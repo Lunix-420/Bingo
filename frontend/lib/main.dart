@@ -1,25 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-IO.Socket socket = IO.io(
-  'http://localhost:3000',
-  IO.OptionBuilder()
-      .setTransports(['websocket']) // for Flutter or Dart VM
-      .setExtraHeaders({'foo': 'bar'}) // optional
-      .build(),
-);
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-void main() {
-  socket.connect();
-  socket.onConnect((_) {
-    //print('connect');
-    socket.emit('msg', 'test');
-  });
-  runApp(const MyApp());
+  @override
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MyAppState extends State<MyApp> {
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the socket connection
+    socket = IO.io(
+      'http://localhost:3000',
+      IO.OptionBuilder()
+          .setTransports(['websocket']) // for Flutter or Dart VM
+          .disableAutoConnect() // disable auto-connection
+          .setExtraHeaders({'foo': 'bar'}) // optional
+          .build(),
+    );
+
+    socket.connect();
+    socket.onConnect((_) {
+      print('Connected');
+    });
+    socket.onDisconnect((_) {
+      print('Disconnected');
+    });
+    socket.on('event', (data) {
+      print(data);
+    });
+  }
+
+  @override
+  void dispose() {
+    socket.disconnect();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,4 +49,8 @@ class MyApp extends StatelessWidget {
       home: Scaffold(body: Center(child: Text('Hello there'))),
     );
   }
+}
+
+void main() {
+  runApp(const MyApp());
 }
