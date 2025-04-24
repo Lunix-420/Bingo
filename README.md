@@ -31,12 +31,12 @@ Erstelle dein eigenes **Bingo Feld** oder lade ein hochgeladenes, starte ein Spi
 
 Weil wir Profis sind, kannst du das Spiel nach deinen Wünschen anpassen:
 
-🌀 **Sync Mode:** Kreuze ein Tile an – für die anderen wird es gesperrt! Chaos garantiert!
-🎯 **Roll Columns/Rows Only:** Zufällige Reihen oder Spalten, oder beides!
-📐 **Spielfeldgröße:** Wähle zwischen 6x6, 5x5, 4x4 oder 3x3!
-⏳ **Timer:** Setze ein Zeitlimit für extra Spannung!
-🥇 **Siegbedingungen:** Meiste Felder oder traditionelle Regeln!
-🔄 **Multihit:** Jeder Spieler kann im Sync Mode jedes Feld markieren, die Sperre wird aufgehoben!
+- 🌀 **Sync Mode:** Kreuze ein Tile an – für die anderen wird es gesperrt! Chaos garantiert!
+- 🎯 **Roll Columns/Rows Only:** Zufällige Reihen oder Spalten, oder beides!
+- 📐 **Spielfeldgröße:** Wähle zwischen 6x6, 5x5, 4x4 oder 3x3!
+- ⏳ **Timer:** Setze ein Zeitlimit für extra Spannung!
+- 🥇 **Siegbedingungen:** Meiste Felder oder traditionelle Regeln!
+- 🔄 **Multihit:** Jeder Spieler kann im Sync Mode jedes Feld markieren, die Sperre wird aufgehoben!
 
 ---
 
@@ -44,9 +44,9 @@ Weil wir Profis sind, kannst du das Spiel nach deinen Wünschen anpassen:
 
 Um die besten Bingo-Felder zu ermitteln, speichert die App:
 
-📌 **Bewertungssystem:** 👍👎
-📌 **Anzahl gespielter Partien** 🔢
-📌 **Kategorie & Tags für Tilesets** 🏷️
+- 📌 **Bewertungssystem:** 👍👎
+- 📌 **Anzahl gespielter Partien** 🔢
+- 📌 **Kategorie & Tags für Tilesets** 🏷️
 
 ---
 
@@ -78,8 +78,8 @@ $ flutter run
 
 ## 🎤 Mitmachen & Support
 
-👾 **Issues melden?** Erstelle ein [GitHub Issue](https://github.com/Lunix-420/Bingo/issues) 🛠️
-💡 **Ideen oder Feedback?** Lass uns wissen, was du denkst! 💬
+- 👾 **Issues melden?** Erstelle ein [GitHub Issue](https://github.com/Lunix-420/Bingo/issues) 🛠️
+- 💡 **Ideen oder Feedback?** Lass uns wissen, was du denkst! 💬
 
 ---
 
