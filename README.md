@@ -14,16 +14,16 @@ Erstelle dein eigenes **Bingo Feld** oder lade ein hochgeladenes, starte ein Spi
 
 ## 🚀 Features
 
-✅ **Erstelle dein eigenes Bingo Feld**
-✅ **Starte ein Spiel mit Freunden**
-✅ **Teile einen Einladungs-Link, um einem Raum beizutreten**
-✅ **Bis zu XYZ Spieler pro Match** 🎭
-✅ **Zufällig generierte Spielfelder pro Spieler** 🎲
-✅ **Automatische Sieg-Erkennung** 🏆
-✅ **Anpassbare Spielregeln** ⚙️
-✅ **Farb-Schemas auswählbar** 🎨
-✅ **Integrierte Suchfunktion für Bingo Felder** 🔍
-✅ **Stylisches Hauptmenü** 🏠
+- ✅ **Erstelle dein eigenes Bingo Feld**
+- ✅ **Starte ein Spiel mit Freunden**
+- ✅ **Teile einen Einladungs-Link, um einem Raum beizutreten**
+- ✅ **Bis zu XYZ Spieler pro Match** 🎭
+- ✅ **Zufällig generierte Spielfelder pro Spieler** 🎲
+- ✅ **Automatische Sieg-Erkennung** 🏆
+- ✅ **Anpassbare Spielregeln** ⚙️
+- ✅ **Farb-Schemas auswählbar** 🎨
+- ✅ **Integrierte Suchfunktion für Bingo Felder** 🔍
+- ✅ **Stylisches Hauptmenü** 🏠
 
 ---
 
