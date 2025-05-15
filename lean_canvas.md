@@ -1,5 +1,4 @@
-CPD Lean Canvas
-========================
+# CPD Lean Canvas
 
 ## Problem
 Alle Bingo Apps sind entweder nur Spiel ohne Customization oder nur Customization ohne Spiel.
