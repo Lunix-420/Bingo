@@ -1,11 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-class Tileset {
-  String name = "";
-  int size = 0;
-  List<String> tiles = [];
-  List<String> tags = [];
-}
+import 'package:frontend/model/tileset.model.dart';
 
 class BingoField extends StatelessWidget {
   final Tileset data;
