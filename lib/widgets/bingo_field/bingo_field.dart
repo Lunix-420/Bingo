@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 import 'package:frontend/model/tileset.model.dart';
 
@@ -9,10 +11,10 @@ class BingoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = data.tiles.length;
+    final size = sqrt(data.tiles.length);
 
     return GridView.count(
-      crossAxisCount: size,
+      crossAxisCount: size.toInt(),
       shrinkWrap: true,
       children:
           data.tiles.map((tile) {

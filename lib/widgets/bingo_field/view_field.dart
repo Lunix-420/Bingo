@@ -7,8 +7,6 @@ class ViewField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(alignment: Alignment.center, child: Text(tile)),
-    );
+    return Container(alignment: Alignment.center, child: Text(tile));
   }
 }

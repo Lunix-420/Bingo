@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Tileset {
   final String name;
   final int size;
@@ -13,9 +11,7 @@ class Tileset {
     required this.tags,
   });
 
-  factory Tileset.fromJson(String input) {
-    final json = jsonDecode(input);
-
+  factory Tileset.fromJson(Map<String, dynamic> json) {
     return Tileset(
       name: json['name'],
       size: json['size'],

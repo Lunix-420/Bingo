@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/router/router.dart';
 import 'package:frontend/theme/theme.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: "Bingo Royal",
       theme: getTheme(),
       routes: buildAppRoutes(),
-      initialRoute: "/",
+      initialRoute: "/test",
     );
   }
 }
