@@ -17,8 +17,11 @@ class BingoField extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Colors.blueGrey, width: 4),
-          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary,
+            width: 4,
+          ),
+          borderRadius: BorderRadius.circular(32),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
@@ -27,12 +30,12 @@ class BingoField extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(32),
         child: GridView.count(
           crossAxisCount: size.toInt(),
           shrinkWrap: true,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
+          mainAxisSpacing: 32,
+          crossAxisSpacing: 32,
           physics: const NeverScrollableScrollPhysics(),
           children: data.tiles.map((tile) => render(tile)).toList(),
         ),
