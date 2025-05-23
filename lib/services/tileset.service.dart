@@ -14,7 +14,9 @@ class TilesetService {
       final tilesets = json.map((e) => Tileset.fromJson(e)).toList();
       return tilesets;
     } else {
-      throw Exception('Failed to load tileset');
+      throw Exception(
+        'Failed to load tileset (status: ${response.statusCode}, body: ${response.body})',
+      );
     }
   }
 }
