@@ -5,13 +5,15 @@ import 'package:frontend/model/tileset.model.dart';
 
 class BingoField extends StatelessWidget {
   final Tileset data;
-  final Widget Function(String) render;
+  final Widget Function(String, int) render;
 
   const BingoField({super.key, required this.data, required this.render});
 
   @override
   Widget build(BuildContext context) {
-    final size = sqrt(data.tiles.length);
+    // We assume that the tileset is a square grid and if not
+    // we will just use the biggest field possible
+    final size = sqrt(data.tiles.length).floor();
 
     return Center(
       child: Container(
@@ -32,12 +34,15 @@ class BingoField extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(32),
         child: GridView.count(
-          crossAxisCount: size.toInt(),
+          crossAxisCount: size,
           shrinkWrap: true,
           mainAxisSpacing: 32,
           crossAxisSpacing: 32,
           physics: const NeverScrollableScrollPhysics(),
-          children: data.tiles.map((tile) => render(tile)).toList(),
+          children: List<Widget>.generate(
+            data.tiles.length,
+            (index) => render(data.tiles[index], index),
+          ),
         ),
       ),
     );

@@ -17,16 +17,24 @@ class _TestfieldViewState extends State<TestfieldView> {
   @override
   void initState() {
     super.initState();
-    TilesetService.fetchTilesets().then(
-      (value) => {
-        setState(() {
-          tileset = value[0];
-        }),
-      },
-    );
+    TilesetService.fetchTilesets()
+        .then(
+          (value) => {
+            setState(() {
+              tileset = value[0];
+            }),
+          },
+        )
+        .catchError(
+          (error) => {
+            // Handle error here, not importing for the test-view
+            // ignore: avoid_print
+            print("Error fetching tilesets: $error"),
+          },
+        );
   }
 
-  Widget render(String tile) {
+  Widget render(String tile, _) {
     return ViewField(tile: tile);
   }
 
