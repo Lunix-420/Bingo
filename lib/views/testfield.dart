@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset.model.dart';
 import 'package:frontend/services/tileset.service.dart';
+import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/view_field.dart';
+import 'package:frontend/widgets/view_scaffold.dart';
 
 class TestfieldView extends StatefulWidget {
   const TestfieldView({super.key});
@@ -40,8 +42,13 @@ class _TestfieldViewState extends State<TestfieldView> {
 
   @override
   Widget build(BuildContext context) {
-    return tileset == null
-        ? Text("Loading...")
-        : BingoField(data: tileset!, render: render);
+    return ViewScaffoldWidget(
+      appbar: AppBarWidget(title: "Testing playground"),
+      children: [
+        tileset == null
+            ? Text("Loading...")
+            : BingoField(data: tileset!, render: render),
+      ],
+    );
   }
 }
