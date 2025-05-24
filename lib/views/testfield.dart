@@ -3,6 +3,7 @@ import 'package:frontend/model/tileset.model.dart';
 import 'package:frontend/services/tileset.service.dart';
 import 'package:frontend/utils/focus.utils.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
+import 'package:frontend/widgets/bingo_field/checkable_field.dart';
 import 'package:frontend/widgets/bingo_field/edit_field.dart';
 
 /*
@@ -47,11 +48,12 @@ class _TestfieldViewState extends State<TestfieldView> {
   }
 
   Widget render(String tile, int index) {
-    return EditFieldWidget(
-      tile: tile,
-      index: index,
-      onTileChanged: _handleEdit,
-    );
+    // return EditFieldWidget(
+    //   tile: tile,
+    //   index: index,
+    //   onTileChanged: _handleEdit,
+    // );
+    return CheckableFieldWidget(tile: tile, checked: true);
   }
 
   void _test() {
