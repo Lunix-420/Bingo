@@ -12,14 +12,14 @@ import 'package:frontend/widgets/bingo_field/checkable_field.dart';
 */
 import 'package:frontend/widgets/view_scaffold.dart';
 
-class TestfieldView extends StatefulWidget {
-  const TestfieldView({super.key});
+class TestFieldView extends StatefulWidget {
+  const TestFieldView({super.key});
 
   @override
-  State<TestfieldView> createState() => _TestfieldViewState();
+  State<TestFieldView> createState() => _TestFieldViewState();
 }
 
-class _TestfieldViewState extends State<TestfieldView> {
+class _TestFieldViewState extends State<TestFieldView> {
   Tileset? tileset;
 
   @override

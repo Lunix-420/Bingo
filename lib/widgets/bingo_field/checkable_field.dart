@@ -44,11 +44,7 @@ class CheckableFieldWidget extends StatelessWidget {
                 top: 0,
                 child: FittedBox(
                   fit: BoxFit.contain,
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: Colors.red[700],
-                    weight: 0.1,
-                  ),
+                  child: Icon(Icons.close_rounded, color: Colors.red[700]),
                 ),
               ),
           ],

@@ -5,6 +5,6 @@ import 'package:frontend/views/testfield.dart';
 Map<String, WidgetBuilder> buildAppRoutes() {
   return {
     "/": (context) => const Scaffold(body: Center(child: Text("Home"))),
-    "/test": (context) => const TestfieldView(),
+    "/test": (context) => const TestFieldView(),
   };
 }
