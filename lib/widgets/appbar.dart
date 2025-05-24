@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppbarWidget extends StatelessWidget {
+class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool disableSettings;
   final bool isHome;
@@ -9,8 +9,8 @@ class AppbarWidget extends StatelessWidget {
   const AppbarWidget({
     super.key,
     required this.title,
-    required this.disableSettings,
-    required this.isHome,
+    this.disableSettings = false,
+    this.isHome = false,
     this.actions,
   });
 
@@ -43,4 +43,7 @@ class AppbarWidget extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
