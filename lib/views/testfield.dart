@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset.model.dart';
 import 'package:frontend/services/tileset.service.dart';
+import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/utils/focus.utils.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/checkable_field.dart';
-import 'package:frontend/widgets/bingo_field/edit_field.dart';
 
 /*
   This is only a component for testing other components. It does not have to be in good
   style or anything and will later be removed.
 */
+import 'package:frontend/widgets/view_scaffold.dart';
 
 class TestfieldView extends StatefulWidget {
   const TestfieldView({super.key});
@@ -67,16 +68,21 @@ class _TestfieldViewState extends State<TestfieldView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return ViewScaffoldWidget(
+      appbar: AppBarWidget(title: "Testing playground"),
       children: [
-        tileset == null
-            ? Text("Loading...")
-            : BingoFieldWidget(
-              tiles: tileset!.tiles,
-              size: tileset!.size,
-              render: render,
-            ),
-        ElevatedButton(onPressed: _test, child: Text("Test")),
+        Stack(
+          children: [
+            tileset == null
+                ? Text("Loading...")
+                : BingoFieldWidget(
+                  tiles: tileset!.tiles,
+                  size: tileset!.size,
+                  render: render,
+                ),
+            ElevatedButton(onPressed: _test, child: Text("Test")),
+          ],
+        ),
       ],
     );
   }
