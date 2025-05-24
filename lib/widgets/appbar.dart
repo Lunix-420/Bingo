@@ -25,22 +25,47 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.deepPurpleAccent[400],
+      centerTitle: true,
       leading:
           isHome
               ? null
-              : IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => _navigateBack(context),
+              : Container(
+                margin: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.yellow[200],
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () => _navigateBack(context),
+                  splashRadius: 24,
+                ),
               ),
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       actions: [
         if (actions != null) ...actions!,
         if (!disableSettings)
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => _navigateToSettings(context),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.settings, color: Colors.black),
+              onPressed: () => _navigateToSettings(context),
+              splashRadius: 24,
+            ),
           ),
       ],
+      elevation: 0,
     );
   }
 

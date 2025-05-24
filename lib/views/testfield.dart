@@ -43,7 +43,7 @@ class _TestfieldViewState extends State<TestfieldView> {
   @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
-      appbar: AppbarWidget(title: "Testing playground", disableSettings: true),
+      appbar: AppbarWidget(title: "Testing playground"),
       children: [
         tileset == null
             ? Text("Loading...")
