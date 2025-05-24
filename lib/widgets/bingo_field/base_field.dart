@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class BaseField extends StatefulWidget {
+class BaseFieldWidget extends StatefulWidget {
   final String tile;
   final Widget? child;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
-  const BaseField({
+  const BaseFieldWidget({
     super.key,
     required this.tile,
     this.child,
@@ -15,10 +15,10 @@ class BaseField extends StatefulWidget {
   });
 
   @override
-  State<BaseField> createState() => _BaseFieldState();
+  State<BaseFieldWidget> createState() => _BaseFieldWidgetState();
 }
 
-class _BaseFieldState extends State<BaseField> {
+class _BaseFieldWidgetState extends State<BaseFieldWidget> {
   final FocusNode _focusNode = FocusNode();
 
   @override
