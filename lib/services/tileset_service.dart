@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:frontend/model/tileset.model.dart';
-import 'package:frontend/services/api.routes.dart';
+import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/services/api_routes.dart';
 import 'package:http/http.dart' as http;
 
 class TilesetService {

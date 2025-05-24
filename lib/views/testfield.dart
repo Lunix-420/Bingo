@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/model/tileset.model.dart';
-import 'package:frontend/services/tileset.service.dart';
+import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
-import 'package:frontend/utils/focus.utils.dart';
+import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/checkable_field.dart';
 
@@ -48,7 +48,7 @@ class _TestFieldViewState extends State<TestFieldView> {
     });
   }
 
-  Widget render(String tile, int index) {
+  Widget tileBuilder(String tile, int index) {
     // return EditFieldWidget(
     //   tile: tile,
     //   index: index,
@@ -78,7 +78,7 @@ class _TestFieldViewState extends State<TestFieldView> {
                 : BingoFieldWidget(
                   tiles: tileset!.tiles,
                   size: tileset!.size,
-                  render: render,
+                  tileBuilder: tileBuilder,
                 ),
             ElevatedButton(onPressed: _test, child: const Text("Test")),
           ],

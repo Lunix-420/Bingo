@@ -1,5 +1,5 @@
-import 'package:frontend/model/player.model.dart';
-import 'package:frontend/model/tileset.model.dart';
+import 'package:frontend/model/player_model.dart';
+import 'package:frontend/model/tileset_model.dart';
 
 enum RoomStatus { waiting, playing, finished }
 

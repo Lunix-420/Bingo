@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:frontend/model/room.model.dart';
-import 'package:frontend/services/api.routes.dart';
+import 'package:frontend/model/room_model.dart';
+import 'package:frontend/services/api_routes.dart';
 import 'package:http/http.dart' as http;
 
 class RoomService {

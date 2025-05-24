@@ -3,13 +3,13 @@ import 'package:flutter/material.dart'; // Changed to material for styling
 class BingoFieldWidget extends StatelessWidget {
   final List<String> tiles;
   final int size; // enum of [3,4,5,6]
-  final Widget Function(String, int) render;
+  final Widget Function(String, int) tileBuilder;
 
   const BingoFieldWidget({
     super.key,
     required this.tiles,
     required this.size,
-    required this.render,
+    required this.tileBuilder,
   });
 
   @override
@@ -40,7 +40,7 @@ class BingoFieldWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: List<Widget>.generate(
             tiles.length,
-            (index) => render(tiles[index], index),
+            (index) => tileBuilder(tiles[index], index),
           ),
         ),
       ),
