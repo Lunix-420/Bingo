@@ -74,13 +74,13 @@ class _TestfieldViewState extends State<TestfieldView> {
         Stack(
           children: [
             tileset == null
-                ? Text("Loading...")
+                ? const Text("Loading...")
                 : BingoFieldWidget(
                   tiles: tileset!.tiles,
                   size: tileset!.size,
                   render: render,
                 ),
-            ElevatedButton(onPressed: _test, child: Text("Test")),
+            ElevatedButton(onPressed: _test, child: const Text("Test")),
           ],
         ),
       ],
