@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool disableSettings;
   final bool isHome;
   final List<Widget>? actions;
 
-  const AppbarWidget({
+  const AppBarWidget({
     super.key,
     required this.title,
     this.disableSettings = false,

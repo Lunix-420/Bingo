@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/widgets/appbar.dart';
 
 class ViewScaffoldWidget extends StatelessWidget {
-  final AppbarWidget appbar;
+  final AppBarWidget appbar;
   final List<Widget> children;
 
   const ViewScaffoldWidget({
@@ -20,7 +20,7 @@ class ViewScaffoldWidget extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Should be fine
             children: children,
           ),
         ),
