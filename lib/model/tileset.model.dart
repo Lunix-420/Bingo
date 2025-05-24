@@ -22,7 +22,7 @@ class Tileset {
       rating: (json['rating'] as num).toDouble(),
       tiles: List<String>.from(json['tiles']),
       tags: List<String>.from(json['tags']),
-      plays: json['plays'],
+      plays: json['plays'] as int,
     );
   }
 }
