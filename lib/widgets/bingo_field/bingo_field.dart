@@ -1,20 +1,19 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart'; // Changed to material for styling
-import 'package:frontend/model/tileset.model.dart';
 
-class BingoField extends StatelessWidget {
-  final Tileset data;
+class BingoFieldWidget extends StatelessWidget {
+  final List<String> tiles;
+  final int size; // enum of [3,4,5,6]
   final Widget Function(String, int) render;
 
-  const BingoField({super.key, required this.data, required this.render});
+  const BingoFieldWidget({
+    super.key,
+    required this.tiles,
+    required this.size,
+    required this.render,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // We assume that the tileset is a square grid and if not
-    // we will just use the biggest field possible
-    final size = sqrt(data.tiles.length).floor();
-
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -40,8 +39,8 @@ class BingoField extends StatelessWidget {
           crossAxisSpacing: 32,
           physics: const NeverScrollableScrollPhysics(),
           children: List<Widget>.generate(
-            data.tiles.length,
-            (index) => render(data.tiles[index], index),
+            tiles.length,
+            (index) => render(tiles[index], index),
           ),
         ),
       ),

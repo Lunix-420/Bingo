@@ -1,13 +1,39 @@
 import 'package:frontend/model/player.model.dart';
 import 'package:frontend/model/tileset.model.dart';
 
+enum RoomStatus { waiting, playing, finished }
+
+RoomStatus roomStatusFromString(String value) {
+  switch (value) {
+    case 'waiting':
+      return RoomStatus.waiting;
+    case 'playing':
+      return RoomStatus.playing;
+    case 'finished':
+      return RoomStatus.finished;
+    default:
+      throw ArgumentError('Invalid status value: $value');
+  }
+}
+
+String roomStatusToString(RoomStatus status) {
+  switch (status) {
+    case RoomStatus.waiting:
+      return 'waiting';
+    case RoomStatus.playing:
+      return 'playing';
+    case RoomStatus.finished:
+      return 'finished';
+  }
+}
+
 class Room {
   final String code;
   final Tileset tileset;
   final String? ruleset = null; // TODO: add later when backend has
   final List<Player> players;
   final Player host;
-  final String status; // Enum of [waiting, playing, finished]
+  final RoomStatus status;
   final int maxPlayers;
 
   Room._({
@@ -28,7 +54,7 @@ class Room {
               .map((player) => Player.fromJson(player))
               .toList(),
       host: Player.fromJson(json['host']),
-      status: json['status'],
+      status: roomStatusFromString(json['status']),
       maxPlayers: json['maxPlayers'],
     );
   }
