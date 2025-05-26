@@ -58,12 +58,13 @@ class _TestFieldViewState extends State<TestFieldView> {
   }
 
   void _test() {
-    final field = getFocusedBaseField();
-    if (field != null) {
-      print("Found: ${field.tile}");
-    } else {
-      print("None found");
-    }
+    Navigator.pushNamed(context, "/preview");
+    // final field = getFocusedBaseField();
+    // if (field != null) {
+    //   print("Found: ${field.tile}");
+    // } else {
+    //   print("None found");
+    // }
   }
 
   @override

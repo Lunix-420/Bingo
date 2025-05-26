@@ -10,4 +10,8 @@ class ViewFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseFieldWidget(tile: tile);
   }
+
+  static Widget tileBuilder(String tile, int index) {
+    return ViewFieldWidget(tile: tile);
+  }
 }
