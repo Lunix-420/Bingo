@@ -25,10 +25,10 @@ class _CardPreviewViewState extends State<CardPreviewView> {
     // sleep for 5 seconds, then with a 50/50 chance return a tileset or throw an error
     try {
       final result = await TilesetService.getTilesetById(context);
-      await Future.delayed(const Duration(seconds: 2));
-      if (Random().nextBool()) {
-        throw Exception("Random error occurred while fetching tileset");
-      }
+      // await Future.delayed(const Duration(seconds: 2));
+      // if (Random().nextBool()) {
+      //   throw Exception("Random error occurred while fetching tileset");
+      // }
       return result;
     } catch (e) {
       logger.e("Error fetching tileset: $e");
@@ -41,14 +41,23 @@ class _CardPreviewViewState extends State<CardPreviewView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Card Preview"),
       children: [
-        BingoPreviewCardWidget(),
         FutureLoaderWidget<Tileset>(
           future: _fetchTileset(context),
           builder:
-              (context, tileset) => BingoFieldWidget(
-                tiles: tileset.tiles,
-                size: tileset.size,
-                tileBuilder: ViewFieldWidget.tileBuilder,
+              (context, tileset) => Column(
+                children: [
+                  BingoPreviewCardWidget(
+                    name: tileset.name,
+                    tags: tileset.tags,
+                    likes: tileset.rating.toInt(),
+                    plays: tileset.plays,
+                  ),
+                  BingoFieldWidget(
+                    tiles: tileset.tiles,
+                    size: tileset.size,
+                    tileBuilder: ViewFieldWidget.tileBuilder,
+                  ),
+                ],
               ),
         ),
       ],
