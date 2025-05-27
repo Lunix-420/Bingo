@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/services/tileset_service.dart';
@@ -5,6 +7,7 @@ import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/view_field.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
+import 'package:frontend/widgets/future_loader.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
 import 'package:frontend/utils/named_logger.dart';
 
@@ -18,31 +21,19 @@ class CardPreviewView extends StatefulWidget {
 }
 
 class _CardPreviewViewState extends State<CardPreviewView> {
-  Tileset? tileset;
-  String? error;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getTileset();
-    });
-  }
-
-  void _getTileset() {
-    TilesetService.getTilesetById(context)
-        .then((value) {
-          logger.i("Got tileset: ${value.name}");
-          setState(() {
-            tileset = value;
-          });
-        })
-        .catchError((error, stackTrace) {
-          logger.e(error, stackTrace: stackTrace);
-          setState(() {
-            this.error = "There was an error fetching the Bingo Field.";
-          });
-        });
+  Future<Tileset> _fetchTileset(BuildContext context) async {
+    // sleep for 5 seconds, then with a 50/50 chance return a tileset or throw an error
+    try {
+      final result = await TilesetService.getTilesetById(context);
+      await Future.delayed(const Duration(seconds: 2));
+      if (Random().nextBool()) {
+        throw Exception("Random error occurred while fetching tileset");
+      }
+      return result;
+    } catch (e) {
+      logger.e("Error fetching tileset: $e");
+      throw Exception("Failed to load tileset");
+    }
   }
 
   @override
@@ -51,13 +42,15 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       appbar: AppBarWidget(title: "Card Preview"),
       children: [
         BingoPreviewCardWidget(),
-        tileset != null
-            ? BingoFieldWidget(
-              tiles: tileset!.tiles,
-              size: tileset!.size,
-              tileBuilder: ViewFieldWidget.tileBuilder,
-            )
-            : const Text("Loading..."),
+        FutureLoaderWidget<Tileset>(
+          future: _fetchTileset(context),
+          builder:
+              (context, tileset) => BingoFieldWidget(
+                tiles: tileset.tiles,
+                size: tileset.size,
+                tileBuilder: ViewFieldWidget.tileBuilder,
+              ),
+        ),
       ],
     );
   }

@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
+
+class FutureLoaderWidget<T> extends StatelessWidget {
+  final Future<T> future;
+  final Widget Function(BuildContext, T) builder;
+  final VoidCallback? onRetry;
+
+  const FutureLoaderWidget({
+    super.key,
+    required this.future,
+    required this.builder,
+    this.onRetry,
+  });
+
+  static Widget _defaultLoading(BuildContext context) {
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  static Widget _defaultError(
+    BuildContext context,
+    Object error,
+    VoidCallback? onRetry,
+  ) {
+    // Show toast
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      toastification.show(
+        title: const Text("Error"),
+        type: ToastificationType.error,
+        style: ToastificationStyle.fillColored,
+        autoCloseDuration: Duration(seconds: 5),
+        description: const Text("Some test message"),
+        alignment: Alignment.bottomLeft,
+      );
+    });
+    return Center(
+      child: GestureDetector(
+        onTap: onRetry,
+        child: const Text(
+          'Retry',
+          style: TextStyle(
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<T>(
+      future: future,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _defaultLoading(context);
+        } else if (snapshot.hasError) {
+          return _defaultError(context, snapshot.error!, onRetry);
+        } else if (snapshot.hasData) {
+          return builder(context, snapshot.data as T);
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+}
