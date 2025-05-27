@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class RoomService {
   static Future<List<Room>> fetchRooms() async {
-    final url = Uri.parse(baseRoute + apiRoutes['game']!['get']!);
+    final url = ApiRoutes.getAllTilesets(); // FIXME: api route
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

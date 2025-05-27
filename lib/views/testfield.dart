@@ -58,12 +58,17 @@ class _TestFieldViewState extends State<TestFieldView> {
   }
 
   void _test() {
-    final field = getFocusedBaseField();
-    if (field != null) {
-      print("Found: ${field.tile}");
-    } else {
-      print("None found");
-    }
+    Navigator.pushNamed(
+      context,
+      "/preview",
+      arguments: {"id": "682b303352f8a9a95e7413c2"},
+    );
+    // final field = getFocusedBaseField();
+    // if (field != null) {
+    //   print("Found: ${field.tile}");
+    // } else {
+    //   print("None found");
+    // }
   }
 
   @override
@@ -71,18 +76,14 @@ class _TestFieldViewState extends State<TestFieldView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Testing playground"),
       children: [
-        Stack(
-          children: [
-            tileset == null
-                ? const Text("Loading...")
-                : BingoFieldWidget(
-                  tiles: tileset!.tiles,
-                  size: tileset!.size,
-                  tileBuilder: tileBuilder,
-                ),
-            ElevatedButton(onPressed: _test, child: const Text("Test")),
-          ],
-        ),
+        tileset == null
+            ? const Text("Loading...")
+            : BingoFieldWidget(
+              tiles: tileset!.tiles,
+              size: tileset!.size,
+              tileBuilder: tileBuilder,
+            ),
+        ElevatedButton(onPressed: _test, child: const Text("Test")),
       ],
     );
   }
