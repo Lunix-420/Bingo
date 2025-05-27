@@ -7,7 +7,7 @@ class PreviewCardRowWidget extends StatelessWidget {
   const PreviewCardRowWidget({
     super.key,
     required this.expandedChild,
-    required this.trailingChild,
+    this.trailingChild,
   });
 
   @override

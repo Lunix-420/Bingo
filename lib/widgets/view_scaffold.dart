@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/appbar.dart';
+import 'package:frontend/widgets/vertical_max_list.dart';
 
 class ViewScaffoldWidget extends StatelessWidget {
   final AppBarWidget appbar;
@@ -13,31 +14,11 @@ class ViewScaffoldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = ScrollController();
     return Scaffold(
       appBar: appbar,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Scrollbar(
-              controller: scrollController,
-              thumbVisibility: true,
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly, // or spaceBetween
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: children,
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
+        child: VerticalMaxListWidget(children: children),
       ),
     );
   }

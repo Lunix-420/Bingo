@@ -5,23 +5,27 @@ class FutureLoaderWidget<T> extends StatelessWidget {
   final Future<T> future;
   final Widget Function(BuildContext, T) builder;
   final VoidCallback? onRetry;
+  final Function(Object)? onError;
 
   const FutureLoaderWidget({
     super.key,
     required this.future,
     required this.builder,
     this.onRetry,
+    this.onError,
   });
 
-  static Widget _defaultLoading(BuildContext context) {
+  Widget _defaultLoading(BuildContext context) {
     return const Center(child: CircularProgressIndicator());
   }
 
-  static Widget _defaultError(
+  Widget _defaultError(
     BuildContext context,
     Object error,
     VoidCallback? onRetry,
   ) {
+    if (onError != null) onError!(error);
+
     // Show toast
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toastification.show(
@@ -29,22 +33,29 @@ class FutureLoaderWidget<T> extends StatelessWidget {
         type: ToastificationType.error,
         style: ToastificationStyle.fillColored,
         autoCloseDuration: Duration(seconds: 5),
-        description: const Text("Some test message"),
+        description: Text(error.toString()),
         alignment: Alignment.bottomLeft,
       );
     });
+
     return Center(
-      child: GestureDetector(
-        onTap: onRetry,
-        child: const Text(
-          'Retry',
-          style: TextStyle(
-            color: Colors.blue,
-            decoration: TextDecoration.underline,
-            fontSize: 18,
-          ),
-        ),
-      ),
+      child:
+          onRetry != null
+              ? GestureDetector(
+                onTap: onRetry,
+                child: const Text(
+                  'Retry',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                    fontSize: 18,
+                  ),
+                ),
+              )
+              : const Text(
+                'An error occurred.',
+                style: TextStyle(color: Colors.red),
+              ),
     );
   }
 

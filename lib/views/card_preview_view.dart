@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/services/tileset_service.dart';
@@ -21,19 +19,25 @@ class CardPreviewView extends StatefulWidget {
 }
 
 class _CardPreviewViewState extends State<CardPreviewView> {
-  Future<Tileset> _fetchTileset(BuildContext context) async {
-    // sleep for 5 seconds, then with a 50/50 chance return a tileset or throw an error
-    try {
-      final result = await TilesetService.getTilesetById(context);
-      // await Future.delayed(const Duration(seconds: 2));
-      // if (Random().nextBool()) {
-      //   throw Exception("Random error occurred while fetching tileset");
-      // }
-      return result;
-    } catch (e) {
-      logger.e("Error fetching tileset: $e");
-      throw Exception("Failed to load tileset");
-    }
+  Widget _futureBuilder(context, tileset) {
+    logger.i("Building preview for tileset: ${tileset.name}");
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        BingoPreviewCardWidget(
+          name: tileset.name,
+          tags: tileset.tags,
+          likes: tileset.rating.toInt(),
+          plays: tileset.plays,
+        ),
+        const SizedBox(height: 32),
+        BingoFieldWidget(
+          tiles: tileset.tiles,
+          size: tileset.size,
+          tileBuilder: ViewFieldWidget.tileBuilder,
+        ),
+      ],
+    );
   }
 
   @override
@@ -42,24 +46,11 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       appbar: AppBarWidget(title: "Card Preview"),
       children: [
         FutureLoaderWidget<Tileset>(
-          future: _fetchTileset(context),
-          builder:
-              (context, tileset) => Column(
-                children: [
-                  BingoPreviewCardWidget(
-                    name: tileset.name,
-                    tags: tileset.tags,
-                    likes: tileset.rating.toInt(),
-                    plays: tileset.plays,
-                  ),
-                  BingoFieldWidget(
-                    tiles: tileset.tiles,
-                    size: tileset.size,
-                    tileBuilder: ViewFieldWidget.tileBuilder,
-                  ),
-                ],
-              ),
+          future: TilesetService.getTilesetById(context),
+          builder: _futureBuilder,
+          onError: (error) => logger.e(error),
         ),
+        const SizedBox(height: 0), // style only
       ],
     );
   }
