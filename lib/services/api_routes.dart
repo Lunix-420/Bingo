@@ -1,8 +1,17 @@
-const baseRoute = 'http://localhost:3000';
+class ApiRoutes {
+  static const String _baseRoute = "http://localhost:3000";
+  static const String _tilesetsBase = "$_baseRoute/tilesets";
 
-const apiRoutes = {
-  'tilesets': {'get': '/tilesets', 'post': '/tilesets'},
-  'user': {'get': '/user', 'post': '/user'},
-  'game': {'get': '/game', 'post': '/game'},
-  'bingo': {'get': '/bingo', 'post': '/bingo'},
-};
+  // --------------------------  Tileset Routes --------------------------
+
+  static Uri getAllTilesets() => Uri.parse(_tilesetsBase);
+  static Uri getTilesetById(String id) => Uri.parse("$_tilesetsBase/$id");
+  static Uri postCreateTileset() => Uri.parse(_tilesetsBase);
+  static Uri putUpdateTileset(String id) => Uri.parse("$_tilesetsBase/$id");
+  static Uri deleteTileset(String id) => Uri.parse("$_tilesetsBase/$id");
+  static Uri postSearchAllTilesets() => Uri.parse("$_tilesetsBase/search");
+  static Uri postUpvoteTileset(String id) =>
+      Uri.parse("$_tilesetsBase/$id/upvote");
+  static Uri postDownvoteTileset(String id) =>
+      Uri.parse("$_tilesetsBase/$id/downvote");
+}

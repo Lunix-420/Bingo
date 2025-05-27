@@ -24,7 +24,9 @@ class _CardPreviewViewState extends State<CardPreviewView> {
   @override
   void initState() {
     super.initState();
-    _getTileset();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getTileset();
+    });
   }
 
   void _getTileset() {

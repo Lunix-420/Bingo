@@ -7,10 +7,11 @@ import 'package:http/http.dart' as http;
 
 class TilesetService {
   static Future<List<Tileset>> fetchTilesets() async {
-    final url = Uri.parse(baseRoute + apiRoutes['tilesets']!['get']!);
+    final url = ApiRoutes.getAllTilesets();
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
+      // print(response.body);
       final json = jsonDecode(response.body) as List;
       final tilesets = json.map((e) => Tileset.fromJson(e)).toList();
       return tilesets;
@@ -30,7 +31,7 @@ class TilesetService {
       throw Exception("No tileset ID provided in route arguments.");
     }
 
-    final url = Uri.parse("");
+    final url = ApiRoutes.getTilesetById(tilesetId);
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

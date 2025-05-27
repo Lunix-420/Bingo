@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class BingoFieldService {
   static Future<List<BingoField>> fetchBingoFields() async {
-    final url = Uri.parse(baseRoute + apiRoutes['bingo']!['get']!);
+    final url = ApiRoutes.getAllTilesets(); // FIXME: Api route
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

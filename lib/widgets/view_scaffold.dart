@@ -17,10 +17,10 @@ class ViewScaffoldWidget extends StatelessWidget {
       appBar: appbar,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+        child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // or spaceBetween
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Should be fine
             children: children,
           ),
         ),
