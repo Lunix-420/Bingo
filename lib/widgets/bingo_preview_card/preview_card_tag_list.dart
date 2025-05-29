@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/bingo_preview_card/preview_card_tag_chip.dart';
 
 class PreviewCardTagListWidget extends StatefulWidget {
   final List<String> tags;
+  final int size;
 
-  const PreviewCardTagListWidget({super.key, required this.tags});
+  const PreviewCardTagListWidget({
+    super.key,
+    required this.tags,
+    required this.size,
+  });
 
   @override
   State<PreviewCardTagListWidget> createState() =>
@@ -18,6 +22,9 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
   void initState() {
     super.initState();
     _tagScrollController = ScrollController();
+    setState(() {
+      widget.tags.insert(0, "${widget.size}x${widget.size}");
+    });
   }
 
   @override
@@ -40,7 +47,24 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
           itemCount: widget.tags.length,
           itemBuilder:
               (context, index) =>
-                  PreviewCardTagChipWidget(text: widget.tags[index]),
+              // PreviewCardTagChipWidget(text: widget.tags[index]),
+              Chip(
+                label: Text(
+                  widget.tags[index],
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: Colors.white,
+                  ),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32),
+                  side: BorderSide(width: 0, color: Colors.transparent),
+                ),
+                shadowColor: Colors.transparent,
+                visualDensity: VisualDensity.compact,
+              ),
           separatorBuilder: (context, index) => const SizedBox(width: 8),
           physics: const ClampingScrollPhysics(),
         ),

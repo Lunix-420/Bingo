@@ -8,11 +8,13 @@ class BingoPreviewCardWidget extends StatelessWidget {
   final List<String> tags;
   final int? likes;
   final int? plays;
+  final int size;
 
   const BingoPreviewCardWidget({
     super.key,
     required this.name,
     required this.tags,
+    required this.size,
     this.likes,
     this.plays,
   });
@@ -72,7 +74,7 @@ class BingoPreviewCardWidget extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             PreviewCardRowWidget(
-              expandedChild: PreviewCardTagListWidget(tags: tags),
+              expandedChild: PreviewCardTagListWidget(tags: tags, size: size),
               trailingChild: _playsWidget(),
             ),
           ],

@@ -29,6 +29,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
           tags: tileset.tags,
           likes: tileset.rating.toInt(),
           plays: tileset.plays,
+          size: tileset.size,
         ),
         const SizedBox(height: 32),
         BingoFieldWidget(
