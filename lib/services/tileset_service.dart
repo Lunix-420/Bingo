@@ -51,4 +51,9 @@ class TilesetService {
     print("Creating tileset: ${tileset.name}");
     // TODO: for now its just a print, add actual implementation later
   }
+
+  static Future<void> editTileset(Tileset tileset) async {
+    print("Editing tileset: ${tileset.name}");
+    // TODO: for now its just a print, add actual implementation later
+  }
 }

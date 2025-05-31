@@ -60,7 +60,7 @@ class _TestFieldViewState extends State<TestFieldView> {
   void _test() {
     Navigator.pushNamed(
       context,
-      "/preview",
+      "/edit",
       arguments: {"id": "682b303352f8a9a95e7413c2"},
     );
     // final field = getFocusedBaseField();
