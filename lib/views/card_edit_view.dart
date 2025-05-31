@@ -14,8 +14,8 @@ class CardEditView extends StatefulWidget {
 }
 
 class _CardEditViewState extends State<CardEditView> {
-  void _handleSave(Tileset tileset) {
-    TilesetService.editTileset(tileset);
+  void _handleSave(Tileset tileset) async {
+    await TilesetService.editTileset(tileset);
   }
 
   @override
