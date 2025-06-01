@@ -6,7 +6,7 @@ class CreateRoomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildMenuButton(
+    return CustomButton(
       color: Colors.redAccent,
       label: 'CREATE ROOM',
       onPressed: () {
