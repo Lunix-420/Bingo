@@ -20,12 +20,12 @@ class CardPreviewView extends StatefulWidget {
 
 class _CardPreviewViewState extends State<CardPreviewView> {
   Widget _futureBuilder(context, tileset) {
-    logger.i("Building preview for tileset: ${tileset.roomName}");
+    logger.i("Building preview for tileset: ${tileset.name}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         BingoPreviewCardWidget(
-          name: tileset.roomName,
+          name: tileset.name,
           tags: tileset.tags,
           likes: tileset.rating.toInt(),
           plays: tileset.plays,
