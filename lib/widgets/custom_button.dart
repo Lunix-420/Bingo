@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
-Widget buildButton({
+Widget buildCustomButton({
   required Color color,
   required String label,
+  required bool isWideButton,
   required VoidCallback onPressed,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
-      final width = constraints.maxWidth;
+      final width = isWideButton
+          ? constraints.maxWidth
+          : constraints.maxWidth * 0.5;
       final padding = width * 0.05;
 
       return Container(
         padding: EdgeInsets.symmetric(horizontal: padding),
+        width: width,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(12),
