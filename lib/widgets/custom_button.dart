@@ -11,10 +11,8 @@ Widget buildCustomButton({
       final width = isWideButton
           ? constraints.maxWidth
           : constraints.maxWidth * 0.5;
-      final padding = width * 0.05;
 
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: padding),
         width: width,
         decoration: BoxDecoration(
           color: color,
