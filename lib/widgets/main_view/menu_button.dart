@@ -8,10 +8,8 @@ Widget buildMenuButton({
   return LayoutBuilder(
     builder: (context, constraints) {
       final width = constraints.maxWidth;
-      final padding = width * 0.05;
 
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: padding),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(12),
