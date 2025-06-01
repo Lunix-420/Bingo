@@ -7,7 +7,7 @@ class JoinRoomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildCustomButton(
+    return CustomButton(
       color: Colors.greenAccent,
       label: 'JOIN ROOM',
       isWideButton: true,

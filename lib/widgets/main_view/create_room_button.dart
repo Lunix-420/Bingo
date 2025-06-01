@@ -6,7 +6,7 @@ class CreateRoomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildCustomButton(
+    return CustomButton(
       color: Colors.redAccent,
       label: 'CREATE ROOM',
       isWideButton: true,

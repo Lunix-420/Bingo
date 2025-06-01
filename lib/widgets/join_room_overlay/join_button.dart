@@ -14,7 +14,7 @@ class JoinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildCustomButton(
+    return CustomButton(
       color: Colors.lightGreenAccent,
       label: 'JOIN',
       isWideButton: false,

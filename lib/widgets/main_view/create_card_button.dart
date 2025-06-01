@@ -6,7 +6,7 @@ class CreateCardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildCustomButton(
+    return CustomButton(
       color: Colors.blueAccent,
       label: 'CREATE CARD',
       isWideButton: true,
