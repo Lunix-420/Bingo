@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildMenuButton({
+Widget buildButton({
   required Color color,
   required String label,
   required VoidCallback onPressed,

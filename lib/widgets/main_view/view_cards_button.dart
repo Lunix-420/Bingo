@@ -6,7 +6,7 @@ class ViewCardsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildMenuButton(
+    return buildButton(
       color: Colors.orangeAccent,
       label: 'VIEW CARDS',
       onPressed: () {

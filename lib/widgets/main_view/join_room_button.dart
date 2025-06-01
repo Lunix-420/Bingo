@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/join_room_overlay.dart';
 import 'menu_button.dart';
 
 class JoinRoomButton extends StatelessWidget {
@@ -6,11 +7,15 @@ class JoinRoomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildMenuButton(
+    return buildButton(
       color: Colors.greenAccent,
       label: 'JOIN ROOM',
       onPressed: () {
-        // TODO
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (_) => const JoinRoomOverlay(),
+        );
       },
     );
   }
