@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/card_create_view.dart';
 import 'package:frontend/views/card_edit_view.dart';
 import 'package:frontend/views/card_preview_view.dart';
-import 'package:frontend/views/main_screen_view.dart';
+import 'package:frontend/views/main_view.dart';
 import 'package:frontend/views/testfield.dart';
 
 /// A function to define the routes for the application.
 Map<String, WidgetBuilder> buildAppRoutes() {
   return {
     "/": (context) => const Scaffold(body: Center(child: Text("Home"))),
-    "/main": (context) => const MainScreenView(),
+    "/main": (context) => const MainView(),
     "/test": (context) => const TestFieldView(),
     "/preview": (context) => const CardPreviewView(),
     "/create": (context) => const CardCreateView(),
