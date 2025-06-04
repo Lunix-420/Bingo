@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class InputField extends StatelessWidget {
+class JoinRoomInputWidget extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
 
-  const InputField({
+  const JoinRoomInputWidget({
     super.key,
     required this.hintText,
     required this.controller,
@@ -24,7 +24,7 @@ class InputField extends StatelessWidget {
             color: Colors.black54
         ),
         filled: true,
-        fillColor: const Color(0xFFC193CC),
+        fillColor: Colors.purpleAccent.shade100,
       ),
     );
   }
