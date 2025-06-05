@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'menu_button.dart';
+import 'package:frontend/views/join_room_overlay.dart';
+import '../custom_button.dart';
 
 class JoinRoomButton extends StatelessWidget {
   const JoinRoomButton({super.key});
@@ -9,8 +10,13 @@ class JoinRoomButton extends StatelessWidget {
     return CustomButton(
       color: Colors.greenAccent,
       label: 'JOIN ROOM',
+      isWideButton: true,
       onPressed: () {
-        // TODO
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (_) => const JoinRoomOverlay(),
+        );
       },
     );
   }

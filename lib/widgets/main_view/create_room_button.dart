@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'menu_button.dart';
+import '../custom_button.dart';
 
 class CreateRoomButton extends StatelessWidget {
   const CreateRoomButton({super.key});
@@ -9,6 +9,7 @@ class CreateRoomButton extends StatelessWidget {
     return CustomButton(
       color: Colors.redAccent,
       label: 'CREATE ROOM',
+      isWideButton: true,
       onPressed: () {
         // TODO
       },

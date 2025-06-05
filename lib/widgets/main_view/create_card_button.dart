@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'menu_button.dart';
+import '../custom_button.dart';
 
 class CreateCardButton extends StatelessWidget {
   const CreateCardButton({super.key});
@@ -13,6 +13,7 @@ class CreateCardButton extends StatelessWidget {
     return CustomButton(
       color: Colors.blueAccent,
       label: 'CREATE CARD',
+      isWideButton: true,
       onPressed: () => handleNagivation(context),
     );
   }
