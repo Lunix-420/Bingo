@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/card_create_view.dart';
+import 'package:frontend/views/card_edit_view.dart';
 import 'package:frontend/views/card_preview_view.dart';
 import 'package:frontend/views/main_view.dart';
 import 'package:frontend/views/testfield.dart';
@@ -7,8 +9,10 @@ import 'package:frontend/views/testfield.dart';
 Map<String, WidgetBuilder> buildAppRoutes() {
   return {
     "/": (context) => const Scaffold(body: Center(child: Text("Home"))),
-    "/main": (context) => const MainView(),
+    "/home": (context) => const MainView(),
     "/test": (context) => const TestFieldView(),
     "/preview": (context) => const CardPreviewView(),
+    "/create": (context) => const CardCreateView(),
+    "/edit": (context) => const CardEditView(),
   };
 }

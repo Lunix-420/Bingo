@@ -6,6 +6,8 @@ import 'package:frontend/services/api_routes.dart';
 import 'package:http/http.dart' as http;
 
 class TilesetService {
+  static const List<int> validSizes = [3, 4, 5, 6];
+
   static Future<List<Tileset>> fetchTilesets() async {
     final url = ApiRoutes.getAllTilesets();
     final response = await http.get(url);
@@ -43,5 +45,15 @@ class TilesetService {
         "Failed to load tileset with id $tilesetId (status: ${response.statusCode}, body: ${response.body})",
       );
     }
+  }
+
+  static Future<void> createTileset(Tileset tileset) async {
+    print("Creating tileset: ${tileset.name}");
+    // TODO: for now its just a print, add actual implementation later
+  }
+
+  static Future<void> editTileset(Tileset tileset) async {
+    print("Editing tileset: ${tileset.name}");
+    // TODO: for now its just a print, add actual implementation later
   }
 }

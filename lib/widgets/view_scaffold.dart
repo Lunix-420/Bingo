@@ -16,9 +16,18 @@ class ViewScaffoldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: VerticalMaxListWidget(children: children),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            center: Alignment.center,
+            radius: 0.75,
+            colors: [Colors.deepPurpleAccent[100]!, Colors.deepPurple[600]!],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: VerticalMaxListWidget(children: children),
+        ),
       ),
     );
   }

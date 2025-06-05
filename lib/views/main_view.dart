@@ -11,8 +11,7 @@ class MainView extends StatefulWidget {
   State<MainView> createState() => _MainViewState();
 }
 
-class _MainViewState extends State<MainView>
-    with TickerProviderStateMixin {
+class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   late AnimationController logoController;
   late AnimationController buttonsController;
 
@@ -43,16 +42,11 @@ class _MainViewState extends State<MainView>
   @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
-      appbar: AppBarWidget(
-        title: 'Bingo Royale',
-      ),
+      appbar: AppBarWidget(title: 'Bingo Royale', isHome: true),
       children: [
         Logo(
           animation: Tween(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-              parent: logoController,
-              curve: Curves.easeOutBack,
-            ),
+            CurvedAnimation(parent: logoController, curve: Curves.easeOutBack),
           ),
         ),
         Menu(

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         title: "Bingo Royal",
         theme: getTheme(),
         routes: buildAppRoutes(),
-        initialRoute: "/main",
+        initialRoute: "/home",
       ),
     );
   }

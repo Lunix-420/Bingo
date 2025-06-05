@@ -15,6 +15,18 @@ class EditFieldWidget extends StatefulWidget {
 
   @override
   State<EditFieldWidget> createState() => _EditFieldWidgetState();
+
+  static Widget Function(String, int) tileBuilder(
+    Function(String, int) onTileChanged,
+  ) {
+    return (String tile, int index) {
+      return EditFieldWidget(
+        tile: tile,
+        index: index,
+        onTileChanged: onTileChanged,
+      );
+    };
+  }
 }
 
 class _EditFieldWidgetState extends State<EditFieldWidget> {
