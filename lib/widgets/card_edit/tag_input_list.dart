@@ -39,7 +39,7 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
       return;
     }
     widget.onAddTag(newTag);
-    newTag = "";
+    _newTagController.clear();
   }
 
   @override
