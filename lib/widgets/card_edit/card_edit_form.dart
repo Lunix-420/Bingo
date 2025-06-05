@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
-import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/edit_field.dart';
@@ -26,25 +25,24 @@ class CardEditFormWidget extends StatefulWidget {
 
 class _CardEditFormWidgetState extends State<CardEditFormWidget> {
   late final Tileset _tileset;
+  final TextEditingController _nameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _tileset = widget.tileset;
+    _nameController.text = _tileset.name;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 
   void _handleTagsChange(List<String> newTags) {
     setState(() {
       _tileset.tags = newTags;
-    });
-  }
-
-  void _handleNameChange(String? newName) {
-    if (newName == null || newName.isEmpty) {
-      return;
-    }
-    setState(() {
-      _tileset.name = newName;
     });
   }
 
@@ -80,10 +78,7 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
         spacing: 32,
         children: [
           // Text input
-          NameInputWidget(
-            name: _tileset.name,
-            onNameChanged: _handleNameChange,
-          ),
+          NameInputWidget(controller: _nameController),
           // Multi-input with edit/chip mode
           TagInputWidget(tags: _tileset.tags, onTagsChanged: _handleTagsChange),
           // Single select

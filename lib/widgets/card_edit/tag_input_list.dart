@@ -19,7 +19,7 @@ class TagInputListWidget extends StatefulWidget {
 }
 
 class _TagInputListWidgetState extends State<TagInputListWidget> {
-  String _newTag = "";
+  final TextEditingController _newTagController = TextEditingController();
 
   Function(String) _handleChange(int index) {
     return (value) => widget.onTagChange(value, index);
@@ -29,22 +29,17 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
     return () => widget.onTagDelete(index);
   }
 
-  void _handleNewTagChange(String value) {
-    setState(() {
-      _newTag = value;
-    });
-  }
-
   void _handleSubmit(_) {
     _addTag();
   }
 
   void _addTag() {
-    if (_newTag.trim().isEmpty || widget.tags.contains(_newTag)) {
+    String newTag = _newTagController.text;
+    if (newTag.trim().isEmpty || widget.tags.contains(newTag)) {
       return;
     }
-    widget.onAddTag(_newTag);
-    _newTag = "";
+    widget.onAddTag(newTag);
+    _newTagController.clear();
   }
 
   @override
@@ -74,7 +69,7 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
             Expanded(
               child: TextFormField(
                 autofocus: true,
-                onChanged: _handleNewTagChange,
+                controller: _newTagController,
                 onFieldSubmitted: _handleSubmit,
                 decoration: const InputDecoration(
                   labelText: 'Add new tag',
