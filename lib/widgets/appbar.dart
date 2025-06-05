@@ -27,6 +27,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.deepPurpleAccent[400],
       centerTitle: true,
+      automaticallyImplyLeading: false,
       leading:
           isHome
               ? null
