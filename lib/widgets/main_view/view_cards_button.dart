@@ -10,9 +10,7 @@ class ViewCardsButton extends StatelessWidget {
       color: Colors.orangeAccent,
       label: 'VIEW CARDS',
       isWideButton: true,
-      onPressed: () {
-        // TODO
-      },
+      onPressed: () => Navigator.pushNamed(context, "/list"),
     );
   }
 }

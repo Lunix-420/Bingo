@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
+import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/services/api_routes.dart';
 import 'package:http/http.dart' as http;
@@ -8,9 +9,23 @@ import 'package:http/http.dart' as http;
 class TilesetService {
   static const List<int> validSizes = [3, 4, 5, 6];
 
-  static Future<List<Tileset>> fetchTilesets() async {
-    final url = ApiRoutes.getAllTilesets();
-    final response = await http.get(url);
+  static Future<List<Tileset>> getTilesets(TilesetFilterModel filter) async {
+    final url = ApiRoutes.postSearchAllTilesets();
+
+    final body = jsonEncode({
+      "search": filter.search,
+      "tags": filter.tags,
+      "size": filter.size,
+      "rating": filter.rating,
+      "plays": filter.plays,
+      "sort": CardListSort.optionToRequest(filter.sort),
+    });
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
 
     if (response.statusCode == 200) {
       // print(response.body);

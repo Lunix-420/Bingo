@@ -16,7 +16,10 @@ class VerticalMaxListWidget extends StatelessWidget {
           child: SingleChildScrollView(
             controller: scrollController,
             child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+                maxHeight: constraints.maxHeight,
+              ),
               child: Column(
                 mainAxisAlignment:
                     MainAxisAlignment.spaceEvenly, // or spaceBetween

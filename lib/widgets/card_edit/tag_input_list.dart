@@ -49,19 +49,22 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
       children: [
         ...List.generate(
           widget.tags.length,
-          (i) => Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  onChanged: _handleChange(i),
-                  initialValue: widget.tags[i],
+          (i) => Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    onChanged: _handleChange(i),
+                    initialValue: widget.tags[i],
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: _handleDelete(i),
-                icon: const Icon(Icons.delete),
-              ),
-            ],
+                IconButton(
+                  onPressed: _handleDelete(i),
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
+            ),
           ),
         ),
         Row(
