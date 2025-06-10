@@ -50,7 +50,7 @@ class _CardListViewState extends State<CardListView> {
             // Paginated list
             Expanded(
               child: FutureLoaderWidget(
-                future: TilesetService.getTilesets(),
+                future: TilesetService.getTilesets(_filter),
                 builder: (context, tilesets) {
                   return ListView.builder(
                     itemCount: tilesets.length,

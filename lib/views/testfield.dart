@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
@@ -25,7 +26,7 @@ class _TestFieldViewState extends State<TestFieldView> {
   @override
   void initState() {
     super.initState();
-    TilesetService.getTilesets()
+    TilesetService.getTilesets(TilesetFilterModel())
         .then(
           (value) => {
             setState(() {

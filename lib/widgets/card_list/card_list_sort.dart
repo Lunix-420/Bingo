@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
 
 class CardListSortWidget extends StatefulWidget {
+  final SortOptions selected;
   final Function(SortOptions sortOption) onSortChanged;
 
-  const CardListSortWidget({super.key, required this.onSortChanged});
+  const CardListSortWidget({
+    super.key,
+    required this.selected,
+    required this.onSortChanged,
+  });
 
   @override
   State<CardListSortWidget> createState() => _CardListSortWidgetState();
@@ -12,42 +17,21 @@ class CardListSortWidget extends StatefulWidget {
 
 class _CardListSortWidgetState extends State<CardListSortWidget> {
   // Only the field to sort by is in the dropdown, order is a separate toggle
-  static const _fields = [
-    {
-      'label': 'Name',
-      'optionAsc': SortOptions.nameAsc,
-      'optionDesc': SortOptions.nameDesc,
-    },
-    {
-      'label': 'Size',
-      'optionAsc': SortOptions.sizeAsc,
-      'optionDesc': SortOptions.sizeDesc,
-    },
-    {
-      'label': 'Rating',
-      'optionAsc': SortOptions.ratingAsc,
-      'optionDesc': SortOptions.ratingDesc,
-    },
-    {
-      'label': 'Created At',
-      'optionAsc': SortOptions.createdAtAsc,
-      'optionDesc': SortOptions.createdAtDesc,
-    },
-    {
-      'label': 'Plays',
-      'optionAsc': SortOptions.playsAsc,
-      'optionDesc': SortOptions.playsDesc,
-    },
-  ];
-
-  int _selectedField = 0;
-  bool _isAscending = true;
+  late int _selectedField = CardListSort.getSelectedSortOptionIndex(
+    widget.selected,
+  );
+  late bool _isAscending = CardListSort.getIsSortOptionAscending(
+    widget.selected,
+  );
 
   void _onFieldChanged(int? index) {
     if (index != null) {
       setState(() {
         _selectedField = index;
       });
+      widget.onSortChanged(
+        CardListSort.getSortOption(_selectedField, _isAscending),
+      );
     }
   }
 
@@ -55,6 +39,9 @@ class _CardListSortWidgetState extends State<CardListSortWidget> {
     setState(() {
       _isAscending = !_isAscending;
     });
+    widget.onSortChanged(
+      CardListSort.getSortOption(_selectedField, _isAscending),
+    );
   }
 
   @override
@@ -66,10 +53,10 @@ class _CardListSortWidgetState extends State<CardListSortWidget> {
             value: _selectedField,
             onChanged: _onFieldChanged,
             items: List.generate(
-              _fields.length,
+              sortOptionFields.length,
               (i) => DropdownMenuItem<int>(
                 value: i,
-                child: Text(_fields[i]['label'] as String),
+                child: Text(sortOptionFields[i]['label'] as String),
               ),
             ),
             isExpanded: true,

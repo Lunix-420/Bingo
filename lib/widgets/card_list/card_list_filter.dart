@@ -73,7 +73,10 @@ class _CardListFilterWidgetState extends State<CardListFilterWidget> {
         Row(
           children: [
             Expanded(
-              child: CardListSortWidget(onSortChanged: _handleSortChange),
+              child: CardListSortWidget(
+                selected: _filter.sort,
+                onSortChanged: _handleSortChange,
+              ),
             ),
             const SizedBox(width: 16),
             IconButton(
