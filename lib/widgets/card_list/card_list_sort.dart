@@ -1,44 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum SortOptions {
-  nameAsc,
-  nameDesc,
-  sizeAsc,
-  sizeDesc,
-  ratingAsc,
-  ratingDesc,
-  createdAtAsc,
-  createdAtDesc,
-  playsAsc,
-  playsDesc,
-}
-
-class CardListSort {
-  static String optionToString(SortOptions sortOption) {
-    switch (sortOption) {
-      case SortOptions.nameAsc:
-        return 'Name Ascending';
-      case SortOptions.nameDesc:
-        return 'Name Descending';
-      case SortOptions.sizeAsc:
-        return 'Size Ascending';
-      case SortOptions.sizeDesc:
-        return 'Size Descending';
-      case SortOptions.ratingAsc:
-        return 'Rating Ascending';
-      case SortOptions.ratingDesc:
-        return 'Rating Descending';
-      case SortOptions.createdAtAsc:
-        return 'Created At Ascending';
-      case SortOptions.createdAtDesc:
-        return 'Created At Descending';
-      case SortOptions.playsAsc:
-        return 'Plays Ascending';
-      case SortOptions.playsDesc:
-        return 'Plays Descending';
-    }
-  }
-}
+import 'package:frontend/model/tileset_filter_model.dart';
 
 class CardListSortWidget extends StatefulWidget {
   final Function(SortOptions sortOption) onSortChanged;

@@ -16,7 +16,6 @@ class _CardListSearchWidgetState extends State<CardListSearchWidget> {
     setState(() {
       _searchText = value;
     });
-    // You can add a callback here if you want to notify parent of search changes
   }
 
   @override

@@ -25,7 +25,7 @@ class _TestFieldViewState extends State<TestFieldView> {
   @override
   void initState() {
     super.initState();
-    TilesetService.fetchTilesets()
+    TilesetService.getTilesets()
         .then(
           (value) => {
             setState(() {

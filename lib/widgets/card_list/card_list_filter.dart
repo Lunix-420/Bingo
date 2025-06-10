@@ -1,29 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/widgets/card_list/card_list_filter_dialog.dart';
 import 'package:frontend/widgets/card_list/card_list_search.dart';
 import 'package:frontend/widgets/card_list/card_list_sort.dart';
 
-class CardListFilter {
-  String? search;
-  SortOptions sort = SortOptions.nameAsc;
-  List<String> tags = [];
-  List<int> size = [];
-  int? rating;
-  int? plays;
-
-  CardListFilter({
-    this.search,
-    this.sort = SortOptions.nameAsc,
-    this.tags = const [],
-    this.size = const [],
-    this.rating,
-    this.plays,
-  });
-}
-
 class CardListFilterWidget extends StatefulWidget {
-  final CardListFilter filter;
-  final Function(CardListFilter filter) onFilterChange;
+  final TilesetFilterModel filter;
+  final Function(TilesetFilterModel filter) onFilterChange;
 
   const CardListFilterWidget({
     super.key,
@@ -37,7 +20,7 @@ class CardListFilterWidget extends StatefulWidget {
 
 class _CardListFilterWidgetState extends State<CardListFilterWidget> {
   final TextEditingController _searchController = TextEditingController();
-  late final CardListFilter _filter;
+  late final TilesetFilterModel _filter;
 
   void _handleFilterChange() {
     widget.onFilterChange(_filter);
@@ -60,9 +43,9 @@ class _CardListFilterWidgetState extends State<CardListFilterWidget> {
   }
 
   void _openDialog() async {
-    final AdditionalFilters? filters = await showDialog(
+    final TilesetFilterModel? filters = await showDialog(
       context: context,
-      builder: (context) => CardListFilterDialogWidget(),
+      builder: (context) => CardListFilterDialogWidget(initialFilters: _filter),
     );
     if (filters != null) {
       setState(() {

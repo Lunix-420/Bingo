@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
@@ -14,10 +15,10 @@ class CardListView extends StatefulWidget {
 }
 
 class _CardListViewState extends State<CardListView> {
-  CardListFilter _filter = CardListFilter();
+  TilesetFilterModel _filter = TilesetFilterModel();
   Timer? _debounce;
 
-  void _handleFilterChange(CardListFilter filter) {
+  void _handleFilterChange(TilesetFilterModel filter) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 750), () {
       setState(() {
@@ -49,7 +50,7 @@ class _CardListViewState extends State<CardListView> {
             // Paginated list
             Expanded(
               child: FutureLoaderWidget(
-                future: TilesetService.fetchTilesets(),
+                future: TilesetService.getTilesets(),
                 builder: (context, tilesets) {
                   return ListView.builder(
                     itemCount: tilesets.length,

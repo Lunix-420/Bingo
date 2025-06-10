@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class TilesetService {
   static const List<int> validSizes = [3, 4, 5, 6];
 
-  static Future<List<Tileset>> fetchTilesets() async {
+  static Future<List<Tileset>> getTilesets() async {
     final url = ApiRoutes.getAllTilesets();
     final response = await http.get(url);
 

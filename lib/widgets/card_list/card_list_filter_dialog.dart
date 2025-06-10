@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/card_edit/tag_input_list.dart';
 
-class AdditionalFilters {
-  List<String> tags = [];
-  List<int> size = [];
-  int? rating;
-  int? plays;
-
-  AdditionalFilters({
-    this.tags = const [],
-    this.size = const [],
-    this.rating,
-    this.plays,
-  });
-}
-
 class CardListFilterDialogWidget extends StatefulWidget {
-  const CardListFilterDialogWidget({super.key});
+  final TilesetFilterModel initialFilters;
+
+  const CardListFilterDialogWidget({super.key, required this.initialFilters});
 
   @override
   State<CardListFilterDialogWidget> createState() =>
@@ -27,7 +16,7 @@ class CardListFilterDialogWidget extends StatefulWidget {
 
 class _CardListFilterDialogWidgetState
     extends State<CardListFilterDialogWidget> {
-  final AdditionalFilters filters = AdditionalFilters();
+  late final TilesetFilterModel filters = widget.initialFilters;
   late TextEditingController ratingController = TextEditingController(
     text: filters.rating?.toString() ?? '',
   );
