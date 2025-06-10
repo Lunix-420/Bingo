@@ -24,13 +24,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        BingoPreviewCardWidget(
-          name: tileset.name,
-          tags: tileset.tags,
-          likes: tileset.rating.toInt(),
-          plays: tileset.plays,
-          size: tileset.size,
-        ),
+        BingoPreviewCardWidget(tileset: tileset, decorators: false),
         const SizedBox(height: 32),
         BingoFieldWidget(
           tiles: tileset.tiles,

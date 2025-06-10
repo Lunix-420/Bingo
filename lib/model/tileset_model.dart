@@ -1,6 +1,7 @@
 import 'package:frontend/services/tileset_service.dart';
 
 class Tileset {
+  String id;
   String name;
   int size; // Enum of [3,4,5,6]
   int rating; // Min of 0
@@ -9,6 +10,7 @@ class Tileset {
   int plays; // Number of times this tileset has been played
 
   Tileset._({
+    this.id = "",
     required this.name,
     required this.size,
     required this.rating,
@@ -21,6 +23,7 @@ class Tileset {
     final newSize = 5;
     final newTiles = List.generate(newSize * newSize, (_) => "");
     return Tileset._(
+      id: "",
       name: "New Card",
       plays: 0,
       size: newSize,
@@ -32,6 +35,7 @@ class Tileset {
 
   factory Tileset.fromJson(Map<String, dynamic> json) {
     return Tileset._(
+      id: json['_id'],
       name: json['name'],
       size: json['size'],
       rating: json['rating'],
