@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
-import 'package:frontend/widgets/pagination.dart';
+import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
+import 'package:frontend/widgets/card_list/card_list_filter.dart';
+import 'package:frontend/widgets/future_loader.dart';
 
 class CardListView extends StatefulWidget {
   const CardListView({super.key});
@@ -10,45 +14,23 @@ class CardListView extends StatefulWidget {
 }
 
 class _CardListViewState extends State<CardListView> {
-  final TextEditingController _searchController = TextEditingController();
-  int _currentPage = 1;
-  final int _pageSize = 10;
+  CardListFilter _filter = CardListFilter();
+  Timer? _debounce;
 
-  // Dummy data for demonstration
-  final List<Map<String, String>> _allCards = List.generate(
-    53,
-    (i) => {
-      'name': 'Card #${i + 1}',
-      'date': '2025-06-${(i % 30) + 1}',
-      'lastEdited': '2025-06-${(i % 30) + 1} 12:00',
-    },
-  );
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void _handleChangePage(int newPage) {
-    setState(() {
-      _currentPage = newPage;
+  void _handleFilterChange(CardListFilter filter) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 750), () {
+      setState(() {
+        _filter = filter;
+      });
     });
   }
 
-  List<Map<String, String>> get _filteredCards {
-    return _allCards;
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
-
-  List<Map<String, String>> get _paginatedCards {
-    final filtered = _filteredCards;
-    final start = (_currentPage - 1) * _pageSize;
-    final end = (start + _pageSize).clamp(0, filtered.length);
-    return filtered.sublist(start, end);
-  }
-
-  int get _totalPages =>
-      (_filteredCards.length / _pageSize).ceil().clamp(1, 999);
 
   @override
   Widget build(BuildContext context) {
@@ -59,31 +41,34 @@ class _CardListViewState extends State<CardListView> {
         child: Column(
           children: [
             // Search bar (row 1)
+            CardListFilterWidget(
+              filter: _filter,
+              onFilterChange: _handleFilterChange,
+            ),
             const SizedBox(height: 16),
             // Paginated list
             Expanded(
-              child:
-                  _paginatedCards.isEmpty
-                      ? const Center(child: Text('No cards found.'))
-                      : ListView.separated(
-                        itemCount: _paginatedCards.length,
-                        separatorBuilder: (_, __) => const Divider(),
-                        itemBuilder: (context, index) {
-                          final card = _paginatedCards[index];
-                          return ListTile(
-                            title: Text(card['name']!),
-                            subtitle: Text(
-                              'Created: ${card['date']}\nLast Edited: ${card['lastEdited']}',
-                            ),
-                            isThreeLine: true,
-                          );
-                        },
-                      ),
-            ),
-            PaginationWidget(
-              currentPage: _currentPage,
-              totalPages: _totalPages,
-              onPageChanged: _handleChangePage,
+              child: FutureLoaderWidget(
+                future: TilesetService.fetchTilesets(),
+                builder: (context, tilesets) {
+                  return ListView.builder(
+                    itemCount: tilesets.length,
+                    itemBuilder: (context, index) {
+                      final tileset = tilesets[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: BingoPreviewCardWidget(
+                          name: tileset.name,
+                          size: tileset.size,
+                          tags: tileset.tags,
+                          likes: tileset.rating,
+                          plays: tileset.plays,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -3,7 +3,7 @@ import 'package:frontend/services/tileset_service.dart';
 class Tileset {
   String name;
   int size; // Enum of [3,4,5,6]
-  double rating; // Min of 0
+  int rating; // Min of 0
   List<String> tiles; // List of tile names, size * size
   List<String> tags;
   int plays; // Number of times this tileset has been played
@@ -24,7 +24,7 @@ class Tileset {
       name: "New Card",
       plays: 0,
       size: newSize,
-      rating: 0.0,
+      rating: 0,
       tiles: newTiles,
       tags: [],
     );
@@ -34,7 +34,7 @@ class Tileset {
     return Tileset._(
       name: json['name'],
       size: json['size'],
-      rating: (json['rating'] as num).toDouble(),
+      rating: json['rating'],
       tiles: List<String>.from(json['tiles']),
       tags: List<String>.from(json['tags']),
       plays: json['plays'],

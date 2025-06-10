@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/card_list/card_list_filter_dialog.dart';
+import 'package:frontend/widgets/card_list/card_list_search.dart';
+import 'package:frontend/widgets/card_list/card_list_sort.dart';
+
+class CardListFilter {
+  String? search;
+  SortOptions sort = SortOptions.nameAsc;
+  List<String> tags = [];
+  List<int> size = [];
+  int? rating;
+  int? plays;
+
+  CardListFilter({
+    this.search,
+    this.sort = SortOptions.nameAsc,
+    this.tags = const [],
+    this.size = const [],
+    this.rating,
+    this.plays,
+  });
+}
 
 class CardListFilterWidget extends StatefulWidget {
-  final Function(Map<String, String>) onFilterChange;
+  final CardListFilter filter;
+  final Function(CardListFilter filter) onFilterChange;
 
-  const CardListFilterWidget({super.key, required this.onFilterChange});
+  const CardListFilterWidget({
+    super.key,
+    required this.filter,
+    required this.onFilterChange,
+  });
 
   @override
   State<CardListFilterWidget> createState() => _CardListFilterWidgetState();
@@ -11,69 +37,64 @@ class CardListFilterWidget extends StatefulWidget {
 
 class _CardListFilterWidgetState extends State<CardListFilterWidget> {
   final TextEditingController _searchController = TextEditingController();
-  final List<String> _sortOptions = ['Name', 'Date Created', 'Last Edited'];
-  final Map<String, String> _filters = {'search': '', 'sort': ''};
+  late final CardListFilter _filter;
+
+  void _handleFilterChange() {
+    widget.onFilterChange(_filter);
+  }
 
   @override
   void initState() {
+    _filter = widget.filter;
+    _searchController.addListener(() {
+      _filter.search = _searchController.text;
+      _handleFilterChange();
+    });
     super.initState();
   }
 
   @override
   void dispose() {
+    _searchController.dispose();
     super.dispose();
   }
 
-  void _openDialog() {
-    showDialog(
+  void _openDialog() async {
+    final AdditionalFilters? filters = await showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Dialog'),
-            content: const Text('This is a dialog!'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Close'),
-              ),
-            ],
-          ),
+      builder: (context) => CardListFilterDialogWidget(),
     );
+    if (filters != null) {
+      setState(() {
+        _filter.tags = filters.tags;
+        _filter.size = filters.size;
+        _filter.rating = filters.rating;
+        _filter.plays = filters.plays;
+      });
+      _handleFilterChange();
+    }
+  }
+
+  void _handleSortChange(SortOptions value) {
+    setState(() {
+      _filter.sort = value;
+    });
+    _handleFilterChange();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextFormField(controller: _searchController),
+        CardListSearchWidget(controller: _searchController),
         Row(
           children: [
             Expanded(
-              child: DropdownButtonFormField<String>(
-                value: "",
-                items:
-                    _sortOptions
-                        .map(
-                          (option) => DropdownMenuItem(
-                            value: option,
-                            child: Text(option),
-                          ),
-                        )
-                        .toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {});
-                  }
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Sort by',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              child: CardListSortWidget(onSortChanged: _handleSortChange),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             IconButton(
-              icon: const Icon(Icons.add_circle_outline),
+              icon: const Icon(Icons.filter_alt),
               tooltip: 'Open Dialog',
               onPressed: _openDialog,
               color: Theme.of(context).colorScheme.primary,

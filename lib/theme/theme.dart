@@ -11,5 +11,9 @@ ThemeData getTheme() {
       primary: primary,
       secondary: secondary,
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Colors.deepPurple.shade400,
+    ),
   );
 }
