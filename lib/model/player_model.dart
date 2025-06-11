@@ -1,9 +1,14 @@
 class Player {
   final String name;
+  final String id;
 
-  Player._({required this.name});
+  Player._({required this.name, required this.id});
 
   factory Player.fromJson(Map<String, dynamic> json) {
-    return Player._(name: json['name']);
+    return Player._(name: json['name'], id: json['_id']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'name': name, '_id': id};
   }
 }
