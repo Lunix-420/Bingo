@@ -43,36 +43,36 @@ class _CardListViewState extends State<CardListView> {
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "View Cards"),
-
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        // Search bar (row 1)
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         CardListFilterWidget(
           filter: _filter,
           onFilterChange: _handleFilterChange,
         ),
-        const SizedBox(height: 16),
-        // Paginated list
-        Expanded(
-          child: FutureLoaderWidget(
-            future: TilesetService.getTilesets(_filter),
-            builder: (context, tilesets) {
-              return ListView.builder(
-                itemCount: tilesets.length,
-                itemBuilder: (context, index) {
-                  final tileset = tilesets[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: BingoPreviewCardWidget(
-                      tileset: tileset,
-                      onTap: _handleCardTap,
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+        SizedBox(height: 32),
+        FutureLoaderWidget(
+          future: TilesetService.getTilesets(_filter),
+          builder: (context, tilesets) {
+            return ListView.builder(
+              itemCount: tilesets.length,
+              shrinkWrap: true, // Important for ListView in Column
+              physics:
+                  const NeverScrollableScrollPhysics(), // Prevent nested scrolling
+              itemBuilder: (context, index) {
+                final tileset = tilesets[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: BingoPreviewCardWidget(
+                    tileset: tileset,
+                    onTap: _handleCardTap,
+                  ),
+                );
+              },
+            );
+          },
         ),
+        SizedBox(height: 16),
       ],
     );
   }
