@@ -88,7 +88,6 @@ class _RoomCreateViewState extends State<RoomCreateView> {
               const SizedBox(height: 16), // style only
               HostNameWidget(controller: hostNameController),
               MaxPlayersWidget(controller: maxPlayersController),
-              // CHECKBOX HERE WITH LABEL "Versus Mode"
               CheckboxListTile(
                 title: Text("Versus Mode"),
                 value: createRoom.isVersus,
