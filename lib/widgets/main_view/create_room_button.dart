@@ -4,7 +4,7 @@ import '../custom_button.dart';
 class CreateRoomButton extends StatelessWidget {
   const CreateRoomButton({super.key});
 
-  void _handleNagivation(BuildContext context) {
+  void _handleNavigation(BuildContext context) {
     Navigator.of(context).pushNamed('/create-room');
   }
 
@@ -14,7 +14,7 @@ class CreateRoomButton extends StatelessWidget {
       color: Colors.redAccent,
       label: 'CREATE ROOM',
       isWideButton: true,
-      onPressed: () => _handleNagivation(context),
+      onPressed: () => _handleNavigation(context),
     );
   }
 }
