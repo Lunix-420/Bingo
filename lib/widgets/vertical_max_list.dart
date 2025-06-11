@@ -23,11 +23,7 @@ class VerticalMaxListWidget extends StatelessWidget {
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Column(
                 mainAxisAlignment: mainAxisAlignment,
-                children: [
-                  ...children,
-                  // invisible spacer to fill remaining space if needed
-                  SizedBox(height: 0),
-                ],
+                children: [...children],
               ),
             ),
           ),

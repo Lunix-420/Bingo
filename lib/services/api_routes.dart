@@ -14,4 +14,10 @@ class ApiRoutes {
       Uri.parse("$_tilesetsBase/$id/upvote");
   static Uri postDownvoteTileset(String id) =>
       Uri.parse("$_tilesetsBase/$id/downvote");
+
+  // --------------------------  Room Routes --------------------------
+  static Uri postCreateRoom() => Uri.parse("$_baseRoute/rooms");
+
+  // --------------------------  Player Routes --------------------------
+  static Uri postCreatePlayer() => Uri.parse("$_baseRoute/players");
 }

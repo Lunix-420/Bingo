@@ -29,8 +29,8 @@ class ViewScaffoldWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: VerticalMaxListWidget(
+            mainAxisAlignment: mainAxisAlignment,
             children: children,
-            mainAxisAlignment: this.mainAxisAlignment,
           ),
         ),
       ),

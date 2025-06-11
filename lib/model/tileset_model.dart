@@ -45,6 +45,18 @@ class Tileset {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'name': name,
+      'size': size,
+      'rating': rating,
+      'tiles': tiles,
+      'tags': tags,
+      'plays': plays,
+    };
+  }
+
   // Can throw an Exception if the size is invalid
   void changeSize(int newSize) {
     if (!TilesetService.validSizes.contains(newSize)) {

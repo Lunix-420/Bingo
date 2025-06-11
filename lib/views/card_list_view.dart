@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/services/room_service.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
@@ -35,14 +37,29 @@ class _CardListViewState extends State<CardListView> {
     super.dispose();
   }
 
-  void _handleCardTap(Tileset tileset) {
-    Navigator.pushNamed(context, "/preview", arguments: {"id": tileset.id});
+  Function(Tileset tileset) _handleCardTap(CreateRoomModel? createRoom) {
+    return (Tileset tileset) {
+      if (createRoom != null) {
+        createRoom.tileset = tileset;
+        Navigator.pushNamed(
+          context,
+          "/create-room",
+          arguments: {"create-room": createRoom},
+        );
+      } else {
+        Navigator.pushNamed(context, "/preview", arguments: {"id": tileset.id});
+      }
+    };
   }
 
   @override
   Widget build(BuildContext context) {
+    final createRoom = RoomService.getCreateRoomModelFromNavigation(context);
+
     return ViewScaffoldWidget(
-      appbar: AppBarWidget(title: "View Cards"),
+      appbar: AppBarWidget(
+        title: createRoom != null ? "Select Card" : "Card List",
+      ),
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(height: 16),
@@ -65,7 +82,7 @@ class _CardListViewState extends State<CardListView> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: BingoPreviewCardWidget(
                     tileset: tileset,
-                    onTap: _handleCardTap,
+                    onTap: _handleCardTap(createRoom),
                   ),
                 );
               },

@@ -28,25 +28,33 @@ String roomStatusToString(RoomStatus status) {
 }
 
 class Room {
+  final String id;
   final String code;
+  final bool isVersus;
   final Tileset tileset;
-  final String? ruleset = null; // TODO: add later when backend has
   final List<Player> players;
+  final List<dynamic> bingofields;
   final Player host;
   final RoomStatus status;
   final int maxPlayers;
 
   Room._({
+    required this.id,
     required this.code,
     required this.tileset,
     required this.players,
     required this.host,
     required this.status,
     required this.maxPlayers,
+    required this.isVersus,
+    required this.bingofields,
   });
 
   factory Room.fromJson(Map<String, dynamic> json) {
     return Room._(
+      id: json['_id'],
+      isVersus: json['isVersus'],
+      bingofields: json['bingofields'],
       code: json['code'],
       tileset: Tileset.fromJson(json['tileset']),
       players:

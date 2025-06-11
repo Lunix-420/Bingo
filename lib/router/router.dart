@@ -4,6 +4,7 @@ import 'package:frontend/views/card_edit_view.dart';
 import 'package:frontend/views/card_list_view.dart';
 import 'package:frontend/views/card_preview_view.dart';
 import 'package:frontend/views/main_view.dart';
+import 'package:frontend/views/room_create_view.dart';
 import 'package:frontend/views/testfield.dart';
 
 /// A function to define the routes for the application.
@@ -13,8 +14,9 @@ Map<String, WidgetBuilder> buildAppRoutes() {
     "/home": (context) => const MainView(),
     "/test": (context) => const TestFieldView(),
     "/preview": (context) => const CardPreviewView(),
-    "/create": (context) => const CardCreateView(),
+    "/create-card": (context) => const CardCreateView(),
     "/edit": (context) => const CardEditView(),
     "/list": (context) => const CardListView(),
+    "/create-room": (context) => const RoomCreateView(),
   };
 }

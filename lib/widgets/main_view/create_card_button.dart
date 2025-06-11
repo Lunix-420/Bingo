@@ -4,8 +4,8 @@ import '../custom_button.dart';
 class CreateCardButton extends StatelessWidget {
   const CreateCardButton({super.key});
 
-  void handleNagivation(BuildContext context) {
-    Navigator.of(context).pushNamed('/create');
+  void _handleNavigation(BuildContext context) {
+    Navigator.of(context).pushNamed('/create-card');
   }
 
   @override
@@ -14,7 +14,7 @@ class CreateCardButton extends StatelessWidget {
       color: Colors.blueAccent,
       label: 'CREATE CARD',
       isWideButton: true,
-      onPressed: () => handleNagivation(context),
+      onPressed: () => _handleNavigation(context),
     );
   }
 }
