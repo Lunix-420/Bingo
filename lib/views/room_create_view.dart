@@ -109,7 +109,11 @@ class _RoomCreateViewState extends State<RoomCreateView> {
               future: createRoomFuture!,
               builder: (context, room) {
                 logger.i("Room created: ${room.code}");
-                // Navigate to the room
+                Navigator.pushNamed(
+                  context,
+                  "/room",
+                  arguments: {"room": room},
+                );
                 return const Text("Room created successfully!");
               },
               onError: (error) => logger.e(error),

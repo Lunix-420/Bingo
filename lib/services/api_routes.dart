@@ -2,6 +2,9 @@ class ApiRoutes {
   static const String _baseRoute = "http://localhost:3000";
   static const String _tilesetsBase = "$_baseRoute/tilesets";
 
+  // --------------------------  Socket Route --------------------------
+  static Uri socketRoute() => Uri.parse(_baseRoute);
+
   // --------------------------  Tileset Routes --------------------------
 
   static Uri getAllTilesets() => Uri.parse(_tilesetsBase);
