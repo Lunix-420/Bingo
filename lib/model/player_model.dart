@@ -11,4 +11,8 @@ class Player {
   Map<String, dynamic> toJson() {
     return {'name': name, '_id': id};
   }
+
+  factory Player() {
+    return Player._(name: "", id: "");
+  }
 }

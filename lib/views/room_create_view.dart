@@ -119,11 +119,13 @@ class _RoomCreateViewState extends State<RoomCreateView> {
               future: createRoomFuture!,
               builder: (context, room) {
                 logger.i("Room created: ${room.code}");
-                Navigator.pushNamed(
-                  context,
-                  "/room",
-                  arguments: {"room": room},
-                );
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pushNamed(
+                    context,
+                    "/room",
+                    arguments: {"room": room, "player": room.host},
+                  );
+                });
                 return const Text("Room created successfully!");
               },
               onError: (error) => logger.e(error),

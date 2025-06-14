@@ -7,6 +7,7 @@ class FutureLoaderWidget<T> extends StatelessWidget {
   final Widget Function(BuildContext, T) builder;
   final VoidCallback? onRetry;
   final Function(Object)? onError;
+  final VoidCallback? onDone;
 
   const FutureLoaderWidget({
     super.key,
@@ -14,6 +15,7 @@ class FutureLoaderWidget<T> extends StatelessWidget {
     required this.builder,
     this.onRetry,
     this.onError,
+    this.onDone,
   });
 
   Widget _defaultLoading(BuildContext context) {
