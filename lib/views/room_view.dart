@@ -74,7 +74,7 @@ class _RoomViewState extends State<RoomView> {
   }
 
   void startGame() {
-    logger.i("Stating...");
+    logger.i("Starting...");
     setState(() {
       future = RoomService.startRoom(room!);
     });
