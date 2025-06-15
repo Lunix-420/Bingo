@@ -8,7 +8,7 @@ import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/create_room/host_name.dart';
 import 'package:frontend/widgets/create_room/max_players.dart';
 import 'package:frontend/widgets/create_room/select_tileset.dart';
-import 'package:frontend/widgets/future_loader.dart';
+import 'package:frontend/widgets/future_create_button.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
 import 'package:toastification/toastification.dart';
 
@@ -114,26 +114,20 @@ class _RoomCreateViewState extends State<RoomCreateView> {
             ],
           ),
         ),
-        createRoomFuture != null
-            ? FutureLoaderWidget(
-              future: createRoomFuture!,
-              builder: (context, room) {
-                logger.i("Room created: ${room.code}");
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pushNamed(
-                    context,
-                    "/room",
-                    arguments: {"room": room, "player": room.host},
-                  );
-                });
-                return const Text("Room created successfully!");
-              },
-              onError: (error) => logger.e(error),
-            )
-            : ElevatedButton(
-              onPressed: _createRoom,
-              child: Text("Create Room"),
-            ),
+        FutureCreateButtonWidget(
+          future: createRoomFuture,
+          buttonText: "Create Room",
+          loadedText: "Room created successfully!",
+          buttonCallback: _createRoom,
+          onError: (error) => logger.e(error),
+          onDone: (context, room) {
+            Navigator.pushNamed(
+              context,
+              "/room",
+              arguments: {"room": room, "player": room.host},
+            );
+          },
+        ),
       ],
     );
   }

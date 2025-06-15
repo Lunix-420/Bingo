@@ -6,7 +6,7 @@ final logger = namedLogger("Socket-IO");
 
 class GameService {
   static io.Socket socket = io.io(
-    ApiRoutes.socketRoute(),
+    ApiRoutes.socketRoute().toString(),
     io.OptionBuilder()
         .setTransports(['websocket'])
         .disableAutoConnect()
@@ -32,17 +32,25 @@ class GameService {
     }
   }
 
-  static void emit(String event, [dynamic data]) {
-    if (socket.connected) {
-      socket.emit(event, data);
-      logger.i('Emitted event: $event with data: $data');
-    } else {
-      logger.w('Socket not connected. Cannot emit event: $event');
-    }
+  static void emitJoinRoom(String roomCode) {
+    logger.i('Emitting joinRoom with code: $roomCode');
+    socket.emit("joinRoom", roomCode);
   }
 
-  static void on(String event, dynamic Function(dynamic) callback) {
-    socket.on(event, callback);
-    logger.i('Listening for event: $event');
+  static void emitLeaveRoom(String roomCode) {
+    logger.i('Emitting leaveRoom with code: $roomCode');
+    socket.emit("leaveRoom", roomCode);
+  }
+
+  static void emitUpdateGameState(String roomCode) async {
+    logger.i('Emitting updateGameState for room: $roomCode');
+    socket.emit("updateGameState", roomCode);
+  }
+
+  static void onGameStateUpdated(Function(dynamic) callback) {
+    logger.i('Setting up listener for gameStateUpdated');
+    socket.on("gameStateUpdated", callback);
+    socket.on("joinedRoom", callback);
+    socket.on("leftRoom", callback);
   }
 }

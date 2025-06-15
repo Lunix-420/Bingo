@@ -20,6 +20,13 @@ class ApiRoutes {
 
   // --------------------------  Room Routes --------------------------
   static Uri postCreateRoom() => Uri.parse("$_baseRoute/rooms");
+  static Uri getRoomById(String id) => Uri.parse("$_baseRoute/rooms/$id");
+  static Uri postPlayerJoinRoom(String id) =>
+      Uri.parse("$_baseRoute/rooms/$id/join");
+  static Uri getRoomIdFromCode(String code) =>
+      Uri.parse("$_baseRoute/rooms/id/$code");
+  static Uri postRoomStart(String id) =>
+      Uri.parse("$_baseRoute/rooms/$id/start");
 
   // --------------------------  Player Routes --------------------------
   static Uri postCreatePlayer() => Uri.parse("$_baseRoute/players");

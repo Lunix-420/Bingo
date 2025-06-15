@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/game_service.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/main_view/menu.dart';
 import 'package:frontend/widgets/main_view/logo.dart';
@@ -18,6 +19,8 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    GameService.disconnectSocket();
+
     logoController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
