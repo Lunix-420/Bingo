@@ -1,14 +1,14 @@
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/tileset_model.dart';
 
-enum RoomStatus { waiting, playing, finished }
+enum RoomStatus { waiting, started, finished }
 
 RoomStatus roomStatusFromString(String value) {
   switch (value) {
     case 'waiting':
       return RoomStatus.waiting;
-    case 'playing':
-      return RoomStatus.playing;
+    case 'started':
+      return RoomStatus.started;
     case 'finished':
       return RoomStatus.finished;
     default:
@@ -20,7 +20,7 @@ String roomStatusToString(RoomStatus status) {
   switch (status) {
     case RoomStatus.waiting:
       return 'waiting';
-    case RoomStatus.playing:
+    case RoomStatus.started:
       return 'playing';
     case RoomStatus.finished:
       return 'finished';

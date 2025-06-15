@@ -3,12 +3,14 @@ import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/room_model.dart';
 import 'package:frontend/services/room_service.dart';
 import 'package:frontend/utils/named_logger.dart';
+import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/create_room/host_name.dart';
 import 'package:frontend/widgets/create_room/max_players.dart';
 import 'package:frontend/widgets/create_room/select_tileset.dart';
-import 'package:frontend/widgets/future_loader.dart';
+import 'package:frontend/widgets/future_create_button.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
+import 'package:toastification/toastification.dart';
 
 final logger = namedLogger("Room-Create-View");
 
@@ -40,10 +42,9 @@ class _RoomCreateViewState extends State<RoomCreateView> {
           createRoom = model;
         });
       }
+      hostNameController.text = createRoom.hostName;
+      maxPlayersController.text = createRoom.maxPlayers.toString();
     });
-
-    hostNameController.text = createRoom.hostName;
-    maxPlayersController.text = createRoom.maxPlayers.toString();
   }
 
   void _handleHostNameChange() {
@@ -67,6 +68,15 @@ class _RoomCreateViewState extends State<RoomCreateView> {
   }
 
   void _createRoom() {
+    if (!createRoom.isValid) {
+      logger.w("CreateRoomModel is not valid");
+      Toast.show(
+        "Invalid Room Data",
+        "Please check your inputs for errors.",
+        ToastificationType.error,
+      );
+      return;
+    }
     setState(() {
       createRoomFuture = RoomService.createRoom(createRoom);
     });
@@ -104,20 +114,20 @@ class _RoomCreateViewState extends State<RoomCreateView> {
             ],
           ),
         ),
-        createRoomFuture != null
-            ? FutureLoaderWidget(
-              future: createRoomFuture!,
-              builder: (context, room) {
-                logger.i("Room created: ${room.code}");
-                // Navigate to the room
-                return const Text("Room created successfully!");
-              },
-              onError: (error) => logger.e(error),
-            )
-            : ElevatedButton(
-              onPressed: _createRoom,
-              child: Text("Create Room"),
-            ),
+        FutureCreateButtonWidget(
+          future: createRoomFuture,
+          buttonText: "Create Room",
+          loadedText: "Room created successfully!",
+          buttonCallback: _createRoom,
+          onError: (error) => logger.e(error),
+          onDone: (context, room) {
+            Navigator.pushNamed(
+              context,
+              "/room",
+              arguments: {"room": room, "player": room.host},
+            );
+          },
+        ),
       ],
     );
   }

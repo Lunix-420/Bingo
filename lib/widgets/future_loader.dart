@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/toasts.dart';
 import 'package:toastification/toastification.dart';
 
 class FutureLoaderWidget<T> extends StatelessWidget {
@@ -28,14 +29,7 @@ class FutureLoaderWidget<T> extends StatelessWidget {
 
     // Show toast
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      toastification.show(
-        title: const Text("Error"),
-        type: ToastificationType.error,
-        style: ToastificationStyle.fillColored,
-        autoCloseDuration: Duration(seconds: 5),
-        description: Text(error.toString()),
-        alignment: Alignment.bottomLeft,
-      );
+      Toast.show("Error", error.toString(), ToastificationType.error);
     });
 
     return Center(

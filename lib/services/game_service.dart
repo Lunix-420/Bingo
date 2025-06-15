@@ -1,0 +1,56 @@
+import 'package:frontend/services/api_routes.dart';
+import 'package:frontend/utils/named_logger.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
+
+final logger = namedLogger("Socket-IO");
+
+class GameService {
+  static io.Socket socket = io.io(
+    ApiRoutes.socketRoute().toString(),
+    io.OptionBuilder()
+        .setTransports(['websocket'])
+        .disableAutoConnect()
+        .build(),
+  );
+
+  static void connectSocket() {
+    if (!socket.connected) {
+      socket.connect();
+      socket.onConnect((_) {
+        logger.i('Socket connected');
+      });
+      socket.onDisconnect((_) {
+        logger.i('Socket disconnected');
+      });
+    }
+  }
+
+  static void disconnectSocket() {
+    if (socket.connected) {
+      socket.disconnect();
+      logger.i('Socket disconnected');
+    }
+  }
+
+  static void emitJoinRoom(String roomCode) {
+    logger.i('Emitting joinRoom with code: $roomCode');
+    socket.emit("joinRoom", roomCode);
+  }
+
+  static void emitLeaveRoom(String roomCode) {
+    logger.i('Emitting leaveRoom with code: $roomCode');
+    socket.emit("leaveRoom", roomCode);
+  }
+
+  static void emitUpdateGameState(String roomCode) async {
+    logger.i('Emitting updateGameState for room: $roomCode');
+    socket.emit("updateGameState", roomCode);
+  }
+
+  static void onGameStateUpdated(Function(dynamic) callback) {
+    logger.i('Setting up listener for gameStateUpdated');
+    socket.on("gameStateUpdated", callback);
+    socket.on("joinedRoom", callback);
+    socket.on("leftRoom", callback);
+  }
+}

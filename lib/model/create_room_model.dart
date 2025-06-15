@@ -23,7 +23,7 @@ class CreateRoomModel {
 
   Map<String, dynamic> toJson(Player player) {
     if (!isValid) {
-      throw Exception("Invalid CreateRoomModel: $this");
+      throw Exception("Invalid CreateRoomModel");
     }
     return {
       "maxPlayers": maxPlayers,

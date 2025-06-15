@@ -5,6 +5,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final bool disableSettings;
   final bool isHome;
   final List<Widget>? actions;
+  final String? routeName;
 
   const AppBarWidget({
     super.key,
@@ -12,9 +13,14 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.disableSettings = false,
     this.isHome = false,
     this.actions,
+    this.routeName,
   });
 
   void _navigateBack(BuildContext context) {
+    if (routeName != null) {
+      Navigator.of(context).pushNamed(routeName!);
+      return;
+    }
     Navigator.of(context).maybePop();
   }
 
