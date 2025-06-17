@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/game_service.dart';
+import 'package:frontend/views/room_view.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/main_view/menu.dart';
 import 'package:frontend/widgets/main_view/logo.dart';
@@ -20,6 +21,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     GameService.disconnectSocket();
+    RoomView.navigated = false;
 
     logoController = AnimationController(
       vsync: this,

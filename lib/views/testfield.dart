@@ -49,13 +49,13 @@ class _TestFieldViewState extends State<TestFieldView> {
     });
   }
 
-  Widget tileBuilder(String tile, int index) {
+  Widget tileBuilder(String tile, int index, _) {
     // return EditFieldWidget(
     //   tile: tile,
     //   index: index,
     //   onTileChanged: _handleEdit,
     // );
-    return CheckableFieldWidget(tile: tile, checked: true);
+    return CheckableFieldWidget(index: index, tile: tile, checked: true);
   }
 
   void _test() {

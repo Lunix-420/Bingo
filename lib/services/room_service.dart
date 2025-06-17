@@ -29,12 +29,28 @@ class RoomService {
     try {
       // Room created successfully
       final json = jsonDecode(response.body);
-      final room = Room.fromJson(json);
+      final roomId = json as String;
       // Handle the created room if needed
-      return room;
+      return getRoomById(roomId);
     } catch (e) {
       throw Exception('Failed to create room (error: $e)');
     }
+  }
+
+  static Room getRoomFromArguments(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map?;
+    if (args == null || !args.containsKey('room')) {
+      throw Exception('Room not found in arguments');
+    }
+    return args['room'] as Room;
+  }
+
+  static Player getPlayerFromArguments(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map?;
+    if (args == null || !args.containsKey('player')) {
+      throw Exception('Player not found in arguments');
+    }
+    return args['player'] as Player;
   }
 
   static Future<Room> addPlayerToRoom(Room room, Player player) async {

@@ -1,3 +1,4 @@
+import 'package:frontend/model/bingo_field_model.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/tileset_model.dart';
 
@@ -33,7 +34,7 @@ class Room {
   final bool isVersus;
   final Tileset tileset;
   final List<Player> players;
-  final List<dynamic> bingofields;
+  final List<BingoField> bingofields;
   final Player host;
   final RoomStatus status;
   final int maxPlayers;
@@ -54,7 +55,10 @@ class Room {
     return Room._(
       id: json['_id'],
       isVersus: json['isVersus'],
-      bingofields: json['bingofields'],
+      bingofields:
+          (json['bingofields'] as List)
+              .map((field) => BingoField.fromJson(field))
+              .toList(),
       code: json['code'],
       tileset: Tileset.fromJson(json['tileset']),
       players:
