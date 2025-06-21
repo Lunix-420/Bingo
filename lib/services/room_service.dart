@@ -15,6 +15,19 @@ class RoomService {
     return args?["create-room"] as CreateRoomModel?;
   }
 
+  static void navigate(
+    BuildContext context,
+    String path,
+    Room? room,
+    Player? player,
+  ) {
+    Navigator.pushNamed(
+      context,
+      path,
+      arguments: {"room": room, "player": player},
+    );
+  }
+
   static Future<Room> createRoom(CreateRoomModel model) async {
     final player = await PlayerService.createPlayer(model.hostName);
 

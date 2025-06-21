@@ -30,4 +30,8 @@ class ApiRoutes {
 
   // --------------------------  Player Routes --------------------------
   static Uri postCreatePlayer() => Uri.parse("$_baseRoute/players");
+
+  // --------------------------  Bingofield Routes --------------------------
+  static Uri postCheckField(String fieldId) =>
+      Uri.parse("$_baseRoute/bingofields/$fieldId/mark");
 }

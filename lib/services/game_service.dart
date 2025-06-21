@@ -54,12 +54,18 @@ class GameService {
 
   static void onRoomUpdate(Function(dynamic) callback) {
     logger.i('Setting up listeners for room updates');
+    _listeners.add(socket.on("joinedRoom", callback));
+    _listeners.add(socket.on("leftRoom", callback));
+  }
+
+  static void onGameUpdate(Function(dynamic) callback) {
+    logger.i('Setting up listeners for game updates');
     _listeners.add(socket.on("gameStateUpdated", callback));
     _listeners.add(socket.on("joinedRoom", callback));
     _listeners.add(socket.on("leftRoom", callback));
   }
 
-  static void removeRoomUpdateListeners() {
+  static void removeListeners() {
     logger.i('Removing room update listeners');
     for (var listener in _listeners) {
       listener();

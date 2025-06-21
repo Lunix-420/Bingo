@@ -3,7 +3,7 @@ class BingoField {
   final String tilesetId;
   final String playerId;
   final List<String> tiles;
-  final List<bool> marked;
+  List<bool> marked;
   final int size; // Enum of [3,4,5,6]
   final bool isWinner;
 

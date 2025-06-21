@@ -142,14 +142,10 @@ class _RoomViewState extends State<RoomView> {
         RoomView.navigated) {
       return;
     }
-    GameService.removeRoomUpdateListeners();
+    GameService.removeListeners();
     RoomView.navigated = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushNamed(
-        context,
-        "/game",
-        arguments: {"room": room, "player": player},
-      );
+      RoomService.navigate(context, "/game", room, player);
     });
   }
 

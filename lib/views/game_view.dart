@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/bingo_field_model.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/services/bingo_field_service.dart';
+import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/utils/toasts.dart';
@@ -25,6 +27,8 @@ class _GameViewState extends State<GameView> {
   Room? room;
   Player? player;
 
+  int? focusedField;
+
   @override
   void initState() {
     super.initState();
@@ -46,10 +50,47 @@ class _GameViewState extends State<GameView> {
       }
     });
     FocusManager.instance.addListener(handleFocusChange);
+
+    GameService.onGameUpdate(_refreshRoom);
+  }
+
+  Future<void> _refreshRoom(_) async {
+    try {
+      final updatedRoom = await RoomService.getRoomById(room!.id);
+      updateRoom(updatedRoom);
+    } catch (e) {
+      logger.e("Error refreshing room: $e");
+      Toast.show(
+        "Error",
+        "Failed to refresh room data.",
+        ToastificationType.error,
+      );
+    }
+  }
+
+  void updateRoom(Room updatedRoom) {
+    setState(() {
+      room = updatedRoom;
+    });
+    final hasWon = room!.bingofields.any((f) => f.isWinner);
+    if (hasWon || room!.status == RoomStatus.finished) {
+      logger.i("Game finished, well done");
+    }
   }
 
   void handleFocusChange() {
-    // --
+    final node =
+        FocusManager.instance.primaryFocus?.context
+            ?.findAncestorWidgetOfExactType<CheckableFieldWidget>();
+    if (node != null) {
+      setState(() {
+        focusedField = node.index;
+      });
+    } else {
+      setState(() {
+        focusedField = null;
+      });
+    }
   }
 
   BingoField? get bingoField {
@@ -78,14 +119,55 @@ class _GameViewState extends State<GameView> {
     return bingoField!.marked;
   }
 
-  void handleCheckChange(int index) {}
+  Future<void> handleCheckChange(int index) async {
+    if (bingoField == null || player == null) {
+      return;
+    }
+    try {
+      await BingoFieldService.checkField(bingoField!, player!, index);
+      updateRoom(await RoomService.getRoomById(room!.id));
+    } catch (e) {
+      logger.e("Error handling check change: $e");
+      Toast.show(
+        "Error",
+        "Failed to update check state.",
+        ToastificationType.error,
+      );
+      return;
+    }
+  }
 
   void handleButtonPress() {
-    final node = FocusManager.instance.primaryFocus;
-    if (node != null && node is CheckableFieldWidget) {
-      final field = node as CheckableFieldWidget;
-      field.index;
+    if (focusedField == null) {
+      return;
     }
+    handleCheckChange(focusedField!);
+  }
+
+  ElevatedButton buildCheckButton() {
+    if (focusedField == null) {
+      return ElevatedButton(
+        onPressed: null,
+        child: const Text("Please select a field"),
+      );
+    }
+    if (focusedField! < 0 || focusedField! >= tiles.length) {
+      return ElevatedButton(
+        onPressed: null,
+        child: const Text("Invalid field selected"),
+      );
+    }
+    if (checked[focusedField!]) {
+      return ElevatedButton(
+        onPressed: handleButtonPress,
+        child: const Text("Uncheck"),
+      );
+    }
+
+    return ElevatedButton(
+      onPressed: handleButtonPress,
+      child: const Text("Check"),
+    );
   }
 
   @override
@@ -112,10 +194,7 @@ class _GameViewState extends State<GameView> {
               tileBuilder: CheckableFieldWidget.tileBuilder(handleCheckChange),
             )
             : SizedBox(height: 0),
-        ElevatedButton(
-          onPressed: handleButtonPress,
-          child: const Text("Check"),
-        ),
+        buildCheckButton(),
       ],
     );
   }
