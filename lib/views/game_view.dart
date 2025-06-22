@@ -54,6 +54,12 @@ class _GameViewState extends State<GameView> {
     GameService.onGameUpdate(_refreshRoom);
   }
 
+  @override
+  void dispose() {
+    FocusManager.instance.removeListener(handleFocusChange);
+    super.dispose();
+  }
+
   Future<void> _refreshRoom(_) async {
     try {
       final updatedRoom = await RoomService.getRoomById(room!.id);

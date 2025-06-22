@@ -16,7 +16,7 @@ class CheckableFieldWidget extends StatelessWidget {
   });
 
   void handleLongPress() {
-    onCheckChange?.call(0); // Placeholder for index, adjust as needed
+    onCheckChange?.call(index);
   }
 
   @override
