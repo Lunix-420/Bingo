@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:frontend/services/api_routes.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -12,17 +13,21 @@ class GameService {
         .disableAutoConnect()
         .build(),
   );
+  static final List<dynamic Function()> _listeners = [];
 
-  static void connectSocket() {
-    if (!socket.connected) {
-      socket.connect();
-      socket.onConnect((_) {
-        logger.i('Socket connected');
-      });
-      socket.onDisconnect((_) {
-        logger.i('Socket disconnected');
-      });
-    }
+  static void connectSocket({
+    VoidCallback? onConnect,
+    VoidCallback? onDisconnect,
+  }) {
+    socket.connect();
+    socket.onConnect((_) {
+      logger.i('Socket connected');
+      onConnect?.call();
+    });
+    socket.onDisconnect((_) {
+      logger.i('Socket disconnected');
+      onDisconnect?.call();
+    });
   }
 
   static void disconnectSocket() {
@@ -47,10 +52,24 @@ class GameService {
     socket.emit("updateGameState", roomCode);
   }
 
-  static void onGameStateUpdated(Function(dynamic) callback) {
-    logger.i('Setting up listener for gameStateUpdated');
-    socket.on("gameStateUpdated", callback);
-    socket.on("joinedRoom", callback);
-    socket.on("leftRoom", callback);
+  static void onRoomUpdate(Function(dynamic) callback) {
+    logger.i('Setting up listeners for room updates');
+    _listeners.add(socket.on("joinedRoom", callback));
+    _listeners.add(socket.on("leftRoom", callback));
+  }
+
+  static void onGameUpdate(Function(dynamic) callback) {
+    logger.i('Setting up listeners for game updates');
+    _listeners.add(socket.on("gameStateUpdated", callback));
+    _listeners.add(socket.on("joinedRoom", callback));
+    _listeners.add(socket.on("leftRoom", callback));
+  }
+
+  static void removeListeners() {
+    logger.i('Removing room update listeners');
+    for (var listener in _listeners) {
+      listener();
+    }
+    _listeners.clear();
   }
 }

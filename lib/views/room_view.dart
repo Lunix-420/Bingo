@@ -19,6 +19,8 @@ import 'package:toastification/toastification.dart';
 final logger = namedLogger("Room-View");
 
 class RoomView extends StatefulWidget {
+  static bool navigated = false;
+
   const RoomView({super.key});
 
   @override
@@ -33,39 +35,50 @@ class _RoomViewState extends State<RoomView> {
   @override
   void initState() {
     super.initState();
-    GameService.connectSocket();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)?.settings.arguments as Map?;
-      if (args != null) {
+      try {
         setState(() {
-          room = args["room"] as Room?;
-          player = args["player"] as Player?;
+          room = RoomService.getRoomFromArguments(context);
+          player = RoomService.getPlayerFromArguments(context);
         });
-        if (room == null || player == null) {
-          Toast.show(
-            "Error",
-            "Room or player data is missing.",
-            ToastificationType.error,
-          );
-          Navigator.pushNamed(context, "/");
-          return;
-        }
-      } else {
+      } catch (e) {
+        logger.e("Error getting room or player from arguments: $e");
+        Toast.show(
+          "Error",
+          "Failed to retrieve room or player data.",
+          ToastificationType.error,
+        );
         Navigator.pushNamed(context, "/");
         return;
       }
-      GameService.emitJoinRoom(room!.code);
-      GameService.onGameStateUpdated((_) {
-        RoomService.getRoomById(room!.id).then((update) {
-          setState(() {
-            room = update;
+
+      GameService.connectSocket(
+        onConnect: () {
+          GameService.onRoomUpdate((_) {
+            logger.i("Room updated, refreshing...");
+            _refreshRoom();
           });
-          if (room!.status == RoomStatus.started) {
-            logger.i("Game Started");
-          }
-        });
-      });
+          GameService.emitJoinRoom(room!.code);
+        },
+      );
     });
+  }
+
+  Future<void> _refreshRoom() async {
+    if (room == null) return;
+    try {
+      final updatedRoom = await RoomService.getRoomById(room!.id);
+      setState(() {
+        room = updatedRoom;
+      });
+    } catch (e) {
+      logger.e("Error refreshing room: $e");
+      Toast.show(
+        "Error",
+        "Failed to refresh room data.",
+        ToastificationType.error,
+      );
+    }
   }
 
   bool get isHost {
@@ -81,8 +94,12 @@ class _RoomViewState extends State<RoomView> {
   }
 
   void gameStarted(BuildContext context, _) {
+    if (RoomView.navigated) {
+      return;
+    }
     logger.i("Game started successfully");
     GameService.emitUpdateGameState(room!.code);
+    _refreshRoom();
   }
 
   List<Widget> get _page {
@@ -118,8 +135,23 @@ class _RoomViewState extends State<RoomView> {
     ];
   }
 
+  void _navigateToGame(BuildContext context) {
+    if (room == null ||
+        player == null ||
+        room!.status != RoomStatus.started ||
+        RoomView.navigated) {
+      return;
+    }
+    GameService.removeListeners();
+    RoomView.navigated = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      RoomService.navigate(context, "/game", room, player);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _navigateToGame(context);
     return ViewScaffoldWidget(
       appbar: AppBarWidget(
         title: "Room",

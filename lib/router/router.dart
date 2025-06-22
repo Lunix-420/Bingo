@@ -3,6 +3,7 @@ import 'package:frontend/views/card_create_view.dart';
 import 'package:frontend/views/card_edit_view.dart';
 import 'package:frontend/views/card_list_view.dart';
 import 'package:frontend/views/card_preview_view.dart';
+import 'package:frontend/views/game_view.dart';
 import 'package:frontend/views/main_view.dart';
 import 'package:frontend/views/room_create_view.dart';
 import 'package:frontend/views/room_view.dart';
@@ -20,5 +21,6 @@ Map<String, WidgetBuilder> buildAppRoutes() {
     "/list": (context) => const CardListView(),
     "/create-room": (context) => const RoomCreateView(),
     "/room": (context) => const RoomView(),
+    "/game": (context) => const GameView(),
   };
 }
