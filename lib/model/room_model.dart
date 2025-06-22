@@ -70,4 +70,18 @@ class Room {
       maxPlayers: json['maxPlayers'],
     );
   }
+
+  factory Room() {
+    return Room._(
+      id: '',
+      code: '',
+      tileset: Tileset(),
+      players: [Player("Host")],
+      host: Player("Host"),
+      status: RoomStatus.waiting,
+      maxPlayers: 4,
+      isVersus: false,
+      bingofields: [],
+    );
+  }
 }

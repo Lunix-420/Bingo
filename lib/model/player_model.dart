@@ -12,7 +12,7 @@ class Player {
     return {'name': name, '_id': id};
   }
 
-  factory Player() {
-    return Player._(name: "", id: "");
+  factory Player(String? name) {
+    return Player._(name: name ?? "", id: "");
   }
 }
