@@ -81,6 +81,11 @@ class _GameViewState extends State<GameView> {
     final hasWon = room!.bingofields.any((f) => f.isWinner);
     if (hasWon || room!.status == RoomStatus.finished) {
       logger.i("Game finished, well done");
+      Navigator.pushNamed(
+        context,
+        "/game-end",
+        arguments: {"room": room, "player": player},
+      );
     }
   }
 
@@ -185,8 +190,8 @@ class _GameViewState extends State<GameView> {
         actions: [
           PlayerListButtonWidget(
             players: room?.players ?? [],
-            host: room?.host ?? Player(),
-            currentPlayer: player ?? Player(),
+            host: room?.host ?? Player(""),
+            currentPlayer: player ?? Player(""),
           ),
         ],
       ),

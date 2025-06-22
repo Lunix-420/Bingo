@@ -62,13 +62,69 @@ class TilesetService {
     }
   }
 
-  static Future<void> createTileset(Tileset tileset) async {
-    print("Creating tileset: ${tileset.name}");
-    // TODO: for now its just a print, add actual implementation later
+  static Future<Tileset> createTileset(Tileset tileset) async {
+    final url = ApiRoutes.postCreateTileset();
+    final body = jsonEncode(tileset.toJson());
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return Tileset.fromJson(json);
+    } else {
+      throw Exception(
+        'Failed to create tileset (status: ${response.statusCode}, body: ${response.body})',
+      );
+    }
   }
 
-  static Future<void> editTileset(Tileset tileset) async {
-    print("Editing tileset: ${tileset.name}");
-    // TODO: for now its just a print, add actual implementation later
+  static Future<Tileset> editTileset(Tileset tileset) async {
+    final url = ApiRoutes.putUpdateTileset(tileset.id);
+    final body = jsonEncode(tileset.toJson());
+
+    final response = await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return Tileset.fromJson(json);
+    } else {
+      throw Exception(
+        'Failed to edit tileset (status: ${response.statusCode}, body: ${response.body})',
+      );
+    }
+  }
+
+  static Future<Tileset> upvoteTileset(Tileset tileset) async {
+    final url = ApiRoutes.postUpvoteTileset(tileset.id);
+    final response = await http.post(url);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return Tileset.fromJson(json);
+    } else {
+      throw Exception(
+        'Failed to upvote tileset (status: ${response.statusCode}, body: ${response.body})',
+      );
+    }
+  }
+
+  static Future<Tileset> downvoteTileset(Tileset tielset) async {
+    final url = ApiRoutes.postDownvoteTileset(tielset.id);
+    final response = await http.post(url);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return Tileset.fromJson(json);
+    } else {
+      throw Exception(
+        'Failed to downvote tileset (status: ${response.statusCode}, body: ${response.body})',
+      );
+    }
   }
 }

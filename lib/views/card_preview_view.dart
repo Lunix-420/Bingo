@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
@@ -19,6 +19,9 @@ class CardPreviewView extends StatefulWidget {
 }
 
 class _CardPreviewViewState extends State<CardPreviewView> {
+  late Future<Tileset> future;
+  Tileset? tileset;
+
   Widget _futureBuilder(context, tileset) {
     logger.i("Building preview for tileset: ${tileset.name}");
     return Column(
@@ -36,6 +39,27 @@ class _CardPreviewViewState extends State<CardPreviewView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      future = TilesetService.getTilesetById(context);
+      future.then((tileset) {
+        setState(() {
+          this.tileset = tileset;
+        });
+      });
+    });
+  }
+
+  void navigateToEdit() {
+    if (tileset == null) {
+      logger.w("Tileset is null, cannot navigate to edit.");
+      return;
+    }
+    Navigator.pushNamed(context, "/edit", arguments: {"id": tileset!.id});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Card Preview"),
@@ -45,7 +69,13 @@ class _CardPreviewViewState extends State<CardPreviewView> {
           builder: _futureBuilder,
           onError: (error) => logger.e(error),
         ),
-        const SizedBox(height: 0), // style only
+        ElevatedButton(
+          onPressed: navigateToEdit,
+          child:
+              tileset != null
+                  ? const Text("Edit Card")
+                  : const Text("Loading..."),
+        ),
       ],
     );
   }

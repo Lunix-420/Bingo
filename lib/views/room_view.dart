@@ -159,8 +159,8 @@ class _RoomViewState extends State<RoomView> {
         actions: [
           PlayerListButtonWidget(
             players: room?.players ?? [],
-            host: room?.host ?? Player(),
-            currentPlayer: player ?? Player(),
+            host: room?.host ?? Player(""),
+            currentPlayer: player ?? Player(""),
           ),
         ],
       ),
