@@ -92,7 +92,7 @@ class _GameViewState extends State<GameView> {
   void handleFocusChange() {
     final node =
         FocusManager.instance.primaryFocus?.context
-            ?.findAncestorWidgetOfExactType<CheckableFieldWidget>();
+            ?.findAncestorWidgetOfExactType<CheckableTileWidget>();
     if (node != null) {
       setState(() {
         focusedField = node.index;
@@ -202,7 +202,7 @@ class _GameViewState extends State<GameView> {
               tiles: tiles,
               size: room?.tileset.size ?? 5,
               checkedTiles: checked,
-              tileBuilder: CheckableFieldWidget.tileBuilder(handleCheckChange),
+              tileBuilder: CheckableTileWidget.tileBuilder(handleCheckChange),
             )
             : SizedBox(height: 0),
         buildCheckButton(),

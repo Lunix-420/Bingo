@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/bingo_field/base_field.dart';
 
-class ViewFieldWidget extends StatelessWidget {
+class ViewTileWidget extends StatelessWidget {
   final String tile;
 
-  const ViewFieldWidget({super.key, required this.tile});
+  const ViewTileWidget({super.key, required this.tile});
 
   @override
   Widget build(BuildContext context) {
-    return BaseFieldWidget(tile: tile);
+    return BaseTileWidget(tile: tile);
   }
 
   static Widget tileBuilder(String tile, int index, bool? _) {
-    return ViewFieldWidget(tile: tile);
+    return ViewTileWidget(tile: tile);
   }
 }

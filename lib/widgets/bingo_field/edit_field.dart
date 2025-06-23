@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/bingo_field/base_field.dart';
 
-class EditFieldWidget extends StatefulWidget {
+class EditTileWidget extends StatefulWidget {
   final String tile;
   final int index;
   final Function(String, int) onTileChanged;
 
-  const EditFieldWidget({
+  const EditTileWidget({
     super.key,
     required this.tile,
     required this.index,
@@ -14,13 +14,13 @@ class EditFieldWidget extends StatefulWidget {
   });
 
   @override
-  State<EditFieldWidget> createState() => _EditFieldWidgetState();
+  State<EditTileWidget> createState() => _EditTileWidgetState();
 
   static Widget Function(String, int, bool?) tileBuilder(
     Function(String, int) onTileChanged,
   ) {
     return (String tile, int index, _) {
-      return EditFieldWidget(
+      return EditTileWidget(
         tile: tile,
         index: index,
         onTileChanged: onTileChanged,
@@ -29,7 +29,7 @@ class EditFieldWidget extends StatefulWidget {
   }
 }
 
-class _EditFieldWidgetState extends State<EditFieldWidget> {
+class _EditTileWidgetState extends State<EditTileWidget> {
   void _handleEdit() async {
     final controller = TextEditingController(text: widget.tile);
     final result = await showDialog<String>(
@@ -61,6 +61,6 @@ class _EditFieldWidgetState extends State<EditFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseFieldWidget(tile: widget.tile, onLongPress: _handleEdit);
+    return BaseTileWidget(tile: widget.tile, onLongPress: _handleEdit);
   }
 }

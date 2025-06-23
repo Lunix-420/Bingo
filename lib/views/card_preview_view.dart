@@ -32,7 +32,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
         BingoFieldWidget(
           tiles: tileset.tiles,
           size: tileset.size,
-          tileBuilder: ViewFieldWidget.tileBuilder,
+          tileBuilder: ViewTileWidget.tileBuilder,
         ),
       ],
     );

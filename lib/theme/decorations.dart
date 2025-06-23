@@ -28,4 +28,12 @@ class Decorations {
     borderRadius: Spacings.roundBorderLarge,
     boxShadow: [Shadows.cardShadow],
   );
+
+  static ShapeBorder bingoFieldBorder = RoundedRectangleBorder(
+    side: BorderSide(
+      color: AppColors.primary.withValues(alpha: 0.75),
+      width: 4,
+    ),
+    borderRadius: Spacings.roundBorderExtraLarge,
+  );
 }

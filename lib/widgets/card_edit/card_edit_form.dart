@@ -89,7 +89,7 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
           BingoFieldWidget(
             tiles: _tileset.tiles,
             size: _tileset.size,
-            tileBuilder: EditFieldWidget.tileBuilder(_handleTileChange),
+            tileBuilder: EditTileWidget.tileBuilder(_handleTileChange),
           ),
           SizedBox(height: 16),
           // Save button
