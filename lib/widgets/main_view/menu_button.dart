@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../theme/decorations.dart';
+import '../../theme/textstyles.dart';
+import '../../theme/spacings.dart';
 
 class CustomButton extends StatelessWidget {
   final Color color;
@@ -20,51 +23,18 @@ class CustomButton extends StatelessWidget {
 
         return Container(
           width: width,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: Colors.black54,
-              width: 2,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(2, 2),
-                blurRadius: 4,
-              ),
-              BoxShadow(
-                color: Color(0x99FFFFFF),
-                offset: Offset(-2, -2),
-                blurRadius: 4,
-              ),
-            ],
-          ),
+          decoration: Decorations.menuButton.copyWith(color: color),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
               onTap: onPressed,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: Spacings.verticalMedium,
                 child: Center(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Text(
-                      label,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        shadows: [
-                          Shadow(
-                            offset: Offset(1.2, 1.2),
-                            blurRadius: 2.0,
-                            color: Colors.black26,
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: Text(label, style: TextStyles.normal()),
                   ),
                 ),
               ),

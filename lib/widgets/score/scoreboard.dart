@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/model/player_model.dart';
-import 'package:frontend/model/room_model.dart';
+import '../../theme/decorations.dart';
+import '../../theme/spacings.dart';
+import '../../model/player_model.dart';
+import '../../model/room_model.dart';
 
 class ScoreboardWidget extends StatelessWidget {
   final Room room;
@@ -8,7 +10,7 @@ class ScoreboardWidget extends StatelessWidget {
 
   const ScoreboardWidget({super.key, required this.room, required this.player});
 
-  Player getWinner() {
+  Player _getWinner() {
     Player? winner;
     for (final field in room.bingofields) {
       if (field.isWinner) {
@@ -19,42 +21,32 @@ class ScoreboardWidget extends StatelessWidget {
     return winner ?? player;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final winner = getWinner();
+  List<Player> _getOrderedPlayers(Player winner) {
     final isCurrentPlayerWinner = player.id == winner.id;
-    // Remove winner and current player from the list, then add them at the top
     final others =
         room.players
             .where((p) => p.id != winner.id && p.id != player.id)
             .toList();
-    final List<Player> orderedPlayers = [
-      winner,
-      if (!isCurrentPlayerWinner) player,
-      ...others,
-    ];
+    return [winner, if (!isCurrentPlayerWinner) player, ...others];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final winner = _getWinner();
+    final orderedPlayers = _getOrderedPlayers(winner);
 
     return Center(
       child: Container(
         height: MediaQuery.of(context).size.height * 0.4,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
+        padding: Spacings.allMedium,
+        decoration: Decorations.card,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ...orderedPlayers.map((p) {
               Icon? leadingIcon;
               if (p == winner && p == player) {
+                // FIXME: colors
                 leadingIcon = const Icon(Icons.star, color: Colors.purple);
               } else if (p == winner) {
                 leadingIcon = const Icon(Icons.star, color: Colors.yellow);

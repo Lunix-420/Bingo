@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/room_model.dart';
 import 'package:frontend/widgets/appbar.dart';
+import 'package:frontend/widgets/room/code_display.dart';
+import 'package:frontend/widgets/room/room_settings_display.dart';
 import 'package:frontend/widgets/score/scoreboard.dart';
 
 /*
@@ -28,7 +30,7 @@ class _TestFieldViewState extends State<TestFieldView> {
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Testing playground"),
-      children: [ScoreboardWidget(room: room, player: room.host)],
+      children: [RoomSettingsDisplayWidget(room: room)],
     );
   }
 }

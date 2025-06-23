@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/theme/textstyles.dart';
 import 'package:frontend/utils/toasts.dart';
 import 'package:toastification/toastification.dart';
 
@@ -37,18 +39,14 @@ class FutureLoaderWidget<T> extends StatelessWidget {
           onRetry != null
               ? GestureDetector(
                 onTap: onRetry,
-                child: const Text(
+                child: Text(
                   'Retry',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
-                    fontSize: 18,
-                  ),
+                  style: TextStyles.normal(color: AppColors.retry),
                 ),
               )
-              : const Text(
+              : Text(
                 'An error occurred.',
-                style: TextStyle(color: Colors.red),
+                style: TextStyles.normal(color: AppColors.error),
               ),
     );
   }

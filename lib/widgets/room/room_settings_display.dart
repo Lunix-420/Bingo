@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/model/room_model.dart';
+import '../../theme/textstyles.dart';
+import '../../theme/spacings.dart';
+import '../../model/room_model.dart';
 
 class RoomSettingsDisplayWidget extends StatelessWidget {
   final Room room;
@@ -10,26 +12,36 @@ class RoomSettingsDisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: Spacings.allMedium,
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Room Settings", style: TextStyles.title())],
+            ),
+            Row(
               children: [
-                const Text(
-                  "Room Settings",
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                Text(
+                  "Host Name: ${room.host.name}",
+                  style: TextStyles.normal(),
                 ),
               ],
             ),
-            Row(children: [Text("Host Name: ${room.host.name}")]),
             Row(
               children: [
-                Text("${room.players.length} of ${room.maxPlayers} Players"),
+                Text(
+                  "${room.players.length} of ${room.maxPlayers} Players",
+                  style: TextStyles.normal(),
+                ),
               ],
             ),
             Row(
-              children: [Text(room.isVersus ? "Mode: Versus" : "Mode: Co-op")],
+              children: [
+                Text(
+                  room.isVersus ? "Mode: Versus" : "Mode: Co-op",
+                  style: TextStyles.normal(),
+                ),
+              ],
             ),
           ],
         ),
