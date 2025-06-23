@@ -35,8 +35,7 @@ class AppColors {
   static Color bingoFieldBackground = Color(0xFF2C2C2C);
   static Color bingoFieldText = Color(0xFFE0E0E0);
 
-  static Color ratedRateIconColor = Color(0xFF4CAF50);
-  static Color unratedRateIconColor = Color(0xFFF44336);
+  static Color rateIconColor = Color(0xFF4CAF50);
   static Color playsIconColor = Color(0xFFB0BEC5);
 
   static Color mainMenuCreateRoomButtonBackground = Color(0xFFFFDB0A);

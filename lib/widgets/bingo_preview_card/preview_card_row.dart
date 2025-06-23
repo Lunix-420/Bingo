@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/spacings.dart';
 
 class PreviewCardRowWidget extends StatelessWidget {
   final Widget expandedChild;
@@ -18,7 +19,7 @@ class PreviewCardRowWidget extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: Spacings.small),
             child: expandedChild,
           ),
         ),

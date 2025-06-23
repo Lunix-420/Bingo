@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 
 class PreviewCardTagListWidget extends StatefulWidget {
   final List<String> tags;
@@ -36,6 +39,7 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
   @override
   Widget build(BuildContext context) {
     if (_tags.isEmpty) return const SizedBox.shrink();
+
     return SizedBox(
       height: 32,
       child: Scrollbar(
@@ -46,24 +50,16 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
           scrollDirection: Axis.horizontal,
           itemCount: _tags.length,
           itemBuilder:
-              (context, index) =>
-              // PreviewCardTagChipWidget(text: widget.tags[index]),
-              Chip(
+              (context, index) => Chip(
                 label: Text(
                   _tags[index],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13,
-                    color: Colors.white,
-                  ),
+                  style: TextStyles.small(color: Colors.white),
                 ),
-                backgroundColor: Theme.of(context).colorScheme.primary,
+                backgroundColor: AppColors.primary,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
+                  borderRadius: Spacings.roundBorderExtraLarge,
                   side: BorderSide(width: 0, color: Colors.transparent),
                 ),
-                shadowColor: Colors.transparent,
-                visualDensity: VisualDensity.compact,
               ),
           separatorBuilder: (context, index) => const SizedBox(width: 8),
           physics: const ClampingScrollPhysics(),

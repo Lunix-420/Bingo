@@ -14,7 +14,13 @@ class TextStyles {
   );
 
   static TextStyle small({Color? color}) =>
-      TextStyle(fontSize: 16.0, color: color ?? Colors.black);
+      TextStyle(fontSize: 14.0, color: color ?? Colors.black);
+
+  static TextStyle large({Color? color}) => TextStyle(
+    fontSize: 28.0,
+    color: color ?? Colors.black,
+    fontWeight: FontWeight.bold,
+  );
 
   static TextStyle button({Color? color}) => TextStyle(
     fontSize: 24.0,

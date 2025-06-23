@@ -15,7 +15,7 @@ class CheckableTileWidget extends StatelessWidget {
     this.onCheckChange,
   });
 
-  void handleLongPress() {
+  void _handleLongPress() {
     onCheckChange?.call(index);
   }
 
@@ -23,7 +23,7 @@ class CheckableTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseTileWidget(
       tile: tile,
-      onLongPress: handleLongPress,
+      onLongPress: _handleLongPress,
       child: SizedBox.expand(
         child: Stack(
           fit: StackFit.expand,
