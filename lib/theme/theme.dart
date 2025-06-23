@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 
 // Only to define global theme colors that should also affect the material widgets
 ThemeData getTheme() {
@@ -29,7 +30,28 @@ ThemeData getTheme() {
         textStyle: WidgetStateProperty.all(
           const TextStyle(color: Colors.white),
         ),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: Spacings.roundBorderMedium),
+        ),
       ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppColors.inputFieldBackground,
+      border: OutlineInputBorder(
+        borderRadius: Spacings.roundBorderSmall,
+        borderSide: BorderSide(color: AppColors.inputFieldBorder, width: 2),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: Spacings.roundBorderSmall,
+        borderSide: BorderSide(color: AppColors.inputFieldBorder, width: 2),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: Spacings.roundBorderSmall,
+        borderSide: BorderSide(color: AppColors.inputFieldBorder, width: 2),
+      ),
+      labelStyle: TextStyles.normal(color: AppColors.inputFieldText),
+      hintStyle: TextStyles.normal(color: AppColors.inputFieldHintText),
     ),
   );
 }

@@ -7,7 +7,7 @@ class AppColors {
     colors: [Colors.deepPurpleAccent[100]!, Colors.deepPurple[600]!],
   );
 
-  static Color primary = Color(0xFF9F51FE);
+  static Color primary = Colors.deepPurple;
   static Color success = Color(0xFF4CAF50);
   static Color error = Color(0xFFF44336);
   static Color retry = Color.fromARGB(255, 20, 242, 246);
@@ -27,9 +27,9 @@ class AppColors {
   static Color backButtonBackground = Colors.orange[300]!;
   static Color backButtonForeground = Colors.black;
 
-  static Color inputFieldBackground = Color(0xFF2C2C2C);
+  static Color inputFieldBackground = Colors.deepPurple[400]!;
   static Color inputFieldText = Color(0xFFE0E0E0);
-  static Color inputFieldBorder = Color(0xFF424242);
+  static Color inputFieldBorder = Colors.white;
   static Color inputFieldHintText = Color(0xFF9E9E9E);
 
   static Color bingoFieldBackground = Color(0xFF2C2C2C);

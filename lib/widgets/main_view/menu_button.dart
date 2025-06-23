@@ -22,9 +22,6 @@ class MenuButtonWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           padding: Spacings.allLarge,
-          shape: RoundedRectangleBorder(
-            borderRadius: Spacings.roundBorderMedium,
-          ),
         ),
 
         child: label,

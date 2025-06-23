@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
-import 'package:frontend/views/join_room_overlay.dart';
+import 'package:frontend/widgets/join_room_overlay/join_room_dialog.dart';
 import 'package:frontend/widgets/main_view/menu_button.dart';
 
 class Menu extends StatelessWidget {
@@ -18,7 +18,7 @@ class Menu extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (_) => const JoinRoomOverlay(),
+      builder: (_) => const JoinRoomDialog(),
     );
   }
 
