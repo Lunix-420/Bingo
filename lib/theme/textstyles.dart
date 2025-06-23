@@ -7,20 +7,17 @@ class TextStyles {
     color: color ?? Colors.black,
   );
 
-  static TextStyle normal({Color? color}) =>
-      TextStyle(fontSize: 16.0, color: color ?? Colors.black);
-
-  static TextStyle small({Color? color}) =>
-      TextStyle(fontSize: 14.0, color: color ?? Colors.black);
-
-  static TextStyle code() => TextStyle(
+  static TextStyle normal({Color? color}) => TextStyle(
     fontSize: 20.0,
-    color: Colors.white,
+    color: color ?? Colors.black,
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle small({Color? color}) =>
+      TextStyle(fontSize: 16.0, color: color ?? Colors.black);
+
   static TextStyle button({Color? color}) => TextStyle(
-    fontSize: 20.0,
+    fontSize: 24.0,
     color: color ?? Colors.white,
     fontWeight: FontWeight.bold,
   );

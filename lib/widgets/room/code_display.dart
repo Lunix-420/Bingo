@@ -16,7 +16,7 @@ class CodeDisplayWidget extends StatelessWidget {
         horizontal: Spacings.extraLarge,
       ),
       decoration: Decorations.codeDisplay,
-      child: Text(code, style: TextStyles.code()),
+      child: Text(code, style: TextStyles.normal()),
     );
   }
 }
