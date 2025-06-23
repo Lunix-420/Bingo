@@ -47,7 +47,7 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
-      appbar: AppBarWidget(title: 'Bingo Royale', isHome: true),
+      appbar: AppBarWidget(title: 'BINGO ROYAL', isHome: true),
       children: [
         Logo(
           animation: Tween(begin: 0.0, end: 1.0).animate(

@@ -18,4 +18,10 @@ class TextStyles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle button({Color? color}) => TextStyle(
+    fontSize: 20.0,
+    color: color ?? Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 }

@@ -1,51 +1,92 @@
 import 'package:flutter/material.dart';
-import 'create_card_button.dart';
-import 'create_room_button.dart';
-import 'join_room_button.dart';
-import 'view_cards_button.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
+import 'package:frontend/views/join_room_overlay.dart';
+import 'package:frontend/widgets/main_view/menu_button.dart';
 
 class Menu extends StatelessWidget {
   final Animation<double> animation;
 
-  const Menu({
-    super.key,
-    required this.animation,
-  });
+  const Menu({super.key, required this.animation});
+
+  void _navigateToCreateRoom(BuildContext context) {
+    Navigator.of(context).pushNamed('/create-room');
+  }
+
+  void _showJoinRoomDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) => const JoinRoomOverlay(),
+    );
+  }
+
+  void _navigateToCreateCard(BuildContext context) {
+    Navigator.of(context).pushNamed('/create-card');
+  }
+
+  void _navigateToViewCards(BuildContext context) {
+    Navigator.pushNamed(context, "/list");
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: ScaleTransition(
-        scale: animation,
-        child: FractionallySizedBox(
-          widthFactor: 0.9,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 8,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ...[
-                  CreateRoomButton(),
-                  JoinRoomButton(),
-                  CreateCardButton(),
-                  ViewCardsButton(),
-                ].map((button) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: button,
-                )),
-              ],
+    return ScaleTransition(
+      scale: animation,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Spacings.extraLarge),
+          child: Card(
+            child: Padding(
+              padding: Spacings.allLarge,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                spacing: 32,
+                children: [
+                  MenuButtonWidget(
+                    color: AppColors.mainMenuCreateRoomButtonBackground,
+                    label: Text(
+                      "CREATE ROOM",
+                      style: TextStyles.button(
+                        color: AppColors.mainMenuCreateRoomButtonForeground,
+                      ),
+                    ),
+                    onPressed: () => _navigateToCreateRoom(context),
+                  ),
+                  MenuButtonWidget(
+                    color: AppColors.mainMenuJoinRoomButtonBackground,
+                    label: Text(
+                      "JOIN ROOM",
+                      style: TextStyles.button(
+                        color: AppColors.mainMenuJoinRoomButtonForeground,
+                      ),
+                    ),
+                    onPressed: () => _showJoinRoomDialog(context),
+                  ),
+                  MenuButtonWidget(
+                    color: AppColors.mainMenuCreateCardButtonBackground,
+                    label: Text(
+                      "CREATE CARD",
+                      style: TextStyles.button(
+                        color: AppColors.mainMenuCreateCardButtonForeground,
+                      ),
+                    ),
+                    onPressed: () => _navigateToCreateCard(context),
+                  ),
+                  MenuButtonWidget(
+                    color: AppColors.mainMenuViewCardsButtonBackground,
+                    label: Text(
+                      "VIEW CARDS",
+                      style: TextStyles.button(
+                        color: AppColors.mainMenuViewCardsButtonForeground,
+                      ),
+                    ),
+                    onPressed: () => _navigateToViewCards(context),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

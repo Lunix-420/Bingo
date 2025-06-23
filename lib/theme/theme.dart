@@ -18,5 +18,18 @@ ThemeData getTheme() {
       color: AppColors.cardBackground,
       shape: RoundedRectangleBorder(borderRadius: Spacings.roundBorderLarge),
     ),
+    buttonTheme: ButtonThemeData(
+      buttonColor: AppColors.primary,
+      shape: RoundedRectangleBorder(borderRadius: Spacings.roundBorderMedium),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.primary),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        textStyle: WidgetStateProperty.all(
+          const TextStyle(color: Colors.white),
+        ),
+      ),
+    ),
   );
 }
