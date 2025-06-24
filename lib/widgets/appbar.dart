@@ -55,7 +55,12 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-      title: Text(title, style: TextStyles.title(color: Colors.white)),
+      title: Text(
+        title,
+        style: TextStyles.title(
+          color: AppColors.getContrastingColor(AppColors.appBarBackground),
+        ),
+      ),
       actions: [
         if (actions != null) ...actions!,
         if (!disableSettings)

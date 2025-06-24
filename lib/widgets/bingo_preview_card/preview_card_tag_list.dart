@@ -53,7 +53,9 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
               (context, index) => Chip(
                 label: Text(
                   _tags[index],
-                  style: TextStyles.small(color: Colors.white),
+                  style: TextStyles.small(
+                    color: AppColors.getContrastingColor(AppColors.primary),
+                  ),
                 ),
                 backgroundColor: AppColors.primary,
                 shape: RoundedRectangleBorder(

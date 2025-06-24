@@ -10,6 +10,7 @@ class AppColors {
   static Color defaultText = Colors.black;
 
   static Color primary = Colors.deepPurple;
+  static Color secondary = Colors.blue;
   static Color success = Color(0xFF4CAF50);
   static Color error = Color(0xFFF44336);
   static Color retry = Color.fromARGB(255, 20, 242, 246);
