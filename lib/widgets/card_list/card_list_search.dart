@@ -26,7 +26,6 @@ class _CardListSearchWidgetState extends State<CardListSearchWidget> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: 'Search...',
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         suffixIcon:
             _searchText.isNotEmpty
                 ? IconButton(

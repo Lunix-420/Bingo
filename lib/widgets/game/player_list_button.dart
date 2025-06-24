@@ -33,7 +33,10 @@ class PlayerListButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.people, color: AppColors.playersButtonForeground),
+      icon: Icon(
+        Icons.people,
+        color: AppColors.getContrastingColor(AppColors.playersButtonBackground),
+      ),
       tooltip: 'Show Players',
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(

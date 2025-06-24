@@ -48,7 +48,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                   tooltip: 'Back',
                   onPressed: () => _navigateBack(context),
                   style: IconButton.styleFrom(
-                    foregroundColor: AppColors.backButtonForeground,
+                    foregroundColor: AppColors.getContrastingColor(
+                      AppColors.backButtonBackground,
+                    ),
                     backgroundColor: AppColors.backButtonBackground,
                   ),
                 ),
@@ -63,7 +65,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               icon: const Icon(Icons.settings),
               onPressed: () => _navigateToSettings(context),
               style: IconButton.styleFrom(
-                foregroundColor: AppColors.settingsButtonForeground,
+                foregroundColor: AppColors.getContrastingColor(
+                  AppColors.settingsButtonBackground,
+                ),
                 backgroundColor: AppColors.settingsButtonBackground,
               ),
             ),

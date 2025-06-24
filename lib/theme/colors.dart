@@ -7,6 +7,8 @@ class AppColors {
     colors: [Colors.deepPurpleAccent[100]!, Colors.deepPurple[600]!],
   );
 
+  static Color defaultText = Colors.black;
+
   static Color primary = Colors.deepPurple;
   static Color success = Color(0xFF4CAF50);
   static Color error = Color(0xFFF44336);
@@ -19,34 +21,30 @@ class AppColors {
   static Color appBarBackground = Colors.deepPurpleAccent[400]!;
 
   static Color settingsButtonBackground = Colors.grey[300]!;
-  static Color settingsButtonForeground = Colors.black;
 
   static Color playersButtonBackground = Color(0xFF1F1F1F);
-  static Color playersButtonForeground = Color(0xFFB0BEC5);
 
   static Color backButtonBackground = Colors.orange[300]!;
-  static Color backButtonForeground = Colors.black;
 
   static Color inputFieldBackground = Colors.deepPurple[400]!;
-  static Color inputFieldText = Color(0xFFE0E0E0);
   static Color inputFieldBorder = Colors.white;
   static Color inputFieldHintText = Color(0xFF9E9E9E);
 
   static Color bingoFieldBackground = Color(0xFF2C2C2C);
-  static Color bingoFieldText = Color(0xFFE0E0E0);
 
   static Color rateIconColor = Color(0xFF4CAF50);
   static Color playsIconColor = Color(0xFFB0BEC5);
 
   static Color mainMenuCreateRoomButtonBackground = Color(0xFFFFDB0A);
-  static Color mainMenuCreateRoomButtonForeground = Colors.black;
 
   static Color mainMenuJoinRoomButtonBackground = Color(0xFFFC8AFF);
-  static Color mainMenuJoinRoomButtonForeground = Colors.black;
 
   static Color mainMenuCreateCardButtonBackground = Color(0xFF4CDAFE);
-  static Color mainMenuCreateCardButtonForeground = Colors.black;
 
   static Color mainMenuViewCardsButtonBackground = Color(0xFFC286FF);
-  static Color mainMenuViewCardsButtonForeground = Colors.black;
+
+  static Color getContrastingColor(Color color) {
+    double luminance = color.computeLuminance();
+    return luminance > 0.5 ? Colors.black : Colors.white;
+  }
 }

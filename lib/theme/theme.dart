@@ -8,7 +8,9 @@ ThemeData getTheme() {
   return ThemeData.dark().copyWith(
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all(Colors.white),
+        foregroundColor: WidgetStateProperty.all(
+          AppColors.getContrastingColor(AppColors.primary),
+        ),
         backgroundColor: WidgetStateProperty.all(AppColors.primary),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: Spacings.roundBorderExtraLarge),
@@ -26,9 +28,13 @@ ThemeData getTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(AppColors.primary),
-        foregroundColor: WidgetStateProperty.all(Colors.white),
+        foregroundColor: WidgetStateProperty.all(
+          AppColors.getContrastingColor(AppColors.primary),
+        ),
         textStyle: WidgetStateProperty.all(
-          const TextStyle(color: Colors.white),
+          TextStyles.button(
+            color: AppColors.getContrastingColor(AppColors.primary),
+          ),
         ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: Spacings.roundBorderMedium),
@@ -50,7 +56,9 @@ ThemeData getTheme() {
         borderRadius: Spacings.roundBorderSmall,
         borderSide: BorderSide(color: AppColors.inputFieldBorder, width: 2),
       ),
-      labelStyle: TextStyles.normal(color: AppColors.inputFieldText),
+      labelStyle: TextStyles.normal(
+        color: AppColors.getContrastingColor(AppColors.inputFieldBackground),
+      ),
       hintStyle: TextStyles.normal(color: AppColors.inputFieldHintText),
     ),
   );

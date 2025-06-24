@@ -50,7 +50,9 @@ class Menu extends StatelessWidget {
                     label: Text(
                       "CREATE ROOM",
                       style: TextStyles.button(
-                        color: AppColors.mainMenuCreateRoomButtonForeground,
+                        color: AppColors.getContrastingColor(
+                          AppColors.mainMenuCreateRoomButtonBackground,
+                        ),
                       ),
                     ),
                     onPressed: () => _navigateToCreateRoom(context),
@@ -60,7 +62,9 @@ class Menu extends StatelessWidget {
                     label: Text(
                       "JOIN ROOM",
                       style: TextStyles.button(
-                        color: AppColors.mainMenuJoinRoomButtonForeground,
+                        color: AppColors.getContrastingColor(
+                          AppColors.mainMenuJoinRoomButtonBackground,
+                        ),
                       ),
                     ),
                     onPressed: () => _showJoinRoomDialog(context),
@@ -70,7 +74,9 @@ class Menu extends StatelessWidget {
                     label: Text(
                       "CREATE CARD",
                       style: TextStyles.button(
-                        color: AppColors.mainMenuCreateCardButtonForeground,
+                        color: AppColors.getContrastingColor(
+                          AppColors.mainMenuCreateCardButtonBackground,
+                        ),
                       ),
                     ),
                     onPressed: () => _navigateToCreateCard(context),
@@ -80,7 +86,9 @@ class Menu extends StatelessWidget {
                     label: Text(
                       "VIEW CARDS",
                       style: TextStyles.button(
-                        color: AppColors.mainMenuViewCardsButtonForeground,
+                        color: AppColors.getContrastingColor(
+                          AppColors.mainMenuViewCardsButtonBackground,
+                        ),
                       ),
                     ),
                     onPressed: () => _navigateToViewCards(context),

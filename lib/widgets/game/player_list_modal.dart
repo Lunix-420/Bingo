@@ -54,7 +54,9 @@ class PlayerListModalWidget extends StatelessWidget {
                             AppColors.backButtonBackground,
                           ),
                           foregroundColor: WidgetStateProperty.all(
-                            AppColors.backButtonForeground,
+                            AppColors.getContrastingColor(
+                              AppColors.backButtonBackground,
+                            ),
                           ),
                         ),
                         tooltip: 'Back',

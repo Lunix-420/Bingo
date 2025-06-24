@@ -7,7 +7,10 @@ class Decorations {
   static BoxDecoration codeDisplay = BoxDecoration(
     color: AppColors.primary,
     borderRadius: Spacings.roundBorderExtraLarge,
-    border: BoxBorder.all(color: Colors.white, width: 2),
+    border: BoxBorder.all(
+      color: AppColors.getContrastingColor(AppColors.primary),
+      width: 2,
+    ),
     boxShadow: [Shadows.cardShadow],
   );
 
@@ -24,7 +27,7 @@ class Decorations {
   );
 
   static BoxDecoration card = BoxDecoration(
-    color: Colors.white,
+    color: AppColors.cardBackground,
     borderRadius: Spacings.roundBorderLarge,
     boxShadow: [Shadows.cardShadow],
   );

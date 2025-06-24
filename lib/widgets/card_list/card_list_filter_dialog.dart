@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 import 'package:frontend/widgets/card_edit/tag_input_list.dart';
 
 class CardListFilterDialogWidget extends StatefulWidget {
@@ -54,24 +57,29 @@ class _CardListFilterDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle dialogStyle = TextStyles.normal(
+      color: AppColors.getContrastingColor(AppColors.dialogBackground),
+    );
+
     return AlertDialog(
-      title: const Text("Filter Fields"),
+      title: const Center(child: Text("Filter Fields")),
+      actionsAlignment: MainAxisAlignment.center,
       content: SizedBox(
-        width: 350,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: Column(
           spacing: 8,
           children: [
-            const Text("Tags"),
+            Text("Tags", style: dialogStyle),
             TagInputListWidget(
               tags: filters.tags,
               onTagChange: _handleTagChange,
               onTagDelete: _handleTagDelete,
               onAddTag: _handleAddTag,
             ),
-            const SizedBox(height: 16),
-            const Text("Size"),
+            const SizedBox(height: Spacings.medium),
+            Text("Size", style: dialogStyle),
             Wrap(
-              spacing: 8.0,
+              spacing: Spacings.small,
               children:
                   TilesetService.validSizes.map((size) {
                     return ChoiceChip(
@@ -81,14 +89,14 @@ class _CardListFilterDialogWidgetState
                     );
                   }).toList(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: Spacings.medium),
             TextField(
               controller: ratingController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(labelText: 'Rating'),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: Spacings.medium),
             TextField(
               controller: playsController,
               keyboardType: TextInputType.number,
@@ -99,11 +107,11 @@ class _CardListFilterDialogWidgetState
         ),
       ),
       actions: [
-        TextButton(
+        ElevatedButton(
           onPressed: () => Navigator.of(context).pop(filters),
           child: const Text("Save"),
         ),
-        TextButton(
+        ElevatedButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text("Cancel"),
         ),

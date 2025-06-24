@@ -39,9 +39,9 @@ ThemeData getTheme() {
     ),
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(secondary),
-        backgroundColor: MaterialStateProperty.all(primary.withOpacity(0.1)),
-        shape: MaterialStateProperty.all(
+        foregroundColor: WidgetStateProperty.all(secondary),
+        backgroundColor: WidgetStateProperty.all(primary.withOpacity(0.1)),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
@@ -64,11 +64,11 @@ ThemeData getTheme() {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(primary),
-      checkColor: MaterialStateProperty.all(Colors.white),
+      fillColor: WidgetStateProperty.all(primary),
+      checkColor: WidgetStateProperty.all(Colors.white),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
     ),
-    radioTheme: RadioThemeData(fillColor: MaterialStateProperty.all(secondary)),
+    radioTheme: RadioThemeData(fillColor: WidgetStateProperty.all(secondary)),
     // Add more themes as needed
   );
 }
