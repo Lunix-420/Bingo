@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/views/card_create_view.dart';
 import 'package:frontend/views/card_edit_view.dart';
 import 'package:frontend/views/card_list_view.dart';
@@ -13,16 +14,19 @@ import 'package:frontend/views/testfield.dart';
 /// A function to define the routes for the application.
 Map<String, WidgetBuilder> buildAppRoutes() {
   return {
-    "/": (context) => const Scaffold(body: Center(child: Text("Home"))),
-    "/home": (context) => const MainView(),
-    "/test": (context) => const TestFieldView(),
-    "/preview": (context) => const CardPreviewView(),
-    "/create-card": (context) => const CardCreateView(),
-    "/edit": (context) => const CardEditView(),
-    "/list": (context) => const CardListView(),
-    "/create-room": (context) => const RoomCreateView(),
-    "/room": (context) => const RoomView(),
-    "/game": (context) => const GameView(),
-    "/game-end": (context) => const GameEndView(),
+    "/":
+        (context) => const Scaffold(
+          body: Center(child: Text("You Should not be here!")),
+        ),
+    Routing.homeRoute: (context) => const MainView(),
+    Routing.testRoute: (context) => const TestFieldView(),
+    Routing.cardPreviewRoute: (context) => const CardPreviewView(),
+    Routing.cardCreateRoute: (context) => const CardCreateView(),
+    Routing.cardEditRoute: (context) => const CardEditView(),
+    Routing.cardListRoute: (context) => const CardListView(),
+    Routing.roomCreateRoute: (context) => const RoomCreateView(),
+    Routing.roomRoute: (context) => const RoomView(),
+    Routing.gameRoute: (context) => const GameView(),
+    Routing.gameEndRoute: (context) => const GameEndView(),
   };
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/view_field.dart';
@@ -23,12 +25,11 @@ class _CardPreviewViewState extends State<CardPreviewView> {
   Tileset? tileset;
 
   Widget _futureBuilder(context, tileset) {
-    logger.i("Building preview for tileset: ${tileset.name}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      spacing: Spacings.large,
       children: [
         BingoPreviewCardWidget(tileset: tileset, decorators: false),
-        const SizedBox(height: 32),
         BingoFieldWidget(
           tiles: tileset.tiles,
           size: tileset.size,
@@ -56,11 +57,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       logger.w("Tileset is null, cannot navigate to edit.");
       return;
     }
-    Navigator.pushNamed(
-      context,
-      "/edit",
-      arguments: {"tilesetId": tileset!.id},
-    );
+    Routing.navigateCardEdit(context, tileset!.id);
   }
 
   Future<Tileset> get _tilesetFuture async =>
@@ -77,7 +74,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
           onError: (error) => logger.e(error),
         ),
         ElevatedButton(
-          onPressed: navigateToEdit,
+          onPressed: tileset != null ? navigateToEdit : null,
           child:
               tileset != null
                   ? const Text("Edit Card")

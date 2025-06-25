@@ -6,8 +6,9 @@ import 'package:frontend/model/room_model.dart';
 import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 import 'package:frontend/utils/named_logger.dart';
-import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
 import 'package:frontend/widgets/future_create_button.dart';
@@ -15,7 +16,6 @@ import 'package:frontend/widgets/game/player_list_button.dart';
 import 'package:frontend/widgets/room/code_display.dart';
 import 'package:frontend/widgets/room/room_settings_display.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
-import 'package:toastification/toastification.dart';
 
 final logger = namedLogger("Room-View");
 
@@ -37,26 +37,15 @@ class _RoomViewState extends State<RoomView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      try {
-        setState(() {
-          room = Routing.getRoomFromArguments(context);
-          player = Routing.getPlayerFromArguments(context);
-        });
-      } catch (e) {
-        logger.e("Error getting room or player from arguments: $e");
-        Toast.show(
-          "Error",
-          "Failed to retrieve room or player data.",
-          ToastificationType.error,
-        );
-        Navigator.pushNamed(context, "/");
-        return;
-      }
+      setState(() {
+        room = Routing.getRoomFromArguments(context);
+        player = Routing.getPlayerFromArguments(context);
+      });
 
       GameService.connectSocket(
         onConnect: () {
           GameService.onRoomUpdate((_) {
-            logger.i("Room updated, refreshing...");
+            logger.d("Room updated, refreshing...");
             _refreshRoom();
           });
           GameService.emitJoinRoom(room!.code);
@@ -67,44 +56,34 @@ class _RoomViewState extends State<RoomView> {
 
   Future<void> _refreshRoom() async {
     if (room == null) return;
-    try {
-      final updatedRoom = await RoomService.getRoomById(room!.id);
+    final updatedRoom = await RoomService.getRoomById(room!.id);
+    if (updatedRoom != null) {
       setState(() {
         room = updatedRoom;
       });
-    } catch (e) {
-      logger.e("Error refreshing room: $e");
-      Toast.show(
-        "Error",
-        "Failed to refresh room data.",
-        ToastificationType.error,
-      );
     }
   }
 
-  bool get isHost {
-    if (room == null || player?.id == null) return false;
-    return room!.host.id == player!.id;
-  }
+  bool get _isHost => room?.host.id == player?.id;
 
-  Future<int> startFuture(Room room) async =>
+  Future<int> _startFuture(Room room) async =>
       (await RoomService.startRoom(room, doThrow: true))!;
 
-  void startGame() {
+  void _startGame() {
     if (room == null) {
       return;
     }
-    logger.i("Starting...");
+    logger.d("Starting...");
     setState(() {
-      future = startFuture(room!);
+      future = _startFuture(room!);
     });
   }
 
-  void gameStarted(BuildContext context, _) {
+  void _gameStarted(BuildContext context, _) {
     if (RoomView.navigated) {
       return;
     }
-    logger.i("Game started successfully");
+    logger.d("Game started successfully");
     GameService.emitUpdateGameState(room!.code);
     _refreshRoom();
   }
@@ -118,24 +97,19 @@ class _RoomViewState extends State<RoomView> {
       CodeDisplayWidget(code: room!.code),
       BingoPreviewCardWidget(tileset: room!.tileset),
       RoomSettingsDisplayWidget(room: room!),
-      isHost
+      _isHost
           ? FutureCreateButtonWidget(
             future: future,
             buttonText: "Start Game",
             loadedText: "Game Started",
-            buttonCallback: startGame,
-            onDone: gameStarted,
-            onError: (error) => logger.e(error),
+            buttonCallback: _startGame,
+            onDone: _gameStarted,
           )
           : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: Spacings.medium),
             child: Text(
               "Waiting for host to start...",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[800],
-              ),
+              style: TextStyles.normal(),
               textAlign: TextAlign.center,
             ),
           ),
@@ -152,7 +126,7 @@ class _RoomViewState extends State<RoomView> {
     GameService.removeListeners();
     RoomView.navigated = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Routing.navigateWithRoomPlayer(context, "/game", room, player);
+      Routing.navigateGame(context, room: room!, player: player!);
     });
   }
 
@@ -162,7 +136,7 @@ class _RoomViewState extends State<RoomView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(
         title: "Room",
-        routeName: "/home",
+        routeName: Routing.homeRoute,
         actions: [
           PlayerListButtonWidget(
             players: room?.players ?? [],

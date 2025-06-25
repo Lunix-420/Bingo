@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
@@ -11,7 +12,7 @@ class Menu extends StatelessWidget {
   const Menu({super.key, required this.animation});
 
   void _navigateToCreateRoom(BuildContext context) {
-    Navigator.of(context).pushNamed('/create-room');
+    Routing.navigateCreateRoom(context);
   }
 
   void _showJoinRoomDialog(BuildContext context) {
@@ -23,11 +24,11 @@ class Menu extends StatelessWidget {
   }
 
   void _navigateToCreateCard(BuildContext context) {
-    Navigator.of(context).pushNamed('/create-card');
+    Routing.navigateCreateCard(context);
   }
 
   void _navigateToViewCards(BuildContext context) {
-    Navigator.pushNamed(context, "/list");
+    Routing.navigateCardList(context);
   }
 
   @override
@@ -43,7 +44,7 @@ class Menu extends StatelessWidget {
               padding: Spacings.allLarge,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                spacing: 32,
+                spacing: Spacings.large,
                 children: [
                   MenuButtonWidget(
                     color: AppColors.mainMenuCreateRoomButtonBackground,

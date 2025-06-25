@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/services/tileset_service.dart';
-import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/card_edit/card_edit_form.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
-
-final logger = namedLogger("Card-Create-View");
 
 class CardCreateView extends StatefulWidget {
   const CardCreateView({super.key});
