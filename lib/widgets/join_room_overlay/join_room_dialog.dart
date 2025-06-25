@@ -89,13 +89,6 @@ class _JoinRoomDialogState extends State<JoinRoomDialog> {
             onDone: _navigateToRoom,
           ),
 
-          // ElevatedButton(
-          //   onPressed: () => _joinRoom(context),
-          //   style: ButtonStyle(
-          //     backgroundColor: WidgetStateProperty.all(AppColors.success),
-          //   ),
-          //   child: Text('JOIN', style: TextStyles.button()),
-          // ),
         ),
       ],
     );
