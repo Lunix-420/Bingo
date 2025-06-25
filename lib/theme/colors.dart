@@ -11,12 +11,12 @@ class AppColors {
 
   static Color primary = Colors.deepPurple;
   static Color secondary = Colors.blue;
-  static Color success = Color(0xFF4CAF50);
-  static Color error = Color(0xFFF44336);
+  static Color success = Colors.lightGreenAccent[400]!;
+  static Color error = Colors.red;
   static Color retry = Color.fromARGB(255, 20, 242, 246);
   static Color focus = primary;
 
-  static Color dialogBackground = Color(0xFF121212);
+  static Color dialogBackground = Colors.deepPurple[300]!;
   static Color cardBackground = Color(0xFFFFFEFF);
   static Color tooltipBackground = Color(0xFF333333);
   static Color appBarBackground = Colors.deepPurpleAccent[400]!;

@@ -35,14 +35,22 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
     super.initState();
     _tileset = widget.tileset;
     _nameController.text = _tileset.name;
+    _nameController.addListener(_handleNameChange);
     FocusManager.instance.addListener(_handleFocusChange);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _nameController.removeListener(_handleNameChange);
     FocusManager.instance.removeListener(_handleFocusChange);
     super.dispose();
+  }
+
+  void _handleNameChange() {
+    setState(() {
+      _tileset.name = _nameController.text;
+    });
   }
 
   void _handleFocusChange() {

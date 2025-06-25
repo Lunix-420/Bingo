@@ -72,5 +72,18 @@ ThemeData getTheme() {
       ),
       deleteIconColor: AppColors.error,
     ),
+    tooltipTheme: TooltipThemeData(
+      textStyle: TextStyles.small(
+        color: AppColors.getContrastingColor(AppColors.tooltipBackground),
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.tooltipBackground,
+        borderRadius: Spacings.roundBorderSmall,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: Spacings.small,
+        horizontal: Spacings.medium,
+      ),
+    ),
   );
 }
