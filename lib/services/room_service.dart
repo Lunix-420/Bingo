@@ -200,4 +200,32 @@ class RoomService {
       return (null, null);
     }
   }
+
+  static Future<void> leaveRoom(
+    Room room,
+    Player player, {
+    bool doThrow = false,
+  }) async {
+    try {
+      final url = ApiRoutes.postPlayerLeaveRoom(room.id);
+      final body = jsonEncode({"player": player.id});
+
+      logger.d('"$url": Leaving room: ${room.id} for player: ${player.id}');
+
+      await Requests.post(url, body);
+
+      logger.d('Player left room successfully: ${room.id}');
+    } catch (e) {
+      logger.e('Error leaving room: $e');
+      Toast.show(
+        "Error",
+        "Failed to leave the room. Please try again.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to leave room: $e');
+      }
+      return;
+    }
+  }
 }

@@ -10,6 +10,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome;
   final List<Widget>? actions;
   final String? routeName;
+  final VoidCallback? onBackPressed;
 
   const AppBarWidget({
     super.key,
@@ -18,9 +19,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.isHome = false,
     this.actions,
     this.routeName,
+    this.onBackPressed,
   });
 
   void _navigateBack(BuildContext context) {
+    onBackPressed?.call();
     if (routeName != null) {
       Navigator.pushNamed(context, routeName!);
       return;

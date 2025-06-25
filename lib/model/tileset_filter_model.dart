@@ -131,7 +131,7 @@ class TilesetFilterModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "search": search,
+      "names": search?.isNotEmpty == true ? [search] : null,
       "tags": tags,
       "size": size,
       "rating": rating,

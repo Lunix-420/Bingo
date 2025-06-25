@@ -146,11 +146,20 @@ class _GameViewState extends State<GameView> {
     );
   }
 
+  void _handleBackPressed() async {
+    if (room == null || player == null) {
+      return;
+    }
+
+    await RoomService.leaveRoom(room!, player!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(
         title: "Game",
+        onBackPressed: _handleBackPressed,
         routeName: Routing.homeRoute,
         actions: [
           PlayerListButtonWidget(
