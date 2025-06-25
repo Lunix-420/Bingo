@@ -61,5 +61,16 @@ ThemeData getTheme() {
       ),
       hintStyle: TextStyles.normal(color: AppColors.inputFieldHintText),
     ),
+    chipTheme: ChipThemeData(
+      backgroundColor: AppColors.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: Spacings.roundBorderExtraLarge,
+        side: BorderSide(width: 0, color: Colors.transparent),
+      ),
+      labelStyle: TextStyles.small(
+        color: AppColors.getContrastingColor(AppColors.primary),
+      ),
+      deleteIconColor: AppColors.error,
+    ),
   );
 }

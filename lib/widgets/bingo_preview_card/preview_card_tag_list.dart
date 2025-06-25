@@ -49,20 +49,7 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
           controller: _tagScrollController,
           scrollDirection: Axis.horizontal,
           itemCount: _tags.length,
-          itemBuilder:
-              (context, index) => Chip(
-                label: Text(
-                  _tags[index],
-                  style: TextStyles.small(
-                    color: AppColors.getContrastingColor(AppColors.primary),
-                  ),
-                ),
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: Spacings.roundBorderExtraLarge,
-                  side: BorderSide(width: 0, color: Colors.transparent),
-                ),
-              ),
+          itemBuilder: (context, index) => Chip(label: Text(_tags[index])),
           separatorBuilder: (context, index) => const SizedBox(width: 8),
           physics: const ClampingScrollPhysics(),
         ),

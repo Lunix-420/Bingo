@@ -40,9 +40,9 @@ class _TagInputDialogWidgetState extends State<TagInputDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Edit Tags"),
+      title: const Center(child: Text("Edit Tags")),
       content: SizedBox(
-        width: 350,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: TagInputListWidget(
           tags: _tags,
           onTagChange: _handleTagChange,
@@ -51,11 +51,11 @@ class _TagInputDialogWidgetState extends State<TagInputDialogWidget> {
         ),
       ),
       actions: [
-        TextButton(
+        ElevatedButton(
           onPressed: () => Navigator.of(context).pop(_tags),
           child: const Text("Save"),
         ),
-        TextButton(
+        ElevatedButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text("Cancel"),
         ),

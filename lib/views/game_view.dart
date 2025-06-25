@@ -5,6 +5,7 @@ import 'package:frontend/model/room_model.dart';
 import 'package:frontend/services/bingo_field_service.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
+import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
@@ -90,9 +91,7 @@ class _GameViewState extends State<GameView> {
   }
 
   void handleFocusChange() {
-    final node =
-        FocusManager.instance.primaryFocus?.context
-            ?.findAncestorWidgetOfExactType<CheckableTileWidget>();
+    final node = getFocusedElement<CheckableTileWidget>();
     if (node != null) {
       setState(() {
         focusedField = node.index;

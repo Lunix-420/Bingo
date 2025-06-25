@@ -31,6 +31,7 @@ class CheckableTileWidget extends StatelessWidget {
             Center(
               child: Text(
                 tile,
+                // TODO:
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -43,6 +44,7 @@ class CheckableTileWidget extends StatelessWidget {
               ),
             ),
             if (checked)
+              // TODO:
               Positioned.fill(
                 bottom: 0,
                 left: 0,
