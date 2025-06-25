@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/model/tileset_model.dart';
-import 'package:frontend/services/room_service.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
@@ -47,14 +47,21 @@ class _CardListViewState extends State<CardListView> {
           arguments: {"create-room": createRoom},
         );
       } else {
-        Navigator.pushNamed(context, "/preview", arguments: {"id": tileset.id});
+        Navigator.pushNamed(
+          context,
+          "/preview",
+          arguments: {"tilesetId": tileset.id},
+        );
       }
     };
   }
 
+  Future<List<Tileset>> get _tilesetFuture async =>
+      (await TilesetService.getTilesets(_filter, doThrow: true))!;
+
   @override
   Widget build(BuildContext context) {
-    final createRoom = RoomService.getCreateRoomModelFromNavigation(context);
+    final createRoom = Routing.getCreateRoomModelFromNavigation(context);
 
     return ViewScaffoldWidget(
       appbar: AppBarWidget(
@@ -69,7 +76,7 @@ class _CardListViewState extends State<CardListView> {
         ),
         SizedBox(height: 32),
         FutureLoaderWidget(
-          future: TilesetService.getTilesets(_filter),
+          future: _tilesetFuture,
           builder: (context, tilesets) {
             return ListView.builder(
               itemCount: tilesets.length,

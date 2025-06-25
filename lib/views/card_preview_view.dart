@@ -42,7 +42,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      future = TilesetService.getTilesetById(context);
+      future = _tilesetFuture;
       future.then((tileset) {
         setState(() {
           this.tileset = tileset;
@@ -56,8 +56,15 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       logger.w("Tileset is null, cannot navigate to edit.");
       return;
     }
-    Navigator.pushNamed(context, "/edit", arguments: {"id": tileset!.id});
+    Navigator.pushNamed(
+      context,
+      "/edit",
+      arguments: {"tilesetId": tileset!.id},
+    );
   }
+
+  Future<Tileset> get _tilesetFuture async =>
+      (await TilesetService.getTilesetById(context, doThrow: true))!;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +72,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       appbar: AppBarWidget(title: "Card Preview"),
       children: [
         FutureLoaderWidget<Tileset>(
-          future: TilesetService.getTilesetById(context),
+          future: _tilesetFuture,
           builder: _futureBuilder,
           onError: (error) => logger.e(error),
         ),

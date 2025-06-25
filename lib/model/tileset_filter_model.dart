@@ -128,4 +128,15 @@ class TilesetFilterModel {
     this.rating,
     this.plays,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "search": search,
+      "tags": tags,
+      "size": size,
+      "rating": rating,
+      "plays": plays,
+      "sort": CardListSort.optionToRequest(sort),
+    };
+  }
 }

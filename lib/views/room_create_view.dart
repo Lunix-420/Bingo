@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/room_service.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/utils/toasts.dart';
@@ -36,7 +37,7 @@ class _RoomCreateViewState extends State<RoomCreateView> {
     maxPlayersController.addListener(_handleMaxPlayersChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final model = RoomService.getCreateRoomModelFromNavigation(context);
+      final model = Routing.getCreateRoomModelFromNavigation(context);
       if (model != null) {
         setState(() {
           createRoom = model;
@@ -67,7 +68,10 @@ class _RoomCreateViewState extends State<RoomCreateView> {
     );
   }
 
-  void _createRoom() {
+  Future<Room> _getCreateRoomFuture(CreateRoomModel createRoom) async =>
+      (await RoomService.createRoom(createRoom, doThrow: true))!;
+
+  Future<void> _createRoom() async {
     if (!createRoom.isValid) {
       logger.w("CreateRoomModel is not valid");
       Toast.show(
@@ -77,8 +81,9 @@ class _RoomCreateViewState extends State<RoomCreateView> {
       );
       return;
     }
+
     setState(() {
-      createRoomFuture = RoomService.createRoom(createRoom);
+      createRoomFuture = _getCreateRoomFuture(createRoom);
     });
   }
 

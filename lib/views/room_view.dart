@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
 import 'package:frontend/utils/named_logger.dart';
@@ -38,8 +39,8 @@ class _RoomViewState extends State<RoomView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         setState(() {
-          room = RoomService.getRoomFromArguments(context);
-          player = RoomService.getPlayerFromArguments(context);
+          room = Routing.getRoomFromArguments(context);
+          player = Routing.getPlayerFromArguments(context);
         });
       } catch (e) {
         logger.e("Error getting room or player from arguments: $e");
@@ -86,10 +87,16 @@ class _RoomViewState extends State<RoomView> {
     return room!.host.id == player!.id;
   }
 
+  Future<int> startFuture(Room room) async =>
+      (await RoomService.startRoom(room, doThrow: true))!;
+
   void startGame() {
+    if (room == null) {
+      return;
+    }
     logger.i("Starting...");
     setState(() {
-      future = RoomService.startRoom(room!);
+      future = startFuture(room!);
     });
   }
 
@@ -145,7 +152,7 @@ class _RoomViewState extends State<RoomView> {
     GameService.removeListeners();
     RoomView.navigated = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      RoomService.navigate(context, "/game", room, player);
+      Routing.navigateWithRoomPlayer(context, "/game", room, player);
     });
   }
 

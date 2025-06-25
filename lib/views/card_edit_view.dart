@@ -18,13 +18,16 @@ class _CardEditViewState extends State<CardEditView> {
     await TilesetService.editTileset(tileset);
   }
 
+  Future<Tileset> get _tilesetFuture async =>
+      (await TilesetService.getTilesetById(context, doThrow: true))!;
+
   @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Card Create"),
       children: [
         FutureLoaderWidget(
-          future: TilesetService.getTilesetById(context),
+          future: _tilesetFuture,
           builder:
               (context, tileset) =>
                   CardEditFormWidget(tileset: tileset, onSave: _handleSave),

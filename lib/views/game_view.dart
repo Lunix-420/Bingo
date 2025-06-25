@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/bingo_field_model.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/bingo_field_service.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
@@ -36,8 +37,8 @@ class _GameViewState extends State<GameView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         setState(() {
-          room = RoomService.getRoomFromArguments(context);
-          player = RoomService.getPlayerFromArguments(context);
+          room = Routing.getRoomFromArguments(context);
+          player = Routing.getPlayerFromArguments(context);
         });
       } catch (e) {
         logger.e("Error getting room or player from arguments: $e");
@@ -58,21 +59,18 @@ class _GameViewState extends State<GameView> {
   @override
   void dispose() {
     FocusManager.instance.removeListener(handleFocusChange);
+    GameService.removeListeners();
     super.dispose();
   }
 
   Future<void> _refreshRoom(_) async {
-    try {
-      final updatedRoom = await RoomService.getRoomById(room!.id);
-      updateRoom(updatedRoom);
-    } catch (e) {
-      logger.e("Error refreshing room: $e");
-      Toast.show(
-        "Error",
-        "Failed to refresh room data.",
-        ToastificationType.error,
-      );
+    final updatedRoom = await RoomService.getRoomById(room!.id);
+
+    if (updatedRoom == null) {
+      return;
     }
+
+    updateRoom(updatedRoom);
   }
 
   void updateRoom(Room updatedRoom) {
@@ -133,18 +131,24 @@ class _GameViewState extends State<GameView> {
     if (bingoField == null || player == null) {
       return;
     }
-    try {
-      await BingoFieldService.checkField(bingoField!, player!, index);
-      updateRoom(await RoomService.getRoomById(room!.id));
-    } catch (e) {
-      logger.e("Error handling check change: $e");
-      Toast.show(
-        "Error",
-        "Failed to update check state.",
-        ToastificationType.error,
-      );
+
+    final response = await BingoFieldService.checkField(
+      bingoField!,
+      player!,
+      index,
+    );
+
+    if (response == null) {
       return;
     }
+
+    final roomResponse = await RoomService.getRoomById(room!.id);
+
+    if (roomResponse == null) {
+      return;
+    }
+
+    updateRoom(roomResponse);
   }
 
   void handleButtonPress() {

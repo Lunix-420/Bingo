@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
-import 'package:frontend/theme/textstyles.dart';
 
 class PreviewCardTagListWidget extends StatefulWidget {
   final List<String> tags;
@@ -50,7 +48,8 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
           scrollDirection: Axis.horizontal,
           itemCount: _tags.length,
           itemBuilder: (context, index) => Chip(label: Text(_tags[index])),
-          separatorBuilder: (context, index) => const SizedBox(width: 8),
+          separatorBuilder:
+              (context, index) => const SizedBox(width: Spacings.small),
           physics: const ClampingScrollPhysics(),
         ),
       ),
