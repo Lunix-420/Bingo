@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/room_service.dart';
+import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
@@ -36,7 +38,7 @@ class _RoomCreateViewState extends State<RoomCreateView> {
     maxPlayersController.addListener(_handleMaxPlayersChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final model = RoomService.getCreateRoomModelFromNavigation(context);
+      final model = Routing.getCreateRoomModelFromNavigation(context);
       if (model != null) {
         setState(() {
           createRoom = model;
@@ -60,12 +62,11 @@ class _RoomCreateViewState extends State<RoomCreateView> {
   }
 
   void _navigateListView() {
-    Navigator.pushNamed(
-      context,
-      "/list",
-      arguments: {"create-room": createRoom},
-    );
+    Routing.navigateCardList(context, createRoom: createRoom);
   }
+
+  Future<Room> _getCreateRoomFuture(CreateRoomModel createRoom) async =>
+      (await RoomService.createRoom(createRoom, doThrow: true))!;
 
   void _createRoom() {
     if (!createRoom.isValid) {
@@ -77,8 +78,9 @@ class _RoomCreateViewState extends State<RoomCreateView> {
       );
       return;
     }
+
     setState(() {
-      createRoomFuture = RoomService.createRoom(createRoom);
+      createRoomFuture = _getCreateRoomFuture(createRoom);
     });
   }
 
@@ -93,13 +95,13 @@ class _RoomCreateViewState extends State<RoomCreateView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            spacing: 16,
+            spacing: Spacings.medium,
             children: [
-              const SizedBox(height: 16), // style only
+              const SizedBox(height: Spacings.medium),
               HostNameWidget(controller: hostNameController),
               MaxPlayersWidget(controller: maxPlayersController),
               CheckboxListTile(
-                title: Text("Versus Mode"),
+                title: const Text("Versus Mode"),
                 value: createRoom.isVersus,
                 onChanged: (bool? value) {
                   setState(() {
@@ -119,13 +121,8 @@ class _RoomCreateViewState extends State<RoomCreateView> {
           buttonText: "Create Room",
           loadedText: "Room created successfully!",
           buttonCallback: _createRoom,
-          onError: (error) => logger.e(error),
           onDone: (context, room) {
-            Navigator.pushNamed(
-              context,
-              "/room",
-              arguments: {"room": room, "player": room.host},
-            );
+            Routing.navigateRoom(context, room: room, player: room.host);
           },
         ),
       ],

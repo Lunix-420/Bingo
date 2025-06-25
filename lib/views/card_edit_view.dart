@@ -14,6 +14,23 @@ class CardEditView extends StatefulWidget {
 }
 
 class _CardEditViewState extends State<CardEditView> {
+  Future<Tileset>? _tilesetFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _tilesetFuture = _loadTileset();
+      });
+    });
+  }
+
+  Future<Tileset> _loadTileset() async {
+    return (await TilesetService.getTilesetById(context, doThrow: true))!;
+  }
+
   void _handleSave(Tileset tileset) async {
     await TilesetService.editTileset(tileset);
   }
@@ -23,12 +40,15 @@ class _CardEditViewState extends State<CardEditView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Card Create"),
       children: [
-        FutureLoaderWidget(
-          future: TilesetService.getTilesetById(context),
-          builder:
-              (context, tileset) =>
-                  CardEditFormWidget(tileset: tileset, onSave: _handleSave),
-        ),
+        if (_tilesetFuture == null)
+          const Center(child: CircularProgressIndicator())
+        else
+          FutureLoaderWidget(
+            future: _tilesetFuture!,
+            builder:
+                (context, tileset) =>
+                    CardEditFormWidget(tileset: tileset, onSave: _handleSave),
+          ),
       ],
     );
   }

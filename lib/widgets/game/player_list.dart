@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/player_model.dart';
+import 'package:frontend/theme/textstyles.dart';
 
 class PlayerListWidget extends StatelessWidget {
   final List<Player> players;
@@ -13,7 +14,7 @@ class PlayerListWidget extends StatelessWidget {
     required this.currentPlayer,
   });
 
-  Icon getPlayerIcon(Player player) {
+  Icon _getPlayerIcon(Player player) {
     if (player.id == currentPlayer.id) {
       if (player.id == host.id) {
         return const Icon(Icons.star, color: Colors.blue);
@@ -32,8 +33,8 @@ class PlayerListWidget extends StatelessWidget {
       itemCount: players.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(players[index].name),
-          leading: getPlayerIcon(players[index]),
+          title: Text(players[index].name, style: TextStyles.normal()),
+          leading: _getPlayerIcon(players[index]),
         );
       },
     );

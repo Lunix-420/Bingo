@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/theme/decorations.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 import 'package:frontend/widgets/bingo_preview_card/preview_card_icon_indicator.dart';
 import 'package:frontend/widgets/bingo_preview_card/preview_card_row.dart';
 import 'package:frontend/widgets/bingo_preview_card/preview_card_tag_list.dart';
@@ -20,7 +24,7 @@ class BingoPreviewCardWidget extends StatelessWidget {
     if (!decorators) return null;
     return PreviewCardIconIndicatorWidget(
       icon: Icons.star_rounded,
-      iconColor: Colors.yellow[700]!,
+      iconColor: AppColors.rateIconColor,
       count: tileset.rating,
     );
   }
@@ -29,7 +33,7 @@ class BingoPreviewCardWidget extends StatelessWidget {
     if (!decorators) return null;
     return PreviewCardIconIndicatorWidget(
       icon: Icons.play_arrow_rounded,
-      iconColor: Colors.red,
+      iconColor: AppColors.playsIconColor,
       count: tileset.plays,
     );
   }
@@ -41,47 +45,32 @@ class BingoPreviewCardWidget extends StatelessWidget {
         cursor: onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
         child: GestureDetector(
           onTap: onTap != null ? () => onTap!(tileset) : null,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Theme.of(context).colorScheme.primary,
-                width: 4,
-              ),
-              borderRadius: BorderRadius.circular(32),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                PreviewCardRowWidget(
-                  expandedChild: Text(
-                    tileset.name,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+          child: Card(
+            shape: Decorations.bingoFieldBorder,
+            child: Padding(
+              padding: Spacings.allLarge,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  PreviewCardRowWidget(
+                    expandedChild: Text(
+                      tileset.name,
+                      style: TextStyles.large(),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
+                    trailingChild: _likesWidget(),
                   ),
-                  trailingChild: _likesWidget(),
-                ),
-                const SizedBox(height: 16),
-                PreviewCardRowWidget(
-                  expandedChild: PreviewCardTagListWidget(
-                    tags: tileset.tags,
-                    size: tileset.size,
+                  const SizedBox(height: 16),
+                  PreviewCardRowWidget(
+                    expandedChild: PreviewCardTagListWidget(
+                      tags: tileset.tags,
+                      size: tileset.size,
+                    ),
+                    trailingChild: _playsWidget(),
                   ),
-                  trailingChild: _playsWidget(),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

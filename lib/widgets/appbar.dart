@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/router/routing.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -18,57 +22,60 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   void _navigateBack(BuildContext context) {
     if (routeName != null) {
-      Navigator.of(context).pushNamed(routeName!);
+      Navigator.pushNamed(context, routeName!);
       return;
     }
-    Navigator.of(context).maybePop();
+    Routing.navigateBack(context);
   }
 
   void _navigateToSettings(BuildContext context) {
-    Navigator.of(context).pushNamed('/settings');
+    // Navigator.of(context).pushNamed('/settings');
+    // TODO: implement
   }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.deepPurpleAccent[400],
+      backgroundColor: AppColors.appBarBackground,
       centerTitle: true,
       automaticallyImplyLeading: false,
       leading:
           isHome
               ? null
               : Container(
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.yellow[200],
-                  shape: BoxShape.circle,
-                ),
+                margin: Spacings.allSmall,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  icon: const Icon(Icons.arrow_back),
+                  tooltip: 'Back',
                   onPressed: () => _navigateBack(context),
-                  splashRadius: 24,
+                  style: IconButton.styleFrom(
+                    foregroundColor: AppColors.getContrastingColor(
+                      AppColors.backButtonBackground,
+                    ),
+                    backgroundColor: AppColors.backButtonBackground,
+                  ),
                 ),
               ),
       title: Text(
         title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+        style: TextStyles.title(
+          color: AppColors.getContrastingColor(AppColors.appBarBackground),
         ),
       ),
       actions: [
         if (actions != null) ...actions!,
         if (!disableSettings)
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              shape: BoxShape.circle,
-            ),
+            margin: Spacings.allSmall,
             child: IconButton(
-              icon: const Icon(Icons.settings, color: Colors.black),
+              icon: const Icon(Icons.settings),
               onPressed: () => _navigateToSettings(context),
-              splashRadius: 24,
+              style: IconButton.styleFrom(
+                foregroundColor: AppColors.getContrastingColor(
+                  AppColors.settingsButtonBackground,
+                ),
+                backgroundColor: AppColors.settingsButtonBackground,
+              ),
             ),
           ),
       ],

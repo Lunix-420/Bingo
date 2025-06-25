@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:frontend/widgets/bingo_field/base_field.dart';
 
-BaseFieldWidget? getFocusedBaseField() {
+T? getFocusedElement<T extends Widget>() {
   final focus = FocusManager.instance.primaryFocus;
-  final widget =
-      focus?.context?.findAncestorWidgetOfExactType<BaseFieldWidget>();
+  final widget = focus?.context?.findAncestorWidgetOfExactType<T>();
   return widget;
 }

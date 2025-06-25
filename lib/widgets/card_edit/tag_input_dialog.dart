@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/widgets/card_edit/tag_input_list.dart';
 
 /// Dialog for editing tags. Handles its own state and controllers.
@@ -40,9 +41,9 @@ class _TagInputDialogWidgetState extends State<TagInputDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Edit Tags"),
+      title: const Center(child: Text("Edit Tags")),
       content: SizedBox(
-        width: 350,
+        width: MediaQuery.of(context).size.width * 0.7,
         child: TagInputListWidget(
           tags: _tags,
           onTagChange: _handleTagChange,
@@ -51,12 +52,12 @@ class _TagInputDialogWidgetState extends State<TagInputDialogWidget> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(_tags),
+        ElevatedButton(
+          onPressed: () => Routing.navigateBack(context, value: _tags),
           child: const Text("Save"),
         ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+        ElevatedButton(
+          onPressed: () => Routing.navigateBack(context),
           child: const Text("Cancel"),
         ),
       ],

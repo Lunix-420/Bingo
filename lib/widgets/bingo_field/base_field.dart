@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/theme/textstyles.dart';
 
-class BaseFieldWidget extends StatefulWidget {
+class BaseTileWidget extends StatefulWidget {
   final String tile;
   final Widget? child;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
-  const BaseFieldWidget({
+  const BaseTileWidget({
     super.key,
     required this.tile,
     this.child,
@@ -15,10 +17,10 @@ class BaseFieldWidget extends StatefulWidget {
   });
 
   @override
-  State<BaseFieldWidget> createState() => _BaseFieldWidgetState();
+  State<BaseTileWidget> createState() => _BaseTileWidgetState();
 }
 
-class _BaseFieldWidgetState extends State<BaseFieldWidget> {
+class _BaseTileWidgetState extends State<BaseTileWidget> {
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -51,32 +53,24 @@ class _BaseFieldWidgetState extends State<BaseFieldWidget> {
           // TODO: check tooltip trigger mode for mobile
           message: widget.tile,
           enableTapToDismiss: true,
-          decoration: BoxDecoration(
-            color: Colors.blue[800],
-            borderRadius: BorderRadius.circular(4),
-          ),
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
+              // TODO:
               color: Colors.blue[100],
               border: Border.all(
                 color:
                     _focusNode.hasFocus ? Colors.blue[900]! : Colors.blue[400]!,
                 width: 2,
               ),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: Spacings.roundBorderMedium,
             ),
-            padding: const EdgeInsets.all(8),
+            padding: Spacings.allMedium,
             child:
                 widget.child ??
                 Text(
                   widget.tile,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                  ),
+                  style: TextStyles.normal(),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/bingo_field/base_field.dart';
 
-class CheckableFieldWidget extends StatelessWidget {
+class CheckableTileWidget extends StatelessWidget {
   final int index;
   final String tile;
   final bool checked;
   final Function(int)? onCheckChange;
 
-  const CheckableFieldWidget({
+  const CheckableTileWidget({
     super.key,
     required this.index,
     required this.tile,
@@ -15,15 +15,15 @@ class CheckableFieldWidget extends StatelessWidget {
     this.onCheckChange,
   });
 
-  void handleLongPress() {
+  void _handleLongPress() {
     onCheckChange?.call(index);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseFieldWidget(
+    return BaseTileWidget(
       tile: tile,
-      onLongPress: handleLongPress,
+      onLongPress: _handleLongPress,
       child: SizedBox.expand(
         child: Stack(
           fit: StackFit.expand,
@@ -31,6 +31,7 @@ class CheckableFieldWidget extends StatelessWidget {
             Center(
               child: Text(
                 tile,
+                // TODO:
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -43,6 +44,7 @@ class CheckableFieldWidget extends StatelessWidget {
               ),
             ),
             if (checked)
+              // TODO:
               Positioned.fill(
                 bottom: 0,
                 left: 0,
@@ -62,7 +64,7 @@ class CheckableFieldWidget extends StatelessWidget {
   static Widget Function(String, int, bool?) tileBuilder(
     Function(int) onCheckChange,
   ) {
-    return (tile, index, checked) => CheckableFieldWidget(
+    return (tile, index, checked) => CheckableTileWidget(
       index: index,
       tile: tile,
       checked: checked ?? false,

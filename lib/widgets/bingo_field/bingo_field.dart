@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart'; // Changed to material for styling
+import 'package:flutter/material.dart';
+import 'package:frontend/theme/decorations.dart';
+import 'package:frontend/theme/spacings.dart'; // Changed to material for styling
 
 class BingoFieldWidget extends StatelessWidget {
   final List<String> tiles;
@@ -17,35 +19,24 @@ class BingoFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
-            width: 4,
-          ),
-          borderRadius: BorderRadius.circular(32),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(32),
-        child: GridView.count(
-          crossAxisCount: size,
-          shrinkWrap: true,
-          mainAxisSpacing: 32,
-          crossAxisSpacing: 32,
-          physics: const NeverScrollableScrollPhysics(),
-          children: List<Widget>.generate(
-            tiles.length,
-            (index) => tileBuilder(
-              tiles[index],
-              index,
-              checkedTiles.isNotEmpty ? checkedTiles[index] : null,
+      child: Card(
+        shape: Decorations.bingoFieldBorder,
+        child: Padding(
+          padding: EdgeInsets.all(Spacings.extraLarge),
+
+          child: GridView.count(
+            crossAxisCount: size,
+            shrinkWrap: true,
+            mainAxisSpacing: Spacings.extraLarge,
+            crossAxisSpacing: Spacings.extraLarge,
+            physics: const NeverScrollableScrollPhysics(),
+            children: List<Widget>.generate(
+              tiles.length,
+              (index) => tileBuilder(
+                tiles[index],
+                index,
+                checkedTiles.isNotEmpty ? checkedTiles[index] : null,
+              ),
             ),
           ),
         ),

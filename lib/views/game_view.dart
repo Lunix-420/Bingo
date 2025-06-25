@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/bingo_field_model.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/bingo_field_service.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
+import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
-import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/checkable_field.dart';
 import 'package:frontend/widgets/game/player_list_button.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
-import 'package:toastification/toastification.dart';
 
 final logger = namedLogger("Game-View");
 
@@ -26,85 +26,65 @@ class GameView extends StatefulWidget {
 class _GameViewState extends State<GameView> {
   Room? room;
   Player? player;
-
   int? focusedField;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      try {
-        setState(() {
-          room = RoomService.getRoomFromArguments(context);
-          player = RoomService.getPlayerFromArguments(context);
-        });
-      } catch (e) {
-        logger.e("Error getting room or player from arguments: $e");
-        Toast.show(
-          "Error",
-          "Failed to retrieve room or player data.",
-          ToastificationType.error,
-        );
-        Navigator.pushNamed(context, "/");
-        return;
-      }
+      setState(() {
+        room = Routing.getRoomFromArguments(context);
+        player = Routing.getPlayerFromArguments(context);
+      });
     });
-    FocusManager.instance.addListener(handleFocusChange);
-
+    FocusManager.instance.addListener(_handleFocusChange);
     GameService.onGameUpdate(_refreshRoom);
   }
 
   @override
   void dispose() {
-    FocusManager.instance.removeListener(handleFocusChange);
+    FocusManager.instance.removeListener(_handleFocusChange);
+    GameService.removeListeners();
     super.dispose();
   }
 
   Future<void> _refreshRoom(_) async {
-    try {
-      final updatedRoom = await RoomService.getRoomById(room!.id);
-      updateRoom(updatedRoom);
-    } catch (e) {
-      logger.e("Error refreshing room: $e");
-      Toast.show(
-        "Error",
-        "Failed to refresh room data.",
-        ToastificationType.error,
-      );
+    if (room == null) {
+      return;
     }
+
+    final updatedRoom = await RoomService.getRoomById(room!.id);
+
+    if (updatedRoom == null) {
+      return;
+    }
+
+    _updateRoom(updatedRoom);
   }
 
-  void updateRoom(Room updatedRoom) {
+  void _updateRoom(Room updatedRoom) {
     setState(() {
       room = updatedRoom;
     });
+    if (room == null || player == null) {
+      logger.w("Room or player is null, cannot update state");
+      return;
+    }
     final hasWon = room!.bingofields.any((f) => f.isWinner);
     if (hasWon || room!.status == RoomStatus.finished) {
       logger.i("Game finished, well done");
-      Navigator.pushNamed(
-        context,
-        "/game-end",
-        arguments: {"room": room, "player": player},
-      );
+      Routing.navigateGameEnd(context, room: room!, player: player!);
     }
   }
 
-  void handleFocusChange() {
-    final node =
-        FocusManager.instance.primaryFocus?.context
-            ?.findAncestorWidgetOfExactType<CheckableFieldWidget>();
-    if (node != null) {
-      setState(() {
-        focusedField = node.index;
-      });
-    } else {
-      setState(() {
-        focusedField = null;
-      });
-    }
+  void _handleFocusChange() {
+    final node = getFocusedElement<CheckableTileWidget>();
+    setState(() {
+      focusedField = node?.index;
+    });
   }
 
-  BingoField? get bingoField {
+  BingoField? get _bingoField {
     if (room == null || player == null) {
       return null;
     }
@@ -116,68 +96,53 @@ class _GameViewState extends State<GameView> {
     }
   }
 
-  List<String> get tiles {
-    if (bingoField == null) {
-      return [];
-    }
-    return bingoField!.tiles;
-  }
+  List<String> get _tiles => _bingoField?.tiles ?? [];
 
-  List<bool> get checked {
-    if (bingoField == null) {
-      return [];
-    }
-    return bingoField!.marked;
-  }
+  List<bool> get _checked => _bingoField?.marked ?? [];
 
-  Future<void> handleCheckChange(int index) async {
-    if (bingoField == null || player == null) {
+  Future<void> _handleCheckChange(int index) async {
+    if (_bingoField == null || player == null) {
       return;
     }
-    try {
-      await BingoFieldService.checkField(bingoField!, player!, index);
-      updateRoom(await RoomService.getRoomById(room!.id));
-    } catch (e) {
-      logger.e("Error handling check change: $e");
-      Toast.show(
-        "Error",
-        "Failed to update check state.",
-        ToastificationType.error,
-      );
+
+    final response = await BingoFieldService.checkField(
+      _bingoField!,
+      player!,
+      index,
+    );
+
+    if (response == null) {
       return;
     }
+
+    final roomResponse = await RoomService.getRoomById(room!.id);
+
+    if (roomResponse == null) {
+      return;
+    }
+
+    _updateRoom(roomResponse);
   }
 
   void handleButtonPress() {
     if (focusedField == null) {
       return;
     }
-    handleCheckChange(focusedField!);
+    _handleCheckChange(focusedField!);
   }
 
-  ElevatedButton buildCheckButton() {
-    if (focusedField == null) {
+  ElevatedButton _buildCheckButton() {
+    if (focusedField == null ||
+        focusedField! < 0 ||
+        focusedField! >= _tiles.length) {
       return ElevatedButton(
         onPressed: null,
-        child: const Text("Please select a field"),
+        child: const Text("Select a tile..."),
       );
     }
-    if (focusedField! < 0 || focusedField! >= tiles.length) {
-      return ElevatedButton(
-        onPressed: null,
-        child: const Text("Invalid field selected"),
-      );
-    }
-    if (checked[focusedField!]) {
-      return ElevatedButton(
-        onPressed: handleButtonPress,
-        child: const Text("Uncheck"),
-      );
-    }
-
     return ElevatedButton(
-      onPressed: handleButtonPress,
-      child: const Text("Check"),
+      onPressed: () => _handleCheckChange(focusedField!),
+      child: Text(_checked[focusedField!] ? "Uncheck" : "Check"),
     );
   }
 
@@ -186,7 +151,7 @@ class _GameViewState extends State<GameView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(
         title: "Game",
-        routeName: "/home",
+        routeName: Routing.homeRoute,
         actions: [
           PlayerListButtonWidget(
             players: room?.players ?? [],
@@ -199,13 +164,13 @@ class _GameViewState extends State<GameView> {
         SizedBox(height: 0),
         room != null
             ? BingoFieldWidget(
-              tiles: tiles,
+              tiles: _tiles,
               size: room?.tileset.size ?? 5,
-              checkedTiles: checked,
-              tileBuilder: CheckableFieldWidget.tileBuilder(handleCheckChange),
+              checkedTiles: _checked,
+              tileBuilder: CheckableTileWidget.tileBuilder(_handleCheckChange),
             )
             : SizedBox(height: 0),
-        buildCheckButton(),
+        _buildCheckButton(),
       ],
     );
   }

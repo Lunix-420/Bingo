@@ -1,120 +1,166 @@
+import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/widgets.dart';
 import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
 import 'package:frontend/services/api_routes.dart';
 import 'package:frontend/services/player_service.dart';
-import 'package:http/http.dart' as http;
+import 'package:frontend/utils/named_logger.dart';
+import 'package:frontend/utils/requests.dart';
+import 'package:frontend/utils/toasts.dart';
+import 'package:toastification/toastification.dart';
+
+final logger = namedLogger("Room-Service");
 
 class RoomService {
-  static CreateRoomModel? getCreateRoomModelFromNavigation(
-    BuildContext context,
-  ) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    return args?["create-room"] as CreateRoomModel?;
-  }
-
-  static void navigate(
-    BuildContext context,
-    String path,
-    Room? room,
-    Player? player,
-  ) {
-    Navigator.pushNamed(
-      context,
-      path,
-      arguments: {"room": room, "player": player},
-    );
-  }
-
-  static Future<Room> createRoom(CreateRoomModel model) async {
-    final player = await PlayerService.createPlayer(model.hostName);
-
-    final url = ApiRoutes.postCreateRoom();
-    final body = jsonEncode(model.toJson(player));
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: body,
-    );
-
+  static Future<Room?> createRoom(
+    CreateRoomModel model, {
+    bool doThrow = false,
+  }) async {
     try {
-      // Room created successfully
-      final json = jsonDecode(response.body);
-      final roomId = json as String;
-      // Handle the created room if needed
-      return getRoomById(roomId);
+      final player = await PlayerService.createPlayer(
+        model.hostName,
+        doThrow: true,
+      );
+
+      final url = ApiRoutes.postCreateRoom();
+      final body = jsonEncode(model.toJson(player!));
+
+      logger.d('"$url": Creating room with body: $body');
+
+      final response = await Requests.post(url, body);
+
+      final roomId = response as String;
+
+      logger.d('Room created successfully with ID: $roomId');
+
+      return getRoomById(roomId, doThrow: true);
     } catch (e) {
-      throw Exception('Failed to create room (error: $e)');
+      logger.e('Error creating room: $e');
+      Toast.show(
+        "Error",
+        "Please check your inputs for errors.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to create room: $e');
+      }
+      return null;
     }
   }
 
-  static Room getRoomFromArguments(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    if (args == null || !args.containsKey('room')) {
-      throw Exception('Room not found in arguments');
-    }
-    return args['room'] as Room;
-  }
+  static Future<Room?> addPlayerToRoom(
+    Room room,
+    Player player, {
+    bool doThrow = false,
+  }) async {
+    try {
+      final url = ApiRoutes.postPlayerJoinRoom(room.id);
+      final body = jsonEncode({'player': player.toJson()});
 
-  static Player getPlayerFromArguments(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    if (args == null || !args.containsKey('player')) {
-      throw Exception('Player not found in arguments');
-    }
-    return args['player'] as Player;
-  }
+      logger.d('"$url": Adding player to room: ${room.id} with body: $body');
 
-  static Future<Room> addPlayerToRoom(Room room, Player player) async {
-    final url = ApiRoutes.postPlayerJoinRoom(room.id);
-    final body = jsonEncode({'player': player.toJson()});
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: body,
-    );
-    if (response.statusCode == 200) {
+      await Requests.post(url, body);
+
+      logger.d('Player added to room successfully: ${room.id}');
+
       return getRoomById(room.id);
-    } else {
-      throw Exception('Failed to add player to room');
+    } catch (e) {
+      logger.e('Error adding player to room: $e');
+      Toast.show(
+        "Error",
+        "Failed to add player to room. Please try again.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to add player to room: $e');
+      }
+      return null;
     }
   }
 
-  static Future<Room> getRoomByCode(String code) async {
-    final url = ApiRoutes.getRoomIdFromCode(code);
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final roomId = json['_id'] as String?;
+  static Future<Room?> getRoomByCode(
+    String code, {
+    bool doThrow = false,
+  }) async {
+    try {
+      final url = ApiRoutes.getRoomIdFromCode(code);
+
+      logger.d('"$url": Getting room by code: $code');
+
+      final response = await Requests.getMap(url);
+
+      final roomId = response['_id'] as String?;
       if (roomId == null) {
         throw Exception('Room ID not found in response');
       }
-      return getRoomById(roomId);
-    } else {
-      throw Exception('Failed to fetch room by code');
+
+      logger.d('Room ID retrieved successfully: $roomId');
+
+      return getRoomById(roomId, doThrow: true);
+    } catch (e) {
+      logger.e('Error getting room by code: $e');
+      Toast.show(
+        "Error",
+        "Failed to retrieve room by code. Please check the code and try again.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to get room by code: $e');
+      }
+      return null;
     }
   }
 
-  static Future<Room> getRoomById(String id) async {
-    final url = ApiRoutes.getRoomById(id);
-    final response = await http.get(url);
+  static Future<Room?> getRoomById(String id, {bool doThrow = false}) async {
+    try {
+      final url = ApiRoutes.getRoomById(id);
 
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      return Room.fromJson(json);
-    } else {
-      throw Exception('Failed to fetch room by ID');
+      logger.d('"$url": Getting room by ID: $id');
+
+      final response = await Requests.getMap(url);
+
+      final room = Room.fromJson(response);
+
+      logger.d('Room retrieved successfully: ${room.id}');
+
+      return room;
+    } catch (e) {
+      logger.e('Error getting room by ID: $e');
+      Toast.show(
+        "Error",
+        "Failed to retrieve room by ID. Please check the ID and try again.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to get room by ID: $e');
+      }
+      return null;
     }
   }
 
-  static Future<int> startRoom(Room room) async {
-    final url = ApiRoutes.postRoomStart(room.id);
-    final response = await http.post(url);
+  static Future<int?> startRoom(Room room, {bool doThrow = false}) async {
+    try {
+      final url = ApiRoutes.postRoomStart(room.id);
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to start room');
+      logger.d('"$url": Starting room with ID: ${room.id}');
+
+      await Requests.post(url, "");
+
+      logger.d('Room started successfully: ${room.id}');
+
+      return 0;
+    } catch (e) {
+      logger.e('Error starting room: $e');
+      Toast.show(
+        "Error",
+        "Failed to start the room. Please try again.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to start room: $e');
+      }
+      return null;
     }
-    return 0;
   }
 }

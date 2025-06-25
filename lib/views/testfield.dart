@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
 import 'package:frontend/widgets/appbar.dart';
-import 'package:frontend/widgets/score/scoreboard.dart';
+import 'package:frontend/widgets/game/player_list_button.dart';
+import 'package:frontend/widgets/room/room_settings_display.dart';
 
 /*
   This is only a component for testing other components. It does not have to be in good
@@ -18,6 +20,12 @@ class TestFieldView extends StatefulWidget {
 
 class _TestFieldViewState extends State<TestFieldView> {
   Room room = Room();
+  late List<Player> players = [
+    Player("Player 1"),
+    Player("Player 2"),
+    Player("Player 3"),
+    Player("Player 4"),
+  ];
 
   @override
   void initState() {
@@ -28,7 +36,13 @@ class _TestFieldViewState extends State<TestFieldView> {
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Testing playground"),
-      children: [ScoreboardWidget(room: room, player: room.host)],
+      children: [
+        PlayerListButtonWidget(
+          players: players,
+          host: players.first,
+          currentPlayer: players.first,
+        ),
+      ],
     );
   }
 }

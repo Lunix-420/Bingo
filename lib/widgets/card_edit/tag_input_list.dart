@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/spacings.dart';
 
 class TagInputListWidget extends StatefulWidget {
   final List<String> tags;
@@ -50,8 +51,9 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
         ...List.generate(
           widget.tags.length,
           (i) => Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(bottom: Spacings.medium),
             child: Row(
+              spacing: Spacings.medium,
               children: [
                 Expanded(
                   child: TextFormField(
@@ -67,17 +69,16 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
             ),
           ),
         ),
+        const SizedBox(height: Spacings.medium),
         Row(
+          spacing: Spacings.medium,
           children: [
             Expanded(
               child: TextFormField(
                 autofocus: true,
                 controller: _newTagController,
                 onFieldSubmitted: _handleSubmit,
-                decoration: const InputDecoration(
-                  labelText: 'Add new tag',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(labelText: 'Add new tag'),
               ),
             ),
             IconButton(icon: const Icon(Icons.add), onPressed: _addTag),

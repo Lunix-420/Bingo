@@ -10,10 +10,7 @@ class NameInputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      decoration: const InputDecoration(
-        labelText: 'Card Name',
-        border: OutlineInputBorder(),
-      ),
+      decoration: const InputDecoration(labelText: 'Card Name'),
     );
   }
 }

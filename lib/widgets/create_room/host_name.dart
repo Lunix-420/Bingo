@@ -11,7 +11,7 @@ class HostNameWidget extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: 'Host Name',
-        border: OutlineInputBorder(),
+        hint: const Text("Enter your name..."),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {

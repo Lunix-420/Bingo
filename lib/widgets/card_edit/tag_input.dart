@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/card_edit/tag_input_dialog.dart';
 
 class TagInputWidget extends StatefulWidget {
@@ -36,19 +37,17 @@ class _TagInputWidgetState extends State<TagInputWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: Spacings.small,
       children: [
         Expanded(
           child: Wrap(
-            spacing: 8.0,
-            runSpacing: 4.0,
+            spacing: Spacings.small,
+            runSpacing: Spacings.small,
             children: List.generate(
               widget.tags.length,
               (i) => Chip(
                 label: Text(widget.tags[i]),
                 onDeleted: () => _onDeleteTag(i),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(64),
-                ),
               ),
             ),
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/edit_field.dart';
@@ -26,18 +28,27 @@ class CardEditFormWidget extends StatefulWidget {
 class _CardEditFormWidgetState extends State<CardEditFormWidget> {
   late final Tileset _tileset;
   final TextEditingController _nameController = TextEditingController();
+  bool _isTileSelected = false;
 
   @override
   void initState() {
     super.initState();
     _tileset = widget.tileset;
     _nameController.text = _tileset.name;
+    FocusManager.instance.addListener(_handleFocusChange);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    FocusManager.instance.removeListener(_handleFocusChange);
     super.dispose();
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      _isTileSelected = getFocusedElement<EditTileWidget>() != null;
+    });
   }
 
   void _handleTagsChange(List<String> newTags) {
@@ -70,18 +81,24 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
     widget.onSave(_tileset);
   }
 
+  void _handleEditClick() {
+    final selectedTile = getFocusedElement<EditTileWidget>();
+    if (selectedTile != null) {
+      selectedTile.handleEdit(context);
+    } else {
+      logger.w("No tile selected for editing.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.all(Spacings.large),
       child: Column(
-        spacing: 32,
+        spacing: Spacings.extraLarge,
         children: [
-          // Text input
           NameInputWidget(controller: _nameController),
-          // Multi-input with edit/chip mode
           TagInputWidget(tags: _tileset.tags, onTagsChanged: _handleTagsChange),
-          // Single select
           SizeInputWidget(
             size: _tileset.size,
             onSizeChanged: _handleSizeChange,
@@ -89,12 +106,14 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
           BingoFieldWidget(
             tiles: _tileset.tiles,
             size: _tileset.size,
-            tileBuilder: EditFieldWidget.tileBuilder(_handleTileChange),
+            tileBuilder: EditTileWidget.tileBuilder(_handleTileChange),
           ),
-          SizedBox(height: 16),
-          // Save button
+          ElevatedButton(
+            onPressed: _isTileSelected ? _handleEditClick : null,
+            child:
+                _isTileSelected ? const Text("Edit") : const Text("Select..."),
+          ),
           ElevatedButton(onPressed: _handleSave, child: const Text('Save')),
-          // TODO: add a "Edit" button
         ],
       ),
     );
