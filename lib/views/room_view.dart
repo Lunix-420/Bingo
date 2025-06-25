@@ -130,12 +130,12 @@ class _RoomViewState extends State<RoomView> {
     });
   }
 
-  void _handleBackPressed() {
+  void _handleBackPressed() async {
     if (RoomView.navigated || room == null || player == null) {
       return;
     }
 
-    RoomService.leaveRoom(room!, player!);
+    await RoomService.leaveRoom(room!, player!);
   }
 
   @override
