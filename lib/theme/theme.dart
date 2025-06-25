@@ -85,5 +85,12 @@ ThemeData getTheme() {
         horizontal: Spacings.medium,
       ),
     ),
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.dialogBackground,
+      shape: RoundedRectangleBorder(borderRadius: Spacings.roundBorderLarge),
+      titleTextStyle: TextStyles.title(
+        color: AppColors.getContrastingColor(AppColors.dialogBackground),
+      ),
+    ),
   );
 }
