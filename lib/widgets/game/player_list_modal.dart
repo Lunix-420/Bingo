@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/player_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
@@ -23,7 +24,7 @@ class PlayerListModalWidget extends StatelessWidget {
       children: [
         // Detect taps outside the drawer
         GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
+          onTap: () => Routing.navigateBack(context),
           child: Container(
             color: Colors.transparent,
             width: double.infinity,
@@ -60,7 +61,7 @@ class PlayerListModalWidget extends StatelessWidget {
                           ),
                         ),
                         tooltip: 'Back',
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () => Routing.navigateBack(context),
                       ),
                       Text('PLAYERS', style: TextStyles.title()),
                     ],

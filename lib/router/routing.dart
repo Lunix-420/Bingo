@@ -20,6 +20,11 @@ class Routing {
   static const String gameEndRoute = '/game-end';
   static const String testRoute = '/test';
 
+  static const String argumentTilesetId = 'tilesetId';
+  static const String argumentCreateRoom = 'create-room';
+  static const String argumentRoom = 'room';
+  static const String argumentPlayer = 'player';
+
   static T _getArgument<T>(BuildContext context, String key) {
     final args = ModalRoute.of(context)?.settings.arguments as Map?;
     if (args == null || !args.containsKey(key) || args[key] == null) {
@@ -38,7 +43,7 @@ class Routing {
 
   static Room? getRoomFromArguments(BuildContext context) {
     try {
-      return _getArgument<Room>(context, 'room');
+      return _getArgument<Room>(context, argumentRoom);
     } catch (e) {
       logger.e("Error getting room from arguments: $e");
       Toast.show(
@@ -53,7 +58,7 @@ class Routing {
 
   static Player? getPlayerFromArguments(BuildContext context) {
     try {
-      return _getArgument<Player>(context, 'player');
+      return _getArgument<Player>(context, argumentPlayer);
     } catch (e) {
       logger.e("Error getting player from arguments: $e");
       Toast.show(
@@ -67,29 +72,16 @@ class Routing {
   }
 
   static String? getTilesetIdFromNavigation(BuildContext context) {
-    return _getOptionalArgument<String>(context, 'tilesetId');
+    return _getOptionalArgument<String>(context, argumentTilesetId);
   }
 
   static CreateRoomModel? getCreateRoomModelFromNavigation(
     BuildContext context,
   ) {
-    return _getOptionalArgument<CreateRoomModel>(context, 'create-room');
+    return _getOptionalArgument<CreateRoomModel>(context, argumentCreateRoom);
   }
 
   // --------------------------  NAVIGATION --------------------------
-
-  static void navigateWithRoomPlayer(
-    BuildContext context,
-    String path, {
-    required Room? room,
-    required Player? player,
-  }) {
-    Navigator.pushNamed(
-      context,
-      path,
-      arguments: {'room': room, 'player': player},
-    );
-  }
 
   static void navigateRoom(
     BuildContext context, {
@@ -99,7 +91,7 @@ class Routing {
     Navigator.pushNamed(
       context,
       roomRoute,
-      arguments: {'room': room, 'player': player},
+      arguments: {argumentRoom: room, argumentPlayer: player},
     );
   }
 
@@ -111,7 +103,7 @@ class Routing {
     Navigator.pushNamed(
       context,
       gameRoute,
-      arguments: {'room': room, 'player': player},
+      arguments: {argumentRoom: room, argumentPlayer: player},
     );
   }
 
@@ -123,7 +115,7 @@ class Routing {
     Navigator.pushNamed(
       context,
       gameEndRoute,
-      arguments: {'room': room, 'player': player},
+      arguments: {argumentRoom: room, argumentPlayer: player},
     );
   }
 
@@ -135,7 +127,7 @@ class Routing {
     Navigator.pushNamed(
       context,
       cardEditRoute,
-      arguments: {'tilesetId': tilesetId},
+      arguments: {argumentTilesetId: tilesetId},
     );
   }
 
@@ -146,7 +138,7 @@ class Routing {
     Navigator.pushNamed(
       context,
       roomCreateRoute,
-      arguments: {'create-room': createRoom},
+      arguments: {argumentCreateRoom: createRoom},
     );
   }
 
@@ -157,7 +149,7 @@ class Routing {
     Navigator.pushNamed(
       context,
       cardListRoute,
-      arguments: {'create-room': createRoom},
+      arguments: {argumentCreateRoom: createRoom},
     );
   }
 
@@ -172,7 +164,15 @@ class Routing {
     Navigator.pushNamed(
       context,
       cardPreviewRoute,
-      arguments: {'tilesetId': tilesetId},
+      arguments: {argumentTilesetId: tilesetId},
     );
+  }
+
+  static void navigateBack(BuildContext context, {dynamic value}) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context, value);
+    } else {
+      navigateHome(context);
+    }
   }
 }

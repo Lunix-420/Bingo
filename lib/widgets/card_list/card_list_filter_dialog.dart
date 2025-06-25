@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
@@ -108,11 +109,11 @@ class _CardListFilterDialogWidgetState
       ),
       actions: [
         ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(filters),
+          onPressed: () => Routing.navigateBack(context, value: filters),
           child: const Text("Save"),
         ),
         ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Routing.navigateBack(context),
           child: const Text("Cancel"),
         ),
       ],

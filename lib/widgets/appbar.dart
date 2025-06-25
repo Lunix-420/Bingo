@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
@@ -21,10 +22,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   void _navigateBack(BuildContext context) {
     if (routeName != null) {
-      Navigator.of(context).pushNamed(routeName!);
+      Navigator.pushNamed(context, routeName!);
       return;
     }
-    Navigator.of(context).maybePop();
+    Routing.navigateBack(context);
   }
 
   void _navigateToSettings(BuildContext context) {

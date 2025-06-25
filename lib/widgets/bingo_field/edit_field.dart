@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/widgets/bingo_field/base_field.dart';
 
 class EditTileWidget extends StatefulWidget {
@@ -30,11 +31,12 @@ class EditTileWidget extends StatefulWidget {
             ),
             actions: [
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => Routing.navigateBack(context),
                 child: const Text('Cancel'),
               ),
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(controller.text),
+                onPressed:
+                    () => Routing.navigateBack(context, value: controller.text),
                 child: const Text('Save'),
               ),
             ],
