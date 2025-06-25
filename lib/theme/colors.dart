@@ -13,6 +13,7 @@ class AppColors {
   static Color secondary = Colors.blue;
   static Color success = Colors.lightGreenAccent[400]!;
   static Color error = Colors.red;
+  static Color disabled = Colors.grey[400]!;
   static Color retry = Color.fromARGB(255, 20, 242, 246);
   static Color focus = primary;
 

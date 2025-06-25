@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
@@ -118,10 +119,18 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
           ),
           ElevatedButton(
             onPressed: _isTileSelected ? _handleEditClick : null,
+            style:
+                _isTileSelected
+                    ? ButtonStyles.successButton
+                    : ButtonStyles.disabledButton,
             child:
                 _isTileSelected ? const Text("Edit") : const Text("Select..."),
           ),
-          ElevatedButton(onPressed: _handleSave, child: const Text('Save')),
+          ElevatedButton(
+            onPressed: _handleSave,
+            style: ButtonStyles.successButton,
+            child: const Text('Save'),
+          ),
         ],
       ),
     );

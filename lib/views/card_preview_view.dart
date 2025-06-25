@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
@@ -75,6 +76,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
         ),
         ElevatedButton(
           onPressed: tileset != null ? navigateToEdit : null,
+          style: ButtonStyles.successButton,
           child:
               tileset != null
                   ? const Text("Edit Card")

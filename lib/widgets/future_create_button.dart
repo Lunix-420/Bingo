@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/widgets/future_loader.dart';
 
 class FutureCreateButtonWidget<T> extends StatelessWidget {
@@ -34,6 +35,10 @@ class FutureCreateButtonWidget<T> extends StatelessWidget {
           },
           onError: (error) => onError != null ? onError!(error) : null,
         )
-        : ElevatedButton(onPressed: buttonCallback, child: Text(buttonText));
+        : ElevatedButton(
+          onPressed: buttonCallback,
+          style: ButtonStyles.successButton,
+          child: Text(buttonText),
+        );
   }
 }

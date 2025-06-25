@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
@@ -110,10 +111,12 @@ class _CardListFilterDialogWidgetState
       actions: [
         ElevatedButton(
           onPressed: () => Routing.navigateBack(context, value: filters),
+          style: ButtonStyles.successButton,
           child: const Text("Save"),
         ),
         ElevatedButton(
           onPressed: () => Routing.navigateBack(context),
+          style: ButtonStyles.errorButton,
           child: const Text("Cancel"),
         ),
       ],

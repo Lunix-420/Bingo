@@ -3,6 +3,7 @@ import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/router/routing.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
 import 'package:frontend/widgets/score/scoreboard.dart';
@@ -59,7 +60,11 @@ class _GameEndViewState extends State<GameEndView> {
       children: [
         BingoPreviewCardWidget(tileset: tileset, onTap: handleTilesetTap),
         scoreboard ?? const SizedBox.shrink(),
-        ElevatedButton(onPressed: _navigateToHome, child: const Text("Finish")),
+        ElevatedButton(
+          onPressed: _navigateToHome,
+          style: ButtonStyles.successButton,
+          child: const Text("Finish"),
+        ),
       ],
     );
   }
