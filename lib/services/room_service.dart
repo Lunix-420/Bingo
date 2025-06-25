@@ -88,9 +88,9 @@ class RoomService {
 
       logger.d('"$url": Getting room by code: $code');
 
-      final response = await Requests.getMap(url);
+      final response = await Requests.get(url);
 
-      final roomId = response['_id'] as String?;
+      final roomId = response as String?;
       if (roomId == null) {
         throw Exception('Room ID not found in response');
       }
@@ -161,6 +161,43 @@ class RoomService {
         throw Exception('Failed to start room: $e');
       }
       return null;
+    }
+  }
+
+  static Future<(Room?, Player?)> joinRoom(
+    String playerName,
+    String roomCode, {
+    bool doThrow = false,
+  }) async {
+    try {
+      logger.d(
+        'Joining room with code: $roomCode and player name: $playerName',
+      );
+
+      final roomFromCode = await getRoomByCode(roomCode, doThrow: true);
+      final player = await PlayerService.createPlayer(
+        playerName,
+        doThrow: true,
+      );
+
+      final room = await addPlayerToRoom(roomFromCode!, player!, doThrow: true);
+
+      logger.d(
+        'Joined room successfully: ${room!.id} with player: ${player.id}',
+      );
+
+      return (room, player);
+    } catch (e) {
+      logger.e('Error joining room: $e');
+      Toast.show(
+        "Error",
+        "Failed to join the room. Please try again.",
+        ToastificationType.error,
+      );
+      if (doThrow) {
+        throw Exception('Failed to join room: $e');
+      }
+      return (null, null);
     }
   }
 }
