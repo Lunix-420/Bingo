@@ -8,6 +8,7 @@ import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
 import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
+import 'package:frontend/views/room_view.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
 import 'package:frontend/widgets/bingo_field/checkable_field.dart';
@@ -146,11 +147,20 @@ class _GameViewState extends State<GameView> {
     );
   }
 
+  void _handleBackPressed() {
+    if (RoomView.navigated || room == null || player == null) {
+      return;
+    }
+
+    RoomService.leaveRoom(room!, player!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(
         title: "Game",
+        onBackPressed: _handleBackPressed,
         routeName: Routing.homeRoute,
         actions: [
           PlayerListButtonWidget(
