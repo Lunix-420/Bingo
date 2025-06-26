@@ -22,7 +22,7 @@ class RoomSettingsDisplayWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Host Name: ${room.host.name}",
+                  "Owner Name: ${room.host.name}",
                   style: TextStyles.normal(),
                 ),
               ],

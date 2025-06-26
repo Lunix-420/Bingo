@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
+import 'package:frontend/theme/buttons.dart';
+import 'package:frontend/theme/spacings.dart';
 
 class CardListSortWidget extends StatefulWidget {
   final SortOptions selected;
@@ -47,26 +49,27 @@ class _CardListSortWidgetState extends State<CardListSortWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: Spacings.medium,
       children: [
         Expanded(
-          child: DropdownButton<int>(
-            value: _selectedField,
-            onChanged: _onFieldChanged,
-            items: List.generate(
+          child: DropdownMenu(
+            dropdownMenuEntries: List.generate(
               sortOptionFields.length,
-              (i) => DropdownMenuItem<int>(
+              (i) => DropdownMenuEntry<int>(
                 value: i,
-                child: Text(sortOptionFields[i]['label'] as String),
+                label: sortOptionFields[i]['label'] as String,
               ),
             ),
-            isExpanded: true,
+            initialSelection: _selectedField,
+            onSelected: _onFieldChanged,
+            expandedInsets: EdgeInsets.zero,
           ),
         ),
-        const SizedBox(width: 8),
         IconButton(
           icon: Icon(_isAscending ? Icons.arrow_upward : Icons.arrow_downward),
           tooltip: _isAscending ? 'Ascending' : 'Descending',
           onPressed: _toggleOrder,
+          style: ButtonStyles.filterIconButton,
         ),
       ],
     );

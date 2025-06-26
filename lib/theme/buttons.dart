@@ -64,4 +64,47 @@ class ButtonStyles {
       ),
     ),
   );
+
+  static ButtonStyle roomCodeButton = ButtonStyle(
+    backgroundColor: WidgetStateProperty.all(AppColors.primary),
+    foregroundColor: WidgetStateProperty.all(
+      AppColors.getContrastingColor(AppColors.primary),
+    ),
+    padding: WidgetStateProperty.all(
+      const EdgeInsets.symmetric(
+        horizontal: Spacings.extraLarge,
+        vertical: Spacings.large,
+      ),
+    ),
+    shape: WidgetStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: Spacings.roundBorderExtraLarge,
+        side: BorderSide(
+          width: 2,
+          color: AppColors.getContrastingColor(AppColors.primary),
+          style: BorderStyle.solid,
+        ),
+      ),
+    ),
+    textStyle: WidgetStateProperty.all(
+      TextStyles.title(color: AppColors.getContrastingColor(AppColors.primary)),
+    ),
+  );
+
+  static ButtonStyle filterIconButton = ButtonStyle(
+    backgroundColor: WidgetStateProperty.all(AppColors.primary),
+    foregroundColor: WidgetStateProperty.all(
+      AppColors.getContrastingColor(AppColors.primary),
+    ),
+    shape: WidgetStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: Spacings.roundBorderExtraLarge,
+        side: BorderSide(
+          width: 2,
+          color: AppColors.getContrastingColor(AppColors.primary),
+          style: BorderStyle.solid,
+        ),
+      ),
+    ),
+  );
 }

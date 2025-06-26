@@ -108,7 +108,7 @@ class _RoomViewState extends State<RoomView> {
           : Padding(
             padding: const EdgeInsets.symmetric(vertical: Spacings.medium),
             child: Text(
-              "Waiting for host to start...",
+              "Waiting for owner to start...",
               style: TextStyles.normal(),
               textAlign: TextAlign.center,
             ),

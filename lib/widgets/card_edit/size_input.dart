@@ -12,22 +12,19 @@ class SizeInputWidget extends StatelessWidget {
     required this.onSizeChanged,
   });
 
-  List<DropdownMenuItem<int>> _getSizeOptions() {
+  List<DropdownMenuEntry<int>> _getSizeOptions() {
     return TilesetService.validSizes.map((size) {
-      return DropdownMenuItem<int>(value: size, child: Text("${size}x$size"));
+      return DropdownMenuEntry<int>(value: size, label: "${size}x$size");
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<int>(
-      value: size,
-      decoration: const InputDecoration(
-        labelText: 'Select Size',
-        border: OutlineInputBorder(),
-      ),
-      items: _getSizeOptions(),
-      onChanged: onSizeChanged,
+    return DropdownMenu(
+      dropdownMenuEntries: _getSizeOptions(),
+      initialSelection: size,
+      onSelected: onSizeChanged,
+      expandedInsets: EdgeInsets.zero,
     );
   }
 }

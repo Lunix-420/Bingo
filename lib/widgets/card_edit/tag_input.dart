@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/card_edit/tag_input_dialog.dart';
 
@@ -52,7 +53,11 @@ class _TagInputWidgetState extends State<TagInputWidget> {
             ),
           ),
         ),
-        IconButton(icon: const Icon(Icons.edit), onPressed: _onEditTags),
+        IconButton(
+          icon: const Icon(Icons.edit),
+          onPressed: _onEditTags,
+          style: ButtonStyles.filterIconButton,
+        ),
       ],
     );
   }

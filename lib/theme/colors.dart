@@ -32,10 +32,8 @@ class AppColors {
   static Color inputFieldBorder = Colors.white;
   static Color inputFieldHintText = Color(0xFF9E9E9E);
 
-  static Color bingoFieldBackground = Color(0xFF2C2C2C);
-
-  static Color rateIconColor = Color(0xFF4CAF50);
-  static Color playsIconColor = Color(0xFFB0BEC5);
+  static Color rateIconColor = Colors.yellow;
+  static Color playsIconColor = Colors.red[400]!;
 
   static Color mainMenuCreateRoomButtonBackground = Color(0xFFFFDB0A);
 

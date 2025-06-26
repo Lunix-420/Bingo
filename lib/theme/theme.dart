@@ -71,6 +71,8 @@ ThemeData getTheme() {
         color: AppColors.getContrastingColor(AppColors.primary),
       ),
       deleteIconColor: AppColors.error,
+      selectedColor: AppColors.primary,
+      checkmarkColor: AppColors.success,
     ),
     tooltipTheme: TooltipThemeData(
       textStyle: TextStyles.small(
@@ -90,6 +92,11 @@ ThemeData getTheme() {
       shape: RoundedRectangleBorder(borderRadius: Spacings.roundBorderLarge),
       titleTextStyle: TextStyles.title(
         color: AppColors.getContrastingColor(AppColors.dialogBackground),
+      ),
+    ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.dialogBackground),
       ),
     ),
   );

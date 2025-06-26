@@ -96,14 +96,20 @@ class _CardListFilterDialogWidgetState
               controller: ratingController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(labelText: 'Rating'),
+              decoration: InputDecoration(
+                labelText: 'Rating',
+                hint: const Text("Enter a minumum rating..."),
+              ),
             ),
             const SizedBox(height: Spacings.medium),
             TextField(
               controller: playsController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(labelText: 'Plays'),
+              decoration: InputDecoration(
+                labelText: 'Plays',
+                hint: const Text("Enter a minimum number of plays..."),
+              ),
             ),
           ],
         ),
