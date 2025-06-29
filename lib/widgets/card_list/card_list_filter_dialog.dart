@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
 import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/colors.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
@@ -67,53 +68,63 @@ class _CardListFilterDialogWidgetState
       actionsAlignment: MainAxisAlignment.center,
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.7,
-        child: Column(
-          spacing: 8,
-          children: [
-            Text("Tags", style: dialogStyle),
-            TagInputListWidget(
-              tags: filters.tags,
-              onTagChange: _handleTagChange,
-              onTagDelete: _handleTagDelete,
-              onAddTag: _handleAddTag,
-            ),
-            const SizedBox(height: Spacings.medium),
-            Text("Size", style: dialogStyle),
-            Wrap(
-              spacing: Spacings.small,
-              children:
-                  TilesetService.validSizes.map((size) {
-                    return ChoiceChip(
-                      label: Text(size.toString()),
-                      selected: filters.size.contains(size),
-                      onSelected: (_) => _handleSizeChange(size),
-                    );
-                  }).toList(),
-            ),
-            const SizedBox(height: Spacings.medium),
-            TextField(
-              controller: ratingController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(labelText: 'Rating'),
-            ),
-            const SizedBox(height: Spacings.medium),
-            TextField(
-              controller: playsController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(labelText: 'Plays'),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 8,
+            children: [
+              Text("Tags", style: dialogStyle),
+              TagInputListWidget(
+                tags: filters.tags,
+                onTagChange: _handleTagChange,
+                onTagDelete: _handleTagDelete,
+                onAddTag: _handleAddTag,
+              ),
+              SizedBox(height: Spacings.medium),
+              Text("Size", style: dialogStyle),
+              Wrap(
+                spacing: Spacings.small,
+                children:
+                    TilesetService.validSizes.map((size) {
+                      return ChoiceChip(
+                        label: Text(size.toString()),
+                        selected: filters.size.contains(size),
+                        onSelected: (_) => _handleSizeChange(size),
+                      );
+                    }).toList(),
+              ),
+              SizedBox(height: Spacings.medium),
+              TextField(
+                controller: ratingController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  labelText: 'Rating',
+                  hint: const Text("Enter a minumum rating..."),
+                ),
+              ),
+              SizedBox(height: Spacings.medium),
+              TextField(
+                controller: playsController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  labelText: 'Plays',
+                  hint: const Text("Enter a minimum number of plays..."),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         ElevatedButton(
           onPressed: () => Routing.navigateBack(context, value: filters),
+          style: ButtonStyles.successButton,
           child: const Text("Save"),
         ),
         ElevatedButton(
           onPressed: () => Routing.navigateBack(context),
+          style: ButtonStyles.errorButton,
           child: const Text("Cancel"),
         ),
       ],

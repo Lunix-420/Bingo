@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
-import '../../theme/decorations.dart';
+import 'package:flutter/services.dart';
+import 'package:frontend/theme/buttons.dart';
+import 'package:frontend/theme/colors.dart';
 import '../../theme/textstyles.dart';
-import '../../theme/spacings.dart';
 
 class CodeDisplayWidget extends StatelessWidget {
   final String code;
 
   const CodeDisplayWidget({super.key, required this.code});
 
+  void _copyToClipboard() {
+    final data = ClipboardData(text: code);
+    Clipboard.setData(data);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: Spacings.medium,
-        horizontal: Spacings.extraLarge,
+    return ElevatedButton(
+      onPressed: _copyToClipboard,
+      style: ButtonStyles.roomCodeButton,
+      child: Text(
+        code,
+        style: TextStyles.normal(
+          color: AppColors.getContrastingColor(AppColors.primary),
+        ),
       ),
-      decoration: Decorations.codeDisplay,
-      child: Text(code, style: TextStyles.normal()),
     );
   }
 }

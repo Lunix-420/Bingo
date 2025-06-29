@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
+import 'package:frontend/widgets/bingo_preview_card/preview_card_tag_list.dart';
 import 'package:frontend/widgets/card_edit/tag_input_dialog.dart';
 
 class TagInputWidget extends StatefulWidget {
   final List<String> tags;
   final Function(List<String>) onTagsChanged;
+  final int size;
 
   /// TagInputWidget displays a list of tags as chips and allows editing via a dialog.
   const TagInputWidget({
     super.key,
     required this.tags,
     required this.onTagsChanged,
+    required this.size,
   });
 
   @override
@@ -18,12 +22,6 @@ class TagInputWidget extends StatefulWidget {
 }
 
 class _TagInputWidgetState extends State<TagInputWidget> {
-  void _onDeleteTag(int index) {
-    final newTags = List<String>.from(widget.tags);
-    newTags.removeAt(index);
-    widget.onTagsChanged(newTags);
-  }
-
   void _onEditTags() async {
     final result = await showDialog<List<String>>(
       context: context,
@@ -40,19 +38,13 @@ class _TagInputWidgetState extends State<TagInputWidget> {
       spacing: Spacings.small,
       children: [
         Expanded(
-          child: Wrap(
-            spacing: Spacings.small,
-            runSpacing: Spacings.small,
-            children: List.generate(
-              widget.tags.length,
-              (i) => Chip(
-                label: Text(widget.tags[i]),
-                onDeleted: () => _onDeleteTag(i),
-              ),
-            ),
-          ),
+          child: PreviewCardTagListWidget(tags: widget.tags, size: widget.size),
         ),
-        IconButton(icon: const Icon(Icons.edit), onPressed: _onEditTags),
+        IconButton(
+          icon: const Icon(Icons.edit),
+          onPressed: _onEditTags,
+          style: ButtonStyles.filterIconButton,
+        ),
       ],
     );
   }

@@ -133,7 +133,7 @@ class TilesetFilterModel {
     return {
       "names": search?.isNotEmpty == true ? [search] : null,
       "tags": tags,
-      "size": size,
+      "sizes": size,
       "rating": rating,
       "plays": plays,
       "sort": CardListSort.optionToRequest(sort),

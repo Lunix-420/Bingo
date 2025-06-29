@@ -6,11 +6,12 @@ import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/bingo_field_service.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/services/room_service.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
-import 'package:frontend/widgets/bingo_field/checkable_field.dart';
+import 'package:frontend/widgets/bingo_field/checkable_tile.dart';
 import 'package:frontend/widgets/game/player_list_button.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
 
@@ -137,11 +138,16 @@ class _GameViewState extends State<GameView> {
         focusedField! >= _tiles.length) {
       return ElevatedButton(
         onPressed: null,
+        style: ButtonStyles.disabledButton,
         child: const Text("Select a tile..."),
       );
     }
     return ElevatedButton(
       onPressed: () => _handleCheckChange(focusedField!),
+      style:
+          _checked[focusedField!]
+              ? ButtonStyles.errorButton
+              : ButtonStyles.successButton,
       child: Text(_checked[focusedField!] ? "Uncheck" : "Check"),
     );
   }

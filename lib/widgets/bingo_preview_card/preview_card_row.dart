@@ -19,7 +19,7 @@ class PreviewCardRowWidget extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(right: Spacings.small),
+            padding: EdgeInsets.only(right: Spacings.small),
             child: expandedChild,
           ),
         ),

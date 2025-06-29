@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/card_edit/card_edit_form.dart';
 import 'package:frontend/widgets/future_loader.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
+import 'package:toastification/toastification.dart';
 
 class CardEditView extends StatefulWidget {
   const CardEditView({super.key});
@@ -31,8 +34,20 @@ class _CardEditViewState extends State<CardEditView> {
     return (await TilesetService.getTilesetById(context, doThrow: true))!;
   }
 
-  void _handleSave(Tileset tileset) async {
-    await TilesetService.editTileset(tileset);
+  Future<void> _handleSave(Tileset tileset) async {
+    final result = await TilesetService.editTileset(tileset);
+    if (result != null) {
+      Toast.show(
+        "Success",
+        "Card saved successfully!",
+        ToastificationType.success,
+      );
+      _navigateBack();
+    }
+  }
+
+  void _navigateBack() {
+    Routing.navigateBack(context);
   }
 
   @override

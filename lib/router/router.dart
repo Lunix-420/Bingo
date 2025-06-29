@@ -9,7 +9,6 @@ import 'package:frontend/views/game_view.dart';
 import 'package:frontend/views/main_view.dart';
 import 'package:frontend/views/room_create_view.dart';
 import 'package:frontend/views/room_view.dart';
-import 'package:frontend/views/testfield.dart';
 
 /// A function to define the routes for the application.
 Map<String, WidgetBuilder> buildAppRoutes() {
@@ -19,7 +18,6 @@ Map<String, WidgetBuilder> buildAppRoutes() {
           body: Center(child: Text("You Should not be here!")),
         ),
     Routing.homeRoute: (context) => const MainView(),
-    Routing.testRoute: (context) => const TestFieldView(),
     Routing.cardPreviewRoute: (context) => const CardPreviewView(),
     Routing.cardCreateRoute: (context) => const CardCreateView(),
     Routing.cardEditRoute: (context) => const CardEditView(),

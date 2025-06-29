@@ -47,7 +47,7 @@ class Tileset {
 
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
+      if (id.isNotEmpty) '_id': id,
       'name': name,
       'size': size,
       'rating': rating,

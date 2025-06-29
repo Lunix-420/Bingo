@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/router/routing.dart';
 import 'package:frontend/services/tileset_service.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
-import 'package:frontend/widgets/bingo_field/view_field.dart';
+import 'package:frontend/widgets/bingo_field/view_tile.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
 import 'package:frontend/widgets/future_loader.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
@@ -29,7 +30,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       spacing: Spacings.large,
       children: [
-        BingoPreviewCardWidget(tileset: tileset, decorators: false),
+        BingoPreviewCardWidget(tileset: tileset),
         BingoFieldWidget(
           tiles: tileset.tiles,
           size: tileset.size,
@@ -75,6 +76,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
         ),
         ElevatedButton(
           onPressed: tileset != null ? navigateToEdit : null,
+          style: ButtonStyles.successButton,
           child:
               tileset != null
                   ? const Text("Edit Card")

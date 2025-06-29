@@ -20,14 +20,16 @@ class RoomSettingsDisplayWidget extends StatelessWidget {
               children: [Text("Room Settings", style: TextStyles.title())],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Host Name: ${room.host.name}",
+                  "Owner Name: ${room.host.name}",
                   style: TextStyles.normal(),
                 ),
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "${room.players.length} of ${room.maxPlayers} Players",
@@ -36,6 +38,7 @@ class RoomSettingsDisplayWidget extends StatelessWidget {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   room.isVersus ? "Mode: Versus" : "Mode: Co-op",

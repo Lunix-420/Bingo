@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_model.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
-import 'package:frontend/widgets/bingo_field/edit_field.dart';
+import 'package:frontend/widgets/bingo_field/edit_tile.dart';
 import 'package:frontend/widgets/card_edit/name_input.dart';
 import 'package:frontend/widgets/card_edit/size_input.dart';
 import 'package:frontend/widgets/card_edit/tag_input.dart';
@@ -35,14 +36,22 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
     super.initState();
     _tileset = widget.tileset;
     _nameController.text = _tileset.name;
+    _nameController.addListener(_handleNameChange);
     FocusManager.instance.addListener(_handleFocusChange);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _nameController.removeListener(_handleNameChange);
     FocusManager.instance.removeListener(_handleFocusChange);
     super.dispose();
+  }
+
+  void _handleNameChange() {
+    setState(() {
+      _tileset.name = _nameController.text;
+    });
   }
 
   void _handleFocusChange() {
@@ -65,7 +74,6 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
       try {
         _tileset.changeSize(newSize);
       } catch (e) {
-        // TODO: maybe add a snackbar or dialog to inform the user
         logger.e("Failed to change size: $e");
       }
     });
@@ -93,12 +101,16 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Spacings.large),
+      padding: EdgeInsets.all(Spacings.large),
       child: Column(
-        spacing: Spacings.extraLarge,
+        spacing: Spacings.medium,
         children: [
           NameInputWidget(controller: _nameController),
-          TagInputWidget(tags: _tileset.tags, onTagsChanged: _handleTagsChange),
+          TagInputWidget(
+            tags: _tileset.tags,
+            onTagsChanged: _handleTagsChange,
+            size: _tileset.size,
+          ),
           SizeInputWidget(
             size: _tileset.size,
             onSizeChanged: _handleSizeChange,
@@ -110,10 +122,18 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
           ),
           ElevatedButton(
             onPressed: _isTileSelected ? _handleEditClick : null,
+            style:
+                _isTileSelected
+                    ? ButtonStyles.successButton
+                    : ButtonStyles.disabledButton,
             child:
                 _isTileSelected ? const Text("Edit") : const Text("Select..."),
           ),
-          ElevatedButton(onPressed: _handleSave, child: const Text('Save')),
+          ElevatedButton(
+            onPressed: _handleSave,
+            style: ButtonStyles.successButton,
+            child: const Text('Save'),
+          ),
         ],
       ),
     );

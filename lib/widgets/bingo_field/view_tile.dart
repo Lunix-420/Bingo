@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/bingo_field/base_field.dart';
+import 'package:frontend/widgets/bingo_field/base_tile.dart';
 
 class ViewTileWidget extends StatelessWidget {
   final String tile;

@@ -18,17 +18,18 @@ class BingoFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final spacing = Spacings.medium;
     return Center(
       child: Card(
         shape: Decorations.bingoFieldBorder,
         child: Padding(
-          padding: EdgeInsets.all(Spacings.extraLarge),
+          padding: EdgeInsets.all(spacing),
 
           child: GridView.count(
             crossAxisCount: size,
             shrinkWrap: true,
-            mainAxisSpacing: Spacings.extraLarge,
-            crossAxisSpacing: Spacings.extraLarge,
+            mainAxisSpacing: spacing,
+            crossAxisSpacing: spacing,
             physics: const NeverScrollableScrollPhysics(),
             children: List<Widget>.generate(
               tiles.length,

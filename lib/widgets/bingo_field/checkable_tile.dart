@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/bingo_field/base_field.dart';
+import 'package:frontend/theme/colors.dart';
+import 'package:frontend/widgets/bingo_field/base_tile.dart';
 
 class CheckableTileWidget extends StatelessWidget {
   final int index;
@@ -28,23 +29,8 @@ class CheckableTileWidget extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Center(
-              child: Text(
-                tile,
-                // TODO:
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  decoration: TextDecoration.none,
-                ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-            ),
+            Center(child: BaseTileWidget.baseFieldText(tile)),
             if (checked)
-              // TODO:
               Positioned.fill(
                 bottom: 0,
                 left: 0,
@@ -52,7 +38,7 @@ class CheckableTileWidget extends StatelessWidget {
                 top: 0,
                 child: FittedBox(
                   fit: BoxFit.contain,
-                  child: Icon(Icons.close_rounded, color: Colors.red[700]),
+                  child: Icon(Icons.close_rounded, color: AppColors.error),
                 ),
               ),
           ],

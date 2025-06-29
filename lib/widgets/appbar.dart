@@ -31,11 +31,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     Routing.navigateBack(context);
   }
 
-  void _navigateToSettings(BuildContext context) {
-    // Navigator.of(context).pushNamed('/settings');
-    // TODO: implement
-  }
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -67,20 +62,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         if (actions != null) ...actions!,
-        if (!disableSettings)
-          Container(
-            margin: Spacings.allSmall,
-            child: IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () => _navigateToSettings(context),
-              style: IconButton.styleFrom(
-                foregroundColor: AppColors.getContrastingColor(
-                  AppColors.settingsButtonBackground,
-                ),
-                backgroundColor: AppColors.settingsButtonBackground,
-              ),
-            ),
-          ),
+        SizedBox(width: Spacings.small),
       ],
       elevation: 0,
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/textstyles.dart';
+import 'package:frontend/utils/player_icon.dart';
 import '../../theme/decorations.dart';
 import '../../theme/spacings.dart';
 import '../../model/player_model.dart';
@@ -46,14 +48,16 @@ class ScoreboardWidget extends StatelessWidget {
             ...orderedPlayers.map((p) {
               Icon? leadingIcon;
               if (p == winner && p == player) {
-                // FIXME: colors
-                leadingIcon = const Icon(Icons.star, color: Colors.purple);
+                leadingIcon = PlayerIcon.getWinnerSelf();
               } else if (p == winner) {
-                leadingIcon = const Icon(Icons.star, color: Colors.yellow);
+                leadingIcon = PlayerIcon.getWinner();
               } else if (p == player) {
-                leadingIcon = const Icon(Icons.star, color: Colors.blue);
+                leadingIcon = PlayerIcon.getSelf();
               }
-              return ListTile(leading: leadingIcon, title: Text(p.name));
+              return ListTile(
+                leading: leadingIcon,
+                title: Text(p.name, style: TextStyles.normal()),
+              );
             }),
           ],
         ),

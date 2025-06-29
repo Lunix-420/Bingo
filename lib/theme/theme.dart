@@ -54,7 +54,7 @@ ThemeData getTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: Spacings.roundBorderSmall,
-        borderSide: BorderSide(color: AppColors.inputFieldBorder, width: 2),
+        borderSide: BorderSide(color: AppColors.secondary, width: 2),
       ),
       labelStyle: TextStyles.normal(
         color: AppColors.getContrastingColor(AppColors.inputFieldBackground),
@@ -65,12 +65,43 @@ ThemeData getTheme() {
       backgroundColor: AppColors.primary,
       shape: RoundedRectangleBorder(
         borderRadius: Spacings.roundBorderExtraLarge,
-        side: BorderSide(width: 0, color: Colors.transparent),
+        side: BorderSide(
+          width: 1,
+          color: AppColors.inputFieldBorder,
+          style: BorderStyle.solid,
+        ),
       ),
       labelStyle: TextStyles.small(
         color: AppColors.getContrastingColor(AppColors.primary),
       ),
       deleteIconColor: AppColors.error,
+      selectedColor: AppColors.primary,
+      checkmarkColor: AppColors.success,
+    ),
+    tooltipTheme: TooltipThemeData(
+      textStyle: TextStyles.small(
+        color: AppColors.getContrastingColor(AppColors.tooltipBackground),
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.tooltipBackground,
+        borderRadius: Spacings.roundBorderSmall,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: Spacings.small,
+        horizontal: Spacings.medium,
+      ),
+    ),
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.dialogBackground,
+      shape: RoundedRectangleBorder(borderRadius: Spacings.roundBorderLarge),
+      titleTextStyle: TextStyles.title(
+        color: AppColors.getContrastingColor(AppColors.dialogBackground),
+      ),
+    ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.dialogBackground),
+      ),
     ),
   );
 }

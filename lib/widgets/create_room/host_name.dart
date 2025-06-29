@@ -10,12 +10,12 @@ class HostNameWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        labelText: 'Host Name',
+        labelText: 'Owner Name',
         hint: const Text("Enter your name..."),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter a host name';
+          return 'Please enter a valid username for the owner';
         }
         return null;
       },

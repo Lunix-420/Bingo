@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/tileset_filter_model.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/card_list/card_list_filter_dialog.dart';
 import 'package:frontend/widgets/card_list/card_list_search.dart';
@@ -69,6 +70,7 @@ class _CardListFilterWidgetState extends State<CardListFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: Spacings.medium,
       children: [
         CardListSearchWidget(controller: _searchController),
         Row(
@@ -84,6 +86,7 @@ class _CardListFilterWidgetState extends State<CardListFilterWidget> {
               icon: const Icon(Icons.filter_alt),
               tooltip: 'Open Dialog',
               onPressed: _openDialog,
+              style: ButtonStyles.filterIconButton,
             ),
           ],
         ),

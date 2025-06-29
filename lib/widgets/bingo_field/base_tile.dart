@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/decorations.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
 
@@ -18,10 +19,21 @@ class BaseTileWidget extends StatefulWidget {
 
   @override
   State<BaseTileWidget> createState() => _BaseTileWidgetState();
+
+  static Widget baseFieldText(String text) {
+    return Text(
+      text,
+      style: TextStyles.normal(),
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+    );
+  }
 }
 
 class _BaseTileWidgetState extends State<BaseTileWidget> {
   final FocusNode _focusNode = FocusNode();
+  final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
 
   @override
   void dispose() {
@@ -43,38 +55,26 @@ class _BaseTileWidgetState extends State<BaseTileWidget> {
     return Focus(
       focusNode: _focusNode,
       onFocusChange: (hasFocus) {
-        setState(() {});
+        setState(() {
+          if (hasFocus) {
+            _tooltipKey.currentState?.ensureTooltipVisible();
+          }
+        });
       },
       child: GestureDetector(
         onTap: _handleTap,
         onLongPress: widget.onLongPress,
         behavior: HitTestBehavior.translucent,
         child: Tooltip(
-          // TODO: check tooltip trigger mode for mobile
+          key: _tooltipKey,
           message: widget.tile,
           enableTapToDismiss: true,
+
           child: Container(
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              // TODO:
-              color: Colors.blue[100],
-              border: Border.all(
-                color:
-                    _focusNode.hasFocus ? Colors.blue[900]! : Colors.blue[400]!,
-                width: 2,
-              ),
-              borderRadius: Spacings.roundBorderMedium,
-            ),
-            padding: Spacings.allMedium,
-            child:
-                widget.child ??
-                Text(
-                  widget.tile,
-                  style: TextStyles.normal(),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
+            decoration: Decorations.bingoTile(_focusNode.hasFocus),
+            padding: Spacings.allSmall,
+            child: widget.child ?? BaseTileWidget.baseFieldText(widget.tile),
           ),
         ),
       ),

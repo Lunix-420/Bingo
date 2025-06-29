@@ -97,7 +97,7 @@ class _RoomCreateViewState extends State<RoomCreateView> {
             mainAxisSize: MainAxisSize.min,
             spacing: Spacings.medium,
             children: [
-              const SizedBox(height: Spacings.medium),
+              SizedBox(height: Spacings.medium),
               HostNameWidget(controller: hostNameController),
               MaxPlayersWidget(controller: maxPlayersController),
               CheckboxListTile(
