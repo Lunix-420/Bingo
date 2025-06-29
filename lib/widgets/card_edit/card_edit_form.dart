@@ -101,9 +101,9 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Spacings.large),
+      padding: EdgeInsets.all(Spacings.large),
       child: Column(
-        spacing: Spacings.extraLarge,
+        spacing: Spacings.medium,
         children: [
           NameInputWidget(controller: _nameController),
           TagInputWidget(

@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/platform.dart';
 
 class Spacings {
-  static const double small = 8.0;
-  static const double medium = 16.0;
-  static const double large = 24.0;
-  static const double extraLarge = 32.0;
+  static double small = PlatformUtils.isMobile() ? 6.0 : 8.0;
+  static double medium = PlatformUtils.isMobile() ? 12.0 : 16.0;
+  static double large = PlatformUtils.isMobile() ? 18.0 : 24.0;
+  static double extraLarge = 32.0;
 
-  static const allSmall = EdgeInsets.all(small);
-  static const allMedium = EdgeInsets.all(medium);
-  static const allLarge = EdgeInsets.all(large);
-  static const allExtraLarge = EdgeInsets.all(extraLarge);
-  static const verticalMedium = EdgeInsets.symmetric(vertical: medium);
-  static const horizontalSmall = EdgeInsets.symmetric(horizontal: small);
+  static EdgeInsets allSmall = EdgeInsets.all(small);
+  static EdgeInsets allMedium = EdgeInsets.all(medium);
+  static EdgeInsets allLarge = EdgeInsets.all(large);
+  static EdgeInsets allExtraLarge = EdgeInsets.all(extraLarge);
+  static EdgeInsets verticalMedium = EdgeInsets.symmetric(vertical: medium);
+  static EdgeInsets horizontalSmall = EdgeInsets.symmetric(horizontal: small);
 
-  static const roundBorderMedium = BorderRadius.all(Radius.circular(medium));
-  static const roundBorderSmall = BorderRadius.all(Radius.circular(small));
-  static const roundBorderLarge = BorderRadius.all(Radius.circular(large));
-  static const roundBorderExtraLarge = BorderRadius.all(
+  static BorderRadius roundBorderMedium = BorderRadius.all(
+    Radius.circular(medium),
+  );
+  static BorderRadius roundBorderSmall = BorderRadius.all(
+    Radius.circular(small),
+  );
+  static BorderRadius roundBorderLarge = BorderRadius.all(
+    Radius.circular(large),
+  );
+  static BorderRadius roundBorderExtraLarge = BorderRadius.all(
     Radius.circular(extraLarge),
   );
 }

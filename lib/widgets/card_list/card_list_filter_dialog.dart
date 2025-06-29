@@ -79,7 +79,7 @@ class _CardListFilterDialogWidgetState
                 onTagDelete: _handleTagDelete,
                 onAddTag: _handleAddTag,
               ),
-              const SizedBox(height: Spacings.medium),
+              SizedBox(height: Spacings.medium),
               Text("Size", style: dialogStyle),
               Wrap(
                 spacing: Spacings.small,
@@ -92,7 +92,7 @@ class _CardListFilterDialogWidgetState
                       );
                     }).toList(),
               ),
-              const SizedBox(height: Spacings.medium),
+              SizedBox(height: Spacings.medium),
               TextField(
                 controller: ratingController,
                 keyboardType: TextInputType.number,
@@ -102,7 +102,7 @@ class _CardListFilterDialogWidgetState
                   hint: const Text("Enter a minumum rating..."),
                 ),
               ),
-              const SizedBox(height: Spacings.medium),
+              SizedBox(height: Spacings.medium),
               TextField(
                 controller: playsController,
                 keyboardType: TextInputType.number,

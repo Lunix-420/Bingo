@@ -106,7 +106,7 @@ class _RoomViewState extends State<RoomView> {
             onDone: _gameStarted,
           )
           : Padding(
-            padding: const EdgeInsets.symmetric(vertical: Spacings.medium),
+            padding: EdgeInsets.symmetric(vertical: Spacings.medium),
             child: Text(
               "Waiting for owner to start...",
               style: TextStyles.normal(),

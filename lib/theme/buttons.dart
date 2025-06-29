@@ -10,7 +10,7 @@ class ButtonStyles {
       AppColors.getContrastingColor(AppColors.success),
     ),
     padding: WidgetStateProperty.all(
-      const EdgeInsets.symmetric(
+      EdgeInsets.symmetric(
         horizontal: Spacings.large,
         vertical: Spacings.medium,
       ),
@@ -31,7 +31,7 @@ class ButtonStyles {
       AppColors.getContrastingColor(AppColors.error),
     ),
     padding: WidgetStateProperty.all(
-      const EdgeInsets.symmetric(
+      EdgeInsets.symmetric(
         horizontal: Spacings.large,
         vertical: Spacings.medium,
       ),
@@ -50,7 +50,7 @@ class ButtonStyles {
       AppColors.getContrastingColor(AppColors.disabled),
     ),
     padding: WidgetStateProperty.all(
-      const EdgeInsets.symmetric(
+      EdgeInsets.symmetric(
         horizontal: Spacings.extraLarge,
         vertical: Spacings.medium,
       ),
@@ -71,7 +71,7 @@ class ButtonStyles {
       AppColors.getContrastingColor(AppColors.primary),
     ),
     padding: WidgetStateProperty.all(
-      const EdgeInsets.symmetric(
+      EdgeInsets.symmetric(
         horizontal: Spacings.extraLarge,
         vertical: Spacings.large,
       ),

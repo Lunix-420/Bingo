@@ -52,7 +52,7 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
       ...List.generate(
         widget.tags.length,
         (i) => Padding(
-          padding: const EdgeInsets.only(bottom: Spacings.medium),
+          padding: EdgeInsets.only(bottom: Spacings.medium),
           child: Row(
             spacing: Spacings.medium,
             children: [
@@ -70,7 +70,7 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
           ),
         ),
       ),
-      const SizedBox(height: Spacings.medium),
+      SizedBox(height: Spacings.medium),
       Row(
         spacing: Spacings.medium,
         children: [

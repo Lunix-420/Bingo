@@ -48,8 +48,7 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
           scrollDirection: Axis.horizontal,
           itemCount: _tags.length,
           itemBuilder: (context, index) => Chip(label: Text(_tags[index])),
-          separatorBuilder:
-              (context, index) => const SizedBox(width: Spacings.small),
+          separatorBuilder: (context, index) => SizedBox(width: Spacings.small),
           physics: const ClampingScrollPhysics(),
         ),
       ),

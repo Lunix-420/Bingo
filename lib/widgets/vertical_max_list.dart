@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/theme/spacings.dart';
 
 class VerticalMaxListWidget extends StatelessWidget {
   final List<Widget> children;
@@ -23,6 +24,7 @@ class VerticalMaxListWidget extends StatelessWidget {
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Column(
                 mainAxisAlignment: mainAxisAlignment,
+                spacing: Spacings.medium,
                 children: [...children],
               ),
             ),

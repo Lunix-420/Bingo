@@ -62,12 +62,11 @@ class _CardListViewState extends State<CardListView> {
       ),
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: Spacings.medium),
+        SizedBox(height: Spacings.small),
         CardListFilterWidget(
           filter: _filter,
           onFilterChange: _handleFilterChange,
         ),
-        SizedBox(height: Spacings.large),
         FutureLoaderWidget(
           future: _tilesetFuture,
           builder: (context, tilesets) {
@@ -78,7 +77,7 @@ class _CardListViewState extends State<CardListView> {
               itemBuilder: (context, index) {
                 final tileset = tilesets[index];
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: Spacings.small),
+                  padding: EdgeInsets.only(bottom: Spacings.small),
                   child: BingoPreviewCardWidget(
                     tileset: tileset,
                     onTap: _handleCardTap(createRoom),
