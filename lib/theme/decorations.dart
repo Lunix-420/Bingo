@@ -39,4 +39,15 @@ class Decorations {
     ),
     borderRadius: Spacings.roundBorderExtraLarge,
   );
+
+  static BoxDecoration bingoTile(bool hasFocus) {
+    return BoxDecoration(
+      color: AppColors.bingoTileBackground,
+      border: Border.all(
+        color: hasFocus ? AppColors.primary : AppColors.bingoTileBorder,
+        width: 2,
+      ),
+      borderRadius: Spacings.roundBorderMedium,
+    );
+  }
 }

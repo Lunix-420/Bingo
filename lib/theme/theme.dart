@@ -54,7 +54,7 @@ ThemeData getTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: Spacings.roundBorderSmall,
-        borderSide: BorderSide(color: AppColors.inputFieldBorder, width: 2),
+        borderSide: BorderSide(color: AppColors.secondary, width: 2),
       ),
       labelStyle: TextStyles.normal(
         color: AppColors.getContrastingColor(AppColors.inputFieldBackground),
@@ -65,7 +65,11 @@ ThemeData getTheme() {
       backgroundColor: AppColors.primary,
       shape: RoundedRectangleBorder(
         borderRadius: Spacings.roundBorderExtraLarge,
-        side: BorderSide(width: 0, color: Colors.transparent),
+        side: BorderSide(
+          width: 1,
+          color: AppColors.inputFieldBorder,
+          style: BorderStyle.solid,
+        ),
       ),
       labelStyle: TextStyles.small(
         color: AppColors.getContrastingColor(AppColors.primary),

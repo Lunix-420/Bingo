@@ -18,7 +18,6 @@ class Routing {
   static const String roomCreateRoute = '/create-room';
   static const String gameRoute = '/game';
   static const String gameEndRoute = '/game-end';
-  static const String testRoute = '/test';
 
   static const String argumentTilesetId = 'tilesetId';
   static const String argumentCreateRoom = 'create-room';
@@ -135,6 +134,15 @@ class Routing {
     BuildContext context, {
     CreateRoomModel? createRoom,
   }) {
+    if (createRoom != null) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        roomCreateRoute,
+        ModalRoute.withName(homeRoute),
+        arguments: {argumentCreateRoom: createRoom},
+      );
+      return;
+    }
     Navigator.pushNamed(
       context,
       roomCreateRoute,

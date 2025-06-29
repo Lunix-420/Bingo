@@ -3,7 +3,7 @@ import 'package:frontend/router/router.dart';
 import 'package:frontend/theme/theme.dart';
 import 'package:toastification/toastification.dart';
 
-Future<void> main() async {
+void main() {
   runApp(const MyApp());
 }
 

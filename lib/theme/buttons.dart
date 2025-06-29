@@ -11,7 +11,7 @@ class ButtonStyles {
     ),
     padding: WidgetStateProperty.all(
       const EdgeInsets.symmetric(
-        horizontal: Spacings.extraLarge,
+        horizontal: Spacings.large,
         vertical: Spacings.medium,
       ),
     ),
@@ -32,7 +32,7 @@ class ButtonStyles {
     ),
     padding: WidgetStateProperty.all(
       const EdgeInsets.symmetric(
-        horizontal: Spacings.extraLarge,
+        horizontal: Spacings.large,
         vertical: Spacings.medium,
       ),
     ),

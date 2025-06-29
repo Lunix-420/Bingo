@@ -68,50 +68,52 @@ class _CardListFilterDialogWidgetState
       actionsAlignment: MainAxisAlignment.center,
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.7,
-        child: Column(
-          spacing: 8,
-          children: [
-            Text("Tags", style: dialogStyle),
-            TagInputListWidget(
-              tags: filters.tags,
-              onTagChange: _handleTagChange,
-              onTagDelete: _handleTagDelete,
-              onAddTag: _handleAddTag,
-            ),
-            const SizedBox(height: Spacings.medium),
-            Text("Size", style: dialogStyle),
-            Wrap(
-              spacing: Spacings.small,
-              children:
-                  TilesetService.validSizes.map((size) {
-                    return ChoiceChip(
-                      label: Text(size.toString()),
-                      selected: filters.size.contains(size),
-                      onSelected: (_) => _handleSizeChange(size),
-                    );
-                  }).toList(),
-            ),
-            const SizedBox(height: Spacings.medium),
-            TextField(
-              controller: ratingController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                labelText: 'Rating',
-                hint: const Text("Enter a minumum rating..."),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 8,
+            children: [
+              Text("Tags", style: dialogStyle),
+              TagInputListWidget(
+                tags: filters.tags,
+                onTagChange: _handleTagChange,
+                onTagDelete: _handleTagDelete,
+                onAddTag: _handleAddTag,
               ),
-            ),
-            const SizedBox(height: Spacings.medium),
-            TextField(
-              controller: playsController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                labelText: 'Plays',
-                hint: const Text("Enter a minimum number of plays..."),
+              const SizedBox(height: Spacings.medium),
+              Text("Size", style: dialogStyle),
+              Wrap(
+                spacing: Spacings.small,
+                children:
+                    TilesetService.validSizes.map((size) {
+                      return ChoiceChip(
+                        label: Text(size.toString()),
+                        selected: filters.size.contains(size),
+                        onSelected: (_) => _handleSizeChange(size),
+                      );
+                    }).toList(),
               ),
-            ),
-          ],
+              const SizedBox(height: Spacings.medium),
+              TextField(
+                controller: ratingController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  labelText: 'Rating',
+                  hint: const Text("Enter a minumum rating..."),
+                ),
+              ),
+              const SizedBox(height: Spacings.medium),
+              TextField(
+                controller: playsController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  labelText: 'Plays',
+                  hint: const Text("Enter a minimum number of plays..."),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       actions: [

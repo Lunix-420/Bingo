@@ -6,7 +6,7 @@ import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
-import 'package:frontend/widgets/bingo_field/view_field.dart';
+import 'package:frontend/widgets/bingo_field/view_tile.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
 import 'package:frontend/widgets/future_loader.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
@@ -30,7 +30,7 @@ class _CardPreviewViewState extends State<CardPreviewView> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       spacing: Spacings.large,
       children: [
-        BingoPreviewCardWidget(tileset: tileset, decorators: false),
+        BingoPreviewCardWidget(tileset: tileset),
         BingoFieldWidget(
           tiles: tileset.tiles,
           size: tileset.size,

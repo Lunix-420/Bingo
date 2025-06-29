@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/theme/textstyles.dart';
+import 'package:frontend/utils/player_icon.dart';
 
 class PlayerListWidget extends StatelessWidget {
   final List<Player> players;
@@ -17,13 +18,13 @@ class PlayerListWidget extends StatelessWidget {
   Icon _getPlayerIcon(Player player) {
     if (player.id == currentPlayer.id) {
       if (player.id == host.id) {
-        return const Icon(Icons.star, color: Colors.blue);
+        return PlayerIcon.getSelf(host: true);
       }
-      return const Icon(Icons.person, color: Colors.blue);
+      return PlayerIcon.getSelf();
     } else if (player.id == host.id) {
-      return const Icon(Icons.star, color: Colors.yellow);
+      return PlayerIcon.getHost();
     } else {
-      return const Icon(Icons.person_outline);
+      return PlayerIcon.getDefault();
     }
   }
 

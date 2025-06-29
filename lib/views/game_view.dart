@@ -11,7 +11,7 @@ import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
-import 'package:frontend/widgets/bingo_field/checkable_field.dart';
+import 'package:frontend/widgets/bingo_field/checkable_tile.dart';
 import 'package:frontend/widgets/game/player_list_button.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
 

@@ -5,7 +5,7 @@ import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/utils/focus_utils.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/widgets/bingo_field/bingo_field.dart';
-import 'package:frontend/widgets/bingo_field/edit_field.dart';
+import 'package:frontend/widgets/bingo_field/edit_tile.dart';
 import 'package:frontend/widgets/card_edit/name_input.dart';
 import 'package:frontend/widgets/card_edit/size_input.dart';
 import 'package:frontend/widgets/card_edit/tag_input.dart';
@@ -74,7 +74,6 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
       try {
         _tileset.changeSize(newSize);
       } catch (e) {
-        // TODO: maybe add a snackbar or dialog to inform the user
         logger.e("Failed to change size: $e");
       }
     });
@@ -107,7 +106,11 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
         spacing: Spacings.extraLarge,
         children: [
           NameInputWidget(controller: _nameController),
-          TagInputWidget(tags: _tileset.tags, onTagsChanged: _handleTagsChange),
+          TagInputWidget(
+            tags: _tileset.tags,
+            onTagsChanged: _handleTagsChange,
+            size: _tileset.size,
+          ),
           SizeInputWidget(
             size: _tileset.size,
             onSizeChanged: _handleSizeChange,
