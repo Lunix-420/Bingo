@@ -42,7 +42,7 @@ class _GameEndViewState extends State<GameEndView> {
     return room!.tileset;
   }
 
-  void handleTilesetTap(Tileset tileset) {
+  void _handleTilesetTap(Tileset tileset) {
     if (room == null) {
       return;
     }
@@ -93,7 +93,7 @@ class _GameEndViewState extends State<GameEndView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Score", routeName: Routing.homeRoute),
       children: [
-        BingoPreviewCardWidget(tileset: tileset, onTap: handleTilesetTap),
+        BingoPreviewCardWidget(tileset: tileset, onTap: _handleTilesetTap),
         scoreboard ?? const SizedBox.shrink(),
         ElevatedButton(
           onPressed: _navigateToHome,

@@ -14,8 +14,7 @@ class MyApp extends StatelessWidget {
 
   void _initPlatform(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    if (size.width >= 1280 && size.height >= 720 ||
-        size.width >= 720 && size.height >= 1280) {
+    if (size.width * size.height >= 450000) {
       isMobile = false;
     } else {
       isMobile = true;
