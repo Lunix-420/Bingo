@@ -32,7 +32,7 @@ class Room {
   final String id;
   final String code;
   final bool isVersus;
-  final Tileset tileset;
+  Tileset tileset;
   final List<Player> players;
   final List<BingoField> bingofields;
   final Player host;

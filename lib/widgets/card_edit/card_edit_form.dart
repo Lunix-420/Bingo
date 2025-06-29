@@ -100,42 +100,35 @@ class _CardEditFormWidgetState extends State<CardEditFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(Spacings.large),
-      child: Column(
-        spacing: Spacings.medium,
-        children: [
-          NameInputWidget(controller: _nameController),
-          TagInputWidget(
-            tags: _tileset.tags,
-            onTagsChanged: _handleTagsChange,
-            size: _tileset.size,
-          ),
-          SizeInputWidget(
-            size: _tileset.size,
-            onSizeChanged: _handleSizeChange,
-          ),
-          BingoFieldWidget(
-            tiles: _tileset.tiles,
-            size: _tileset.size,
-            tileBuilder: EditTileWidget.tileBuilder(_handleTileChange),
-          ),
-          ElevatedButton(
-            onPressed: _isTileSelected ? _handleEditClick : null,
-            style:
-                _isTileSelected
-                    ? ButtonStyles.successButton
-                    : ButtonStyles.disabledButton,
-            child:
-                _isTileSelected ? const Text("Edit") : const Text("Select..."),
-          ),
-          ElevatedButton(
-            onPressed: _handleSave,
-            style: ButtonStyles.successButton,
-            child: const Text('Save'),
-          ),
-        ],
-      ),
+    return Column(
+      spacing: Spacings.medium,
+      children: [
+        NameInputWidget(controller: _nameController),
+        TagInputWidget(
+          tags: _tileset.tags,
+          onTagsChanged: _handleTagsChange,
+          size: _tileset.size,
+        ),
+        SizeInputWidget(size: _tileset.size, onSizeChanged: _handleSizeChange),
+        BingoFieldWidget(
+          tiles: _tileset.tiles,
+          size: _tileset.size,
+          tileBuilder: EditTileWidget.tileBuilder(_handleTileChange),
+        ),
+        ElevatedButton(
+          onPressed: _isTileSelected ? _handleEditClick : null,
+          style:
+              _isTileSelected
+                  ? ButtonStyles.successButton
+                  : ButtonStyles.disabledButton,
+          child: _isTileSelected ? const Text("Edit") : const Text("Select..."),
+        ),
+        ElevatedButton(
+          onPressed: _handleSave,
+          style: ButtonStyles.successButton,
+          child: const Text('Save'),
+        ),
+      ],
     );
   }
 }

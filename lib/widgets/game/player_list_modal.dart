@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/router/routing.dart';
@@ -34,7 +36,7 @@ class PlayerListModalWidget extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.6,
+            width: max(MediaQuery.of(context).size.width * 0.6, 300.0),
             height: double.infinity,
             decoration: BoxDecoration(color: Theme.of(context).cardTheme.color),
             child: Column(
@@ -46,7 +48,7 @@ class PlayerListModalWidget extends StatelessWidget {
                     vertical: Spacings.large,
                   ),
                   child: Row(
-                    spacing: Spacings.extraLarge,
+                    spacing: Spacings.large,
                     children: [
                       IconButton(
                         icon: const Icon(Icons.arrow_forward),

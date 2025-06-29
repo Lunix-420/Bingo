@@ -168,17 +168,17 @@ class TilesetService {
   }
 
   static Future<Tileset?> downvoteTileset(
-    Tileset tielset, {
+    Tileset tileset, {
     bool doThrow = false,
   }) async {
     try {
-      final url = ApiRoutes.postDownvoteTileset(tielset.id);
+      final url = ApiRoutes.postDownvoteTileset(tileset.id);
 
-      logger.d('"$url": Downvoting tileset with ID: ${tielset.id}');
+      logger.d('"$url": Downvoting tileset with ID: ${tileset.id}');
 
       final response = await Requests.postMap(url, "");
 
-      logger.d('Tileset downvoted successfully: ${tielset.id}');
+      logger.d('Tileset downvoted successfully: ${tileset.id}');
 
       return Tileset.fromJson(response);
     } catch (e) {

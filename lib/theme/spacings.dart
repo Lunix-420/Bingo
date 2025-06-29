@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/platform.dart';
+import 'package:frontend/main.dart';
 
 class Spacings {
-  static double small = PlatformUtils.isMobile() ? 6.0 : 8.0;
-  static double medium = PlatformUtils.isMobile() ? 12.0 : 16.0;
-  static double large = PlatformUtils.isMobile() ? 18.0 : 24.0;
+  static double small = MyApp.isMobile ? 6.0 : 8.0;
+  static double medium = MyApp.isMobile ? 12.0 : 16.0;
+  static double large = MyApp.isMobile ? 18.0 : 24.0;
   static double extraLarge = 32.0;
 
   static EdgeInsets allSmall = EdgeInsets.all(small);
