@@ -7,7 +7,10 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scale = MediaQuery.of(context).size.height / 350.0;
+    final scale = (5.5 - (MediaQuery.of(context).size.height / 250.0)).clamp(
+      1.0,
+      5.5,
+    );
     return Align(
       alignment: Alignment.topCenter,
       child: ScaleTransition(

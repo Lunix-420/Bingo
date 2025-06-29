@@ -10,8 +10,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static bool isMobile = false;
+
+  void _initPlatform(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    if (size.width * size.height >= 450000) {
+      isMobile = false;
+    } else {
+      isMobile = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _initPlatform(context);
+
     return ToastificationWrapper(
       child: MaterialApp(
         title: "Bingo Royal",

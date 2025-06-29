@@ -3,11 +3,14 @@ import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
 import 'package:frontend/model/tileset_model.dart';
 import 'package:frontend/router/routing.dart';
+import 'package:frontend/services/tileset_service.dart';
 import 'package:frontend/theme/buttons.dart';
+import 'package:frontend/utils/toasts.dart';
 import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/bingo_preview_card/bingo_preview_card.dart';
 import 'package:frontend/widgets/score/scoreboard.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
+import 'package:toastification/toastification.dart';
 
 class GameEndView extends StatefulWidget {
   const GameEndView({super.key});
@@ -19,6 +22,7 @@ class GameEndView extends StatefulWidget {
 class _GameEndViewState extends State<GameEndView> {
   Room? room;
   Player? player;
+  bool hasLiked = false;
 
   @override
   void initState() {
@@ -38,8 +42,39 @@ class _GameEndViewState extends State<GameEndView> {
     return room!.tileset;
   }
 
-  void handleTilesetTap(Tileset tileset) {
-    // TODO:
+  void _handleTilesetTap(Tileset tileset) {
+    if (room == null) {
+      return;
+    }
+    if (hasLiked) {
+      TilesetService.downvoteTileset(room!.tileset).then((tileset) {
+        if (tileset != null) {
+          setState(() {
+            room!.tileset = tileset;
+            hasLiked = false;
+          });
+          Toast.show(
+            "Success",
+            "Successfully unliked the Bingo Card!",
+            ToastificationType.success,
+          );
+        }
+      });
+    } else {
+      TilesetService.upvoteTileset(room!.tileset).then((tileset) {
+        if (tileset != null) {
+          setState(() {
+            room!.tileset = tileset;
+            hasLiked = true;
+          });
+          Toast.show(
+            "Success",
+            "Successfully liked the Bingo Card!",
+            ToastificationType.success,
+          );
+        }
+      });
+    }
   }
 
   ScoreboardWidget? get scoreboard {
@@ -58,7 +93,7 @@ class _GameEndViewState extends State<GameEndView> {
     return ViewScaffoldWidget(
       appbar: AppBarWidget(title: "Score", routeName: Routing.homeRoute),
       children: [
-        BingoPreviewCardWidget(tileset: tileset, onTap: handleTilesetTap),
+        BingoPreviewCardWidget(tileset: tileset, onTap: _handleTilesetTap),
         scoreboard ?? const SizedBox.shrink(),
         ElevatedButton(
           onPressed: _navigateToHome,
