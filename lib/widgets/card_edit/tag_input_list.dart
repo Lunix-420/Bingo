@@ -25,6 +25,11 @@ class _TagInputListWidgetState extends State<TagInputListWidget> {
   final TextEditingController _newTagController = TextEditingController();
   final FocusNode _newTagFocusNode = FocusNode();
 
+  @override
+  void dispose() {
+    _newTagFocusNode.dispose();
+    super.dispose();
+  }
   Function(String) _handleChange(int index) {
     return (value) => widget.onTagChange(value, index);
   }
