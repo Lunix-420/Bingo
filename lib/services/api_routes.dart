@@ -1,5 +1,5 @@
 class ApiRoutes {
-  static const String _baseRoute = "http://192.168.2.125:3000";
+  static const String _baseRoute = "http://localhost:3000";
   static const String _tilesetsBase = "$_baseRoute/tilesets";
 
   // --------------------------  Socket Route --------------------------
