@@ -18,14 +18,11 @@ class PreviewCardTagListWidget extends StatefulWidget {
 
 class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
   late final ScrollController _tagScrollController;
-  late final List<String> _tags;
 
   @override
   void initState() {
     super.initState();
     _tagScrollController = ScrollController();
-    _tags = List<String>.from(widget.tags);
-    _tags.insert(0, "${widget.size}x${widget.size}");
   }
 
   @override
@@ -34,9 +31,15 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
     super.dispose();
   }
 
+  List<String> get tags {
+    final List<String> tags = List<String>.from(widget.tags);
+    tags.insert(0, "${widget.size}x${widget.size}");
+    return tags;
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_tags.isEmpty) return const SizedBox.shrink();
+    if (tags.isEmpty) return const SizedBox.shrink();
 
     return SizedBox(
       height: 32,
@@ -46,8 +49,8 @@ class _PreviewCardTagListWidgetState extends State<PreviewCardTagListWidget> {
         child: ListView.separated(
           controller: _tagScrollController,
           scrollDirection: Axis.horizontal,
-          itemCount: _tags.length,
-          itemBuilder: (context, index) => Chip(label: Text(_tags[index])),
+          itemCount: tags.length,
+          itemBuilder: (context, index) => Chip(label: Text(tags[index])),
           separatorBuilder: (context, index) => SizedBox(width: Spacings.small),
           physics: const ClampingScrollPhysics(),
         ),

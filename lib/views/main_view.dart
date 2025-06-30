@@ -20,8 +20,10 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    GameService.removeListeners();
     GameService.disconnectSocket();
     RoomView.navigated = false;
+    RoomView.connected = false;
 
     logoController = AnimationController(
       vsync: this,

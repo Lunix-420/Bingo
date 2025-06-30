@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/model/create_room_model.dart';
 import 'package:frontend/model/player_model.dart';
 import 'package:frontend/model/room_model.dart';
+import 'package:frontend/services/game_service.dart';
 import 'package:frontend/utils/named_logger.dart';
 import 'package:frontend/utils/toasts.dart';
 import 'package:toastification/toastification.dart';
@@ -177,6 +178,8 @@ class Routing {
   }
 
   static void navigateBack(BuildContext context, {dynamic value}) {
+    GameService.removeListeners();
+    GameService.disconnectSocket();
     if (Navigator.canPop(context)) {
       Navigator.pop(context, value);
     } else {

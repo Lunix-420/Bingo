@@ -56,6 +56,7 @@ class GameService {
     logger.i('Setting up listeners for room updates');
     _listeners.add(socket.on("joinedRoom", callback));
     _listeners.add(socket.on("leftRoom", callback));
+    _listeners.add(socket.on("gameStateUpdated", callback));
   }
 
   static void onGameUpdate(Function(dynamic) callback) {

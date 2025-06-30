@@ -21,6 +21,7 @@ final logger = namedLogger("Room-View");
 
 class RoomView extends StatefulWidget {
   static bool navigated = false;
+  static bool connected = false;
 
   const RoomView({super.key});
 
@@ -41,6 +42,11 @@ class _RoomViewState extends State<RoomView> {
         room = Routing.getRoomFromArguments(context);
         player = Routing.getPlayerFromArguments(context);
       });
+
+      if (RoomView.connected) {
+        return;
+      }
+      RoomView.connected = true;
 
       GameService.connectSocket(
         onConnect: () {

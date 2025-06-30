@@ -1,5 +1,5 @@
 class ApiRoutes {
-  static const String _baseRoute = "http://localhost:3000";
+  static const String _baseRoute = "https://test.dev-tonka.com";
   static const String _tilesetsBase = "$_baseRoute/tilesets";
   static const String _roomsBase = "$_baseRoute/rooms";
   static const String _playersBase = "$_baseRoute/players";

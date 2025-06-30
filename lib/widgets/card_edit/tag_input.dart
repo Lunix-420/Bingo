@@ -4,7 +4,7 @@ import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/widgets/bingo_preview_card/preview_card_tag_list.dart';
 import 'package:frontend/widgets/card_edit/tag_input_dialog.dart';
 
-class TagInputWidget extends StatefulWidget {
+class TagInputWidget extends StatelessWidget {
   final List<String> tags;
   final Function(List<String>) onTagsChanged;
   final int size;
@@ -17,18 +17,13 @@ class TagInputWidget extends StatefulWidget {
     required this.size,
   });
 
-  @override
-  State<TagInputWidget> createState() => _TagInputWidgetState();
-}
-
-class _TagInputWidgetState extends State<TagInputWidget> {
-  void _onEditTags() async {
+  void _onEditTags(BuildContext context) async {
     final result = await showDialog<List<String>>(
       context: context,
-      builder: (context) => TagInputDialogWidget(initialTags: widget.tags),
+      builder: (context) => TagInputDialogWidget(initialTags: tags),
     );
     if (result != null) {
-      widget.onTagsChanged(result);
+      onTagsChanged(result);
     }
   }
 
@@ -38,11 +33,11 @@ class _TagInputWidgetState extends State<TagInputWidget> {
       spacing: Spacings.small,
       children: [
         Expanded(
-          child: PreviewCardTagListWidget(tags: widget.tags, size: widget.size),
+          child: PreviewCardTagListWidget(tags: tags, size: size),
         ),
         IconButton(
           icon: const Icon(Icons.edit),
-          onPressed: _onEditTags,
+          onPressed: () => _onEditTags(context),
           style: ButtonStyles.filterIconButton,
         ),
       ],
