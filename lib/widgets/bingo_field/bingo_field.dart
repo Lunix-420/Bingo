@@ -19,24 +19,33 @@ class BingoFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final spacing = Spacings.medium;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Center(
       child: Card(
         shape: Decorations.bingoFieldBorder,
         child: Padding(
           padding: EdgeInsets.all(spacing),
-
-          child: GridView.count(
-            crossAxisCount: size,
-            shrinkWrap: true,
-            mainAxisSpacing: spacing,
-            crossAxisSpacing: spacing,
-            physics: const NeverScrollableScrollPhysics(),
-            children: List<Widget>.generate(
-              tiles.length,
-              (index) => tileBuilder(
-                tiles[index],
-                index,
-                checkedTiles.isNotEmpty ? checkedTiles[index] : null,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: screenHeight * 0.6,
+            ),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: GridView.count(
+                crossAxisCount: size,
+                shrinkWrap: true,
+                mainAxisSpacing: spacing,
+                crossAxisSpacing: spacing,
+                physics: const NeverScrollableScrollPhysics(),
+                children: List<Widget>.generate(
+                  tiles.length,
+                  (index) => tileBuilder(
+                    tiles[index],
+                    index,
+                    checkedTiles.isNotEmpty ? checkedTiles[index] : null,
+                  ),
+                ),
               ),
             ),
           ),

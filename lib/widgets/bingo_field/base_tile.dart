@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/theme/decorations.dart';
 import 'package:frontend/theme/spacings.dart';
 import 'package:frontend/theme/textstyles.dart';
@@ -8,6 +9,7 @@ class BaseTileWidget extends StatefulWidget {
   final Widget? child;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
+  final VoidCallback? onFocusedEnter;
 
   const BaseTileWidget({
     super.key,
@@ -15,6 +17,7 @@ class BaseTileWidget extends StatefulWidget {
     this.child,
     this.onTap,
     this.onLongPress,
+    this.onFocusedEnter,
   });
 
   @override
@@ -50,17 +53,34 @@ class _BaseTileWidgetState extends State<BaseTileWidget> {
     }
   }
 
+  KeyEventResult _handleKeyDown(FocusNode node, KeyEvent event) {
+    if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.enter) {
+      if (widget.onFocusedEnter != null) {
+        _tooltipKey.currentState?.deactivate();
+        widget.onFocusedEnter!();
+        return KeyEventResult.handled;
+      }
+    }
+    return KeyEventResult.ignored;
+  }
+
+  void _handleFocusChange(bool hasFocus) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (hasFocus) {
+        _tooltipKey.currentState?.activate();
+        _tooltipKey.currentState?.ensureTooltipVisible();
+      } else {
+        Tooltip.dismissAllToolTips();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Focus(
       focusNode: _focusNode,
-      onFocusChange: (hasFocus) {
-        setState(() {
-          if (hasFocus) {
-            _tooltipKey.currentState?.ensureTooltipVisible();
-          }
-        });
-      },
+      onFocusChange: _handleFocusChange,
+      onKeyEvent: _handleKeyDown,
       child: GestureDetector(
         onTap: _handleTap,
         onLongPress: widget.onLongPress,
@@ -69,7 +89,6 @@ class _BaseTileWidgetState extends State<BaseTileWidget> {
           key: _tooltipKey,
           message: widget.tile,
           enableTapToDismiss: true,
-
           child: Container(
             alignment: Alignment.center,
             decoration: Decorations.bingoTile(_focusNode.hasFocus),

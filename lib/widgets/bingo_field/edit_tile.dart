@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/router/routing.dart';
+import 'package:frontend/theme/buttons.dart';
 import 'package:frontend/widgets/bingo_field/base_tile.dart';
 
 class EditTileWidget extends StatefulWidget {
@@ -19,6 +20,11 @@ class EditTileWidget extends StatefulWidget {
 
   void handleEdit(BuildContext context) async {
     final controller = TextEditingController(text: tile);
+
+    void save() {
+      Routing.navigateBack(context, value: controller.text);
+    }
+
     final result = await showDialog<String>(
       context: context,
       builder:
@@ -28,16 +34,18 @@ class EditTileWidget extends StatefulWidget {
               controller: controller,
               autofocus: true,
               decoration: const InputDecoration(labelText: 'Tile'),
+              onSubmitted: (value) => save(),
             ),
             actions: [
               ElevatedButton(
-                onPressed: () => Routing.navigateBack(context),
-                child: const Text('Cancel'),
+                onPressed: save,
+                style: ButtonStyles.successButton,
+                child: const Text('Save'),
               ),
               ElevatedButton(
-                onPressed:
-                    () => Routing.navigateBack(context, value: controller.text),
-                child: const Text('Save'),
+                onPressed: () => Routing.navigateBack(context),
+                style: ButtonStyles.errorButton,
+                child: const Text('Cancel'),
               ),
             ],
           ),
@@ -66,6 +74,7 @@ class _EditTileWidgetState extends State<EditTileWidget> {
     return BaseTileWidget(
       tile: widget.tile,
       onLongPress: () => widget.handleEdit(context),
+      onFocusedEnter: () => widget.handleEdit(context),
     );
   }
 }
