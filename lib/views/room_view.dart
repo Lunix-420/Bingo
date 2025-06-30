@@ -42,6 +42,11 @@ class _RoomViewState extends State<RoomView> {
         room = Routing.getRoomFromArguments(context);
         player = Routing.getPlayerFromArguments(context);
       });
+      GameService.removeListeners();
+      GameService.onRoomUpdate((_) {
+        logger.d("Room updated, refreshing...");
+        _refreshRoom();
+      });
 
       if (RoomView.connected) {
         return;
@@ -50,10 +55,6 @@ class _RoomViewState extends State<RoomView> {
 
       GameService.connectSocket(
         onConnect: () {
-          GameService.onRoomUpdate((_) {
-            logger.d("Room updated, refreshing...");
-            _refreshRoom();
-          });
           GameService.emitJoinRoom(room!.code);
         },
       );

@@ -18,6 +18,8 @@ import 'package:frontend/widgets/view_scaffold.dart';
 final logger = namedLogger("Game-View");
 
 class GameView extends StatefulWidget {
+  static bool navigated = false;
+
   const GameView({super.key});
 
   @override
@@ -39,13 +41,13 @@ class _GameViewState extends State<GameView> {
       });
     });
     FocusManager.instance.addListener(_handleFocusChange);
+    GameService.removeListeners();
     GameService.onGameUpdate(_refreshRoom);
   }
 
   @override
   void dispose() {
     FocusManager.instance.removeListener(_handleFocusChange);
-    GameService.removeListeners();
     super.dispose();
   }
 
@@ -60,20 +62,27 @@ class _GameViewState extends State<GameView> {
       return;
     }
 
-    _updateRoom(updatedRoom);
+    _updateRoom(updatedRoom, false);
   }
 
-  void _updateRoom(Room updatedRoom) {
+  void _updateRoom(Room updatedRoom, bool emitUpdate) {
     setState(() {
       room = updatedRoom;
     });
+    if (emitUpdate) {
+      GameService.emitUpdateGameState(room!.code);
+    }
     if (room == null || player == null) {
       logger.w("Room or player is null, cannot update state");
       return;
     }
     final hasWon = room!.bingofields.any((f) => f.isWinner);
-    if (hasWon || room!.status == RoomStatus.finished) {
+    if ((hasWon || room!.status == RoomStatus.finished) &&
+        !GameView.navigated) {
       logger.i("Game finished, well done");
+      GameService.removeListeners();
+      GameService.disconnectSocket();
+      GameView.navigated = true;
       Routing.navigateGameEnd(context, room: room!, player: player!);
     }
   }
@@ -122,7 +131,7 @@ class _GameViewState extends State<GameView> {
       return;
     }
 
-    _updateRoom(roomResponse);
+    _updateRoom(roomResponse, true);
   }
 
   void handleButtonPress() {
