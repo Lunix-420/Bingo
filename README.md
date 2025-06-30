@@ -76,6 +76,18 @@ $ flutter run
 
 ---
 
+## Testing
+
+Zum Testen verwenden wir manuelle tests. Diese sehen wiefolgt aus:
+
+1. Programm starten
+2. Ausprobieren allerlei gedachter Interaktionen
+3. Ausprobieren von ungedachten Interaktionen
+
+Testing ist anders leider kaum möglich, da die App dicht an unser Backend gekoppelt ist. Zudem verwenden wir **Toastification** um Usern Feedback zu geben, und diese sind auch kaum Testbar und bringen daher die meisten Komponenten zum Absturz. Darüberhinaus macht es keinen Sinn, Stateless Komponenten zu testen, da diese Stateless sind und lediglich aussehen mit sich bringen.
+
+---
+
 ## 🎤 Mitmachen & Support
 
 - 👾 **Issues melden?** Erstelle ein [GitHub Issue](https://github.com/Lunix-420/Bingo/issues) 🛠️
