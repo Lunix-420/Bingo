@@ -21,7 +21,6 @@ Erstelle dein eigenes **Bingo Feld** oder lade ein hochgeladenes, starte ein Spi
 - ✅ **Zufällig generierte Spielfelder pro Spieler** 🎲
 - ✅ **Automatische Sieg-Erkennung** 🏆
 - ✅ **Anpassbare Spielregeln** ⚙️
-- ✅ **Farb-Schemas auswählbar** 🎨
 - ✅ **Integrierte Suchfunktion für Bingo Felder** 🔍
 - ✅ **Stylisches Hauptmenü** 🏠
 
@@ -31,12 +30,8 @@ Erstelle dein eigenes **Bingo Feld** oder lade ein hochgeladenes, starte ein Spi
 
 Weil wir Profis sind, kannst du das Spiel nach deinen Wünschen anpassen:
 
-- 🌀 **Sync Mode:** Kreuze ein Tile an – für die anderen wird es gesperrt! Chaos garantiert!
-- 🎯 **Roll Columns/Rows Only:** Zufällige Reihen oder Spalten, oder beides!
+- 🌀 **Versus Mode:** Kreuze ein Tile an – für die anderen wird es gesperrt! Chaos garantiert!
 - 📐 **Spielfeldgröße:** Wähle zwischen 6x6, 5x5, 4x4 oder 3x3!
-- ⏳ **Timer:** Setze ein Zeitlimit für extra Spannung!
-- 🥇 **Siegbedingungen:** Meiste Felder oder traditionelle Regeln!
-- 🔄 **Multihit:** Jeder Spieler kann im Sync Mode jedes Feld markieren, die Sperre wird aufgehoben!
 
 ---
 
@@ -57,6 +52,7 @@ Um die besten Bingo-Felder zu ermitteln, speichert die App:
 - Flutter SDK installiert ([Anleitung](https://flutter.dev/docs/get-started/install))
 - Dart SDK installiert
 - Android SDK installiert
+- Das Bingo-Backend läuft. Zu finden in [diesem Git-Repo](https://github.com/Lunix-420/BingoServer)
 
 ### Schritte
 
@@ -85,13 +81,6 @@ Zum Testen verwenden wir manuelle tests. Diese sehen wiefolgt aus:
 3. Ausprobieren von ungedachten Interaktionen
 
 Testing ist anders leider kaum möglich, da die App dicht an unser Backend gekoppelt ist. Zudem verwenden wir **Toastification** um Usern Feedback zu geben, und diese sind auch kaum Testbar und bringen daher die meisten Komponenten zum Absturz. Darüberhinaus macht es keinen Sinn, Stateless Komponenten zu testen, da diese Stateless sind und lediglich aussehen mit sich bringen.
-
----
-
-## 🎤 Mitmachen & Support
-
-- 👾 **Issues melden?** Erstelle ein [GitHub Issue](https://github.com/Lunix-420/Bingo/issues) 🛠️
-- 💡 **Ideen oder Feedback?** Lass uns wissen, was du denkst! 💬
 
 ---
 
