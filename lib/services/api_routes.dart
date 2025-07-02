@@ -1,6 +1,9 @@
 class ApiRoutes {
-  static const String _baseRoute = "http://192.168.2.125:3000";
+  static const String _baseRoute = "http://89.116.25.141:3000";
   static const String _tilesetsBase = "$_baseRoute/tilesets";
+  static const String _roomsBase = "$_baseRoute/rooms";
+  static const String _playersBase = "$_baseRoute/players";
+  static const String _bingofieldsBase = "$_baseRoute/bingofields";
 
   // --------------------------  Socket Route --------------------------
   static Uri socketRoute() => Uri.parse(_baseRoute);
@@ -19,21 +22,19 @@ class ApiRoutes {
       Uri.parse("$_tilesetsBase/$id/downvote");
 
   // --------------------------  Room Routes --------------------------
-  static Uri postCreateRoom() => Uri.parse("$_baseRoute/rooms");
-  static Uri getRoomById(String id) => Uri.parse("$_baseRoute/rooms/$id");
-  static Uri postPlayerJoinRoom(String id) =>
-      Uri.parse("$_baseRoute/rooms/$id/join");
+  static Uri postCreateRoom() => Uri.parse(_roomsBase);
+  static Uri getRoomById(String id) => Uri.parse("$_roomsBase/$id");
+  static Uri postPlayerJoinRoom(String id) => Uri.parse("$_roomsBase/$id/join");
   static Uri postPlayerLeaveRoom(String id) =>
-      Uri.parse("$_baseRoute/rooms/$id/leave");
+      Uri.parse("$_roomsBase/$id/leave");
   static Uri getRoomIdFromCode(String code) =>
-      Uri.parse("$_baseRoute/rooms/id/$code");
-  static Uri postRoomStart(String id) =>
-      Uri.parse("$_baseRoute/rooms/$id/start");
+      Uri.parse("$_roomsBase/id/$code");
+  static Uri postRoomStart(String id) => Uri.parse("$_roomsBase/$id/start");
 
   // --------------------------  Player Routes --------------------------
-  static Uri postCreatePlayer() => Uri.parse("$_baseRoute/players");
+  static Uri postCreatePlayer() => Uri.parse(_playersBase);
 
   // --------------------------  Bingofield Routes --------------------------
   static Uri postCheckField(String fieldId) =>
-      Uri.parse("$_baseRoute/bingofields/$fieldId/mark");
+      Uri.parse("$_bingofieldsBase/$fieldId/mark");
 }

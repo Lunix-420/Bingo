@@ -21,6 +21,7 @@ final logger = namedLogger("Room-View");
 
 class RoomView extends StatefulWidget {
   static bool navigated = false;
+  static bool connected = false;
 
   const RoomView({super.key});
 
@@ -41,13 +42,19 @@ class _RoomViewState extends State<RoomView> {
         room = Routing.getRoomFromArguments(context);
         player = Routing.getPlayerFromArguments(context);
       });
+      GameService.removeListeners();
+      GameService.onRoomUpdate((_) {
+        logger.d("Room updated, refreshing...");
+        _refreshRoom();
+      });
+
+      if (RoomView.connected) {
+        return;
+      }
+      RoomView.connected = true;
 
       GameService.connectSocket(
         onConnect: () {
-          GameService.onRoomUpdate((_) {
-            logger.d("Room updated, refreshing...");
-            _refreshRoom();
-          });
           GameService.emitJoinRoom(room!.code);
         },
       );
