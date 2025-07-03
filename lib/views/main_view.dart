@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/services/game_service.dart';
 import 'package:frontend/views/game_view.dart';
@@ -7,7 +6,6 @@ import 'package:frontend/widgets/appbar.dart';
 import 'package:frontend/widgets/main_view/menu.dart';
 import 'package:frontend/widgets/main_view/logo.dart';
 import 'package:frontend/widgets/view_scaffold.dart';
-import "package:web/web.dart" as web;
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -29,10 +27,6 @@ class _MainViewState extends State<MainView> with TickerProviderStateMixin {
       RoomView.navigated = false;
       RoomView.connected = false;
       GameView.navigated = false;
-      if (kIsWeb) {
-        // Reload the page to reset the state
-        web.window.location.reload();
-      }
     }
     RoomView.navigated = false;
     RoomView.connected = false;

@@ -38,7 +38,6 @@ dependencies:
   http: ^1.4.0
   logger: ^2.5.0
   toastification: ^3.0.2
-  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
