@@ -72,6 +72,16 @@ $ flutter run
 
 ---
 
+## Bekannte Bugs
+
+Die folgenden 2 bekannten Bugs treten nach mehrmaligen Testen nur auf, wenn man die gebaute Version über `flutter build` nutzt. In der debug-Version mit `flutter run` konnten diese nicht nachproduziert werden.
+
+1. Wenn man ein Spiel hostet, spielt und nach Abschluss wieder normal auf den Main-Screen landert **ohne** die Seite neuzuladen (also den Zustand zurückzusetzten) und dann wieder ein spiel hostet, wenn dann ein Spieler den Raum beitritt, wird der Host in das Spiel weitergeleitet, obwohl dies nicht passieren sollte.
+
+2. Als Host in der Lobby wird die aktuelle Spieleranzahl nicht geupdated.
+
+---
+
 ## Testing
 
 Zum Testen verwenden wir manuelle tests. Diese sehen wiefolgt aus:
